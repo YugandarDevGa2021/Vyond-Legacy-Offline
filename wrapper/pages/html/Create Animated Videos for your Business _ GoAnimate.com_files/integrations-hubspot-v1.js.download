@@ -1,0 +1,111 @@
+var _____WB$wombat$assign$function_____ = function(name) {return (self._wb_wombat && self._wb_wombat.local_init && self._wb_wombat.local_init(name)) || self[name]; };
+if (!self.__WB_pmw) { self.__WB_pmw = function(obj) { this.__WB_source = obj; return this; } }
+{
+  let window = _____WB$wombat$assign$function_____("window");
+  let self = _____WB$wombat$assign$function_____("self");
+  let document = _____WB$wombat$assign$function_____("document");
+  let location = _____WB$wombat$assign$function_____("location");
+  let top = _____WB$wombat$assign$function_____("top");
+  let parent = _____WB$wombat$assign$function_____("parent");
+  let frames = _____WB$wombat$assign$function_____("frames");
+  let opener = _____WB$wombat$assign$function_____("opener");
+
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 380);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 380:
+/***/ (function(module, exports) {
+
+(function(){var es,initHubspotIntegration,originalReady,s,setForeignData;return null==window._hsq&&(window._hsq=[]),setForeignData=function(video,tracker){var pageName,pageUrl,ref;return pageUrl=document.location.href.split('?')[0],pageName=(null==(ref=document.getElementsByTagName('title')[0])?void 0:ref.innerHTML)||'',pageName=pageName.replace(/^[\n\s]+/,'').replace(/[\n\s]+$/,''),pageName=pageName.replace(/[^\x00-\x7F]/g,''),video.foreignData({hubspot_hutk:tracker.utk.visitor,wistia_visitor_key:video.visitorKey(),page_url:pageUrl,page_name:pageName,canonical_url:tracker.canonicalUrl,page_id:tracker.pageId,content_type:tracker.contentType})},initHubspotIntegration=function(){return wistiaEmbeds.onFind(function(video){return video.ready(function(){var ref;return(null==(ref=video._mediaData.integrations)?void 0:ref.hubspot)?void 0:Wistia.util.poll(function(){return video.visitorKey()},function(){return video instanceof Wistia.PlaylistIframeAPI||window._hsq.push(function(tracker){return setForeignData(video,tracker)}),video instanceof Wistia.PublicApi?Wistia.Metrics.videoCount(video,'player/integrations-hubspot-v1/init-on-api-embed'):video instanceof Wistia.PlaylistIframeAPI?Wistia.Metrics.count('player/integrations-hubspot-v1/init-on-iframe-playlist',1,{href:location.href,referrer:document.referrer,hashedId:video.hashedId()}):Wistia.Metrics.count('player/integrations-hubspot-v1/init-on-iframe-embed',1,{href:location.href,referrer:document.referrer,hashedId:video.hashedId()})})})})},null==window.wistiaEmbeds?(null==window.wistiaEmbedShepherdReady?window.wistiaEmbedShepherdReady=initHubspotIntegration:(originalReady=window.wistiaEmbedShepherdReady,window.wistiaEmbedShepherdReady=function(){return originalReady(),initHubspotIntegration()}),es=document.createElement('script'),es.type='text/javascript',es.async=!0,es.src='//web.archive.org/web/20180225120847/http://fast.wistia.com/assets/external/embed_shepherd-v1.js',s=document.getElementsByTagName('script')[0],s.parentNode.insertBefore(es,s)):initHubspotIntegration()})();;
+;
+
+/***/ })
+
+/******/ });
+
+}
+/*
+     FILE ARCHIVED ON 12:08:47 Feb 25, 2018 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 18:05:56 Oct 21, 2021.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 630.824
+  exclusion.robots: 0.182
+  exclusion.robots.policy: 0.166
+  RedisCDXSource: 2.423
+  esindex: 0.016
+  LoadShardBlock: 145.164 (3)
+  PetaboxLoader3.datanode: 200.067 (5)
+  CDXLines.iter: 93.839 (3)
+  load_resource: 789.064 (2)
+  PetaboxLoader3.resolve: 410.557 (2)
+*/

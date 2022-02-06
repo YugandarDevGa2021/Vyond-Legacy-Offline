@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list version="1.0">
+	<fvm_meta theme_code="" is_biz="0" />
+        <theme id="whiteboard" name="Whiteboard Animation" thumb="" cc_theme_id="whiteboard" />
+        <theme id="infographics" name="Video Infographics" thumb="" cc_theme_id="infographics" />
+        <theme id="commoncraft" name="Common Craft" thumb="" cc_theme_id="commoncraft" />
+        <theme id="bizmodels" name="Business Models" thumb="" cc_theme_id="bizmodels" />
+	<theme id="import" name="Imported Assets" thumb="" cc_theme_id="import" />
+	<word></word>
+	<whiteword />
+	<excludeAssetIDs />
+	<points money="0" sharing="0" />
+</list>

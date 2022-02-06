@@ -1,0 +1,2062 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0088)https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397 -->
+<html><script type="text/javascript" src="./Your Videos on Vyond_files/pd.js.download"></script><script type="text/javascript" async="" src="./Your Videos on Vyond_files/cx.js.download"></script><script async="" type="text/javascript" src="./Your Videos on Vyond_files/cx.cce.js.download"></script><script type="text/javascript" async="" src="./Your Videos on Vyond_files/b6218934c79aae40781124b6cfd94df4d8f23b98qoo.js.download"></script><script type="text/javascript" async="" src="./Your Videos on Vyond_files/tinypass.min.js.download"></script><script type="text/javascript" async="" src="./Your Videos on Vyond_files/b6218934c79aae40781124b6cfd94df4d8f23b98.js.download"></script><script type="text/javascript" integrity="sha384-girahbTbYZ9tT03PWWj0mEVgyxtZoyDF9KVZdL+R53PP5wCY0PiVUKq0jeRlMx9M" crossorigin="anonymous" async="" src="./Your Videos on Vyond_files/amplitude-7.2.1-min.gz.js.download"></script><script src="./Your Videos on Vyond_files/784667875001149" async=""></script><script async="" src="./Your Videos on Vyond_files/fbevents.js.download"></script><script type="text/javascript" async="" src="./Your Videos on Vyond_files/insight.min.js.download"></script><script type="text/javascript" async="" src="./Your Videos on Vyond_files/pixel.js.download"></script><script type="text/javascript" async="" src="./Your Videos on Vyond_files/uwt.js.download"></script><script type="text/javascript" async="" src="./Your Videos on Vyond_files/f.txt"></script><script type="text/javascript" async="" src="./Your Videos on Vyond_files/analytics.js.download"></script><script async="" id="cio-tracker" data-site-id="0338e55d5a2b9b9bdd26" src="./Your Videos on Vyond_files/track.js.download"></script><script async="" src="./Your Videos on Vyond_files/gtm.js.download"></script><script type="text/javascript" async="" src="./Your Videos on Vyond_files/cookie_policy"></script><script type="text/javascript" class="__REQUESTLY__SCRIPT">(function (namespace) {
+  window[namespace] = window[namespace] || {};
+  window[namespace].responseRules = {};
+
+  const isApplicableOnUrl = (url) =>
+    window[namespace].responseRules.hasOwnProperty(url);
+  const getResponseRule = (url) => window[namespace].responseRules[url];
+  const notifyRuleApplied = (rule) => {
+    window.postMessage(
+      {
+        from: "requestly",
+        type: "response_rule_applied",
+        id: rule.id,
+      },
+      window.location.href
+    );
+  };
+
+  // Intercept XMLHttpRequest
+  const onReadyStateChange = function () {
+    if (this.readyState === 4 && isApplicableOnUrl(this.responseURL)) {
+      const responseRule = getResponseRule(this.responseURL);
+      const { response } = responseRule;
+      const responseType = this.responseType;
+      const customResponse =
+        response.type === "code"
+          ? responseRule.evaluator({
+              method: this.method,
+              url: this.responseURL,
+              requestHeaders: this.requestHeaders,
+              requestData: this.requestData,
+              responseType: this.responseType,
+              response: this.response,
+            })
+          : response.value;
+
+      Object.defineProperty(this, "response", {
+        get: function () {
+          if (response.type === "static" && responseType === "json") {
+            return JSON.parse(customResponse);
+          }
+          return customResponse;
+        },
+      });
+
+      if (responseType === "" || responseType === "text") {
+        Object.defineProperty(this, "responseText", {
+          get: function () {
+            return customResponse;
+          },
+        });
+      }
+
+      notifyRuleApplied(responseRule);
+    }
+  };
+
+  const XHR = XMLHttpRequest;
+  XMLHttpRequest = function () {
+    const xhr = new XHR();
+    xhr.addEventListener(
+      "readystatechange",
+      onReadyStateChange.bind(xhr),
+      false
+    );
+    return xhr;
+  };
+  XMLHttpRequest.prototype = XHR.prototype;
+  Object.entries(XHR).map(([key, val]) => {
+    XMLHttpRequest[key] = val;
+  });
+
+  const open = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function (method) {
+    this.method = method;
+    open.apply(this, arguments);
+  };
+
+  const send = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.send = function (data) {
+    this.requestData = data;
+    send.apply(this, arguments);
+  };
+
+  let setRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
+  XMLHttpRequest.prototype.setRequestHeader = function (header, value) {
+    this.requestHeaders = this.requestHeaders || {};
+    this.requestHeaders[header] = value;
+    setRequestHeader.apply(this, arguments);
+  };
+
+  // Intercept fetch API
+  const _fetch = fetch;
+  fetch = async (resource, initOptions) => {
+    const url =
+      resource instanceof Request ? resource.url : resource.toString();
+    const fetchedResponse = await _fetch(resource, initOptions);
+
+    if (!isApplicableOnUrl(url)) {
+      return fetchedResponse;
+    }
+
+    let method, requestHeaders, requestData;
+
+    if (resource instanceof Request) {
+      const request = resource.clone();
+      method = request.method || "GET";
+      requestHeaders =
+        request.headers &&
+        Array.from(request.headers).reduce((obj, [key, val]) => {
+          obj[key] = val;
+          return obj;
+        }, {});
+      requestData = await request.text();
+    } else {
+      method = initOptions.method || "GET";
+      if (initOptions.headers instanceof Headers) {
+        requestHeaders = Array.from(initOptions.headers).reduce(
+          (obj, [key, val]) => {
+            obj[key] = val;
+            return obj;
+          },
+          {}
+        );
+      } else {
+        requestHeaders = initOptions.headers;
+      }
+      requestData = initOptions.body;
+    }
+
+    const responseRule = getResponseRule(url);
+    const customResponseText =
+      responseRule.response.type === "code"
+        ? responseRule.evaluator({
+            method,
+            url,
+            requestHeaders,
+            requestData,
+            response: await fetchedResponse.text(),
+          })
+        : responseRule.response.value;
+
+    notifyRuleApplied(responseRule);
+
+    return new Response(new Blob([customResponseText]), {
+      status: fetchedResponse.status,
+      statusText: fetchedResponse.statusText,
+      headers: fetchedResponse.headers,
+    });
+  };
+})('__REQUESTLY__')</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script class="w-json-ld" type="application/ld+json" id="w-json-ldwistia_50">{"@context":"http://schema.org/","@id":"https://fast.wistia.net/embed/iframe/70x3iky0kr","@type":"VideoObject","duration":"PT1M6S","name":"Vyond Studio - Faster, Richer, Better (Race car)","thumbnailUrl":"https://embed-ssl.wistia.com/deliveries/b16ba537edb5a2b3014c1f4c8bd48e0e.jpg?image_crop_resized=1280x720","embedUrl":"https://fast.wistia.net/embed/iframe/70x3iky0kr","uploadDate":"2018-11-15","description":"a (Product team) In app videos video"}</script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<link rel="dns-prefetch" href="https://d2bm7x1jqouzel.cloudfront.net/">
+<link rel="dns-prefetch" href="https://d3v4eglovri8yt.cloudfront.net/">
+
+<title>Your Videos on Vyond</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="">
+<meta property="og:site_name" content="Vyond">
+<meta property="fb:app_id" content="177116303202">
+
+<meta name="google-site-verification" content="K_niiTfCVi72gwvxK00O4NjsVybMutMUnc-ZnN6HUuA">
+
+
+<link href="./Your Videos on Vyond_files/sailec.css" rel="stylesheet" type="text/css">
+<link href="./Your Videos on Vyond_files/common_combined.css.gz.css" rel="stylesheet" type="text/css">
+
+<link href="./Your Videos on Vyond_files/watermark.css.gz.css" rel="stylesheet" type="text/css">
+<link href="./Your Videos on Vyond_files/video.css.gz.css" rel="stylesheet" type="text/css">
+<link href="./Your Videos on Vyond_files/myvideos.css.gz.css" rel="stylesheet" type="text/css">
+<link href="./Your Videos on Vyond_files/video_export.css.gz.css" rel="stylesheet" type="text/css">
+<link href="./Your Videos on Vyond_files/banner.css.gz.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+<style text="text/css">
+.top-nav.collapse {height: auto;overflow: visible;}
+</style>
+<![endif]-->
+
+<script>
+var srv_tz_os = -4, view_name = "go", user_cookie_name = "u_info";
+var user_role = 8;
+</script>
+
+<script src="./Your Videos on Vyond_files/common_combined.js.gz.js.download"></script>
+<script type="text/javascript" src="./Your Videos on Vyond_files/goserver_js-en_US.json.gz.json"></script>
+<script type="text/javascript">
+var I18N_LANG = 'en_US';
+var GT = new Gettext({'locale_data': json_locale_data});
+</script>
+
+<script src="./Your Videos on Vyond_files/jquery-ui-1.9.2.custom-core-interactions.min.js.gz.js.download"></script>
+<script src="./Your Videos on Vyond_files/jquery.tmpl.min.js.gz.js.download"></script>
+<script src="./Your Videos on Vyond_files/trial_upsell.js.gz.js.download"></script>
+<script src="./Your Videos on Vyond_files/moment.min.js.gz.js.download"></script>
+<script src="./Your Videos on Vyond_files/sessionChecker.js.gz.js.download"></script>
+<script src="./Your Videos on Vyond_files/go_amp.js.gz.js.download"></script>
+
+<!-- Vyond Cookie Consent -->
+<script>(function(v,y,o,n){v[n]=v[n]||[];
+var f=y.getElementsByTagName(o)[0],d=y.createElement(o);
+d.type='text/javascript';d.async=true;d.src=
+'https://ga.vyond.com/ajax/cookie_policy';
+f.parentNode.insertBefore(d,f);
+})(window,document,'script','_vyccq');</script>
+<!-- End Vyond Cookie Consent -->
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TXV7MD');
+
+dataLayer.push({"userId":"0dEL5Gr6-Vss","roleName":"Student","bl":"Yes"});
+</script>
+<!-- Google Tag Manager -->
+
+<script>
+    dataLayer.push({ 'useQualaroo': 1 });
+
+</script>
+
+<!-- Start of Zendesk Widget script -->
+<iframe src="javascript:false" title="" style="display: none;" src="./Your Videos on Vyond_files/saved_resource.html"></iframe><script>/*<![CDATA[*/window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(c){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload="document._l();">'),o.close()}("//assets.zendesk.com/embeddable_framework/main.js","goanimate.zendesk.com");/*]]>*/</script>
+<!-- End of Zendesk Widget script -->
+<script>
+zE(function() {
+    zE.identify({"name":"jjvlogs","email":"joshuamartinrego05@gmail.com"});
+    zE.hide();
+});
+</script>
+
+
+<style type="text/css">.tp-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #121214;
+    z-index: 300000;
+    opacity: 0;
+    transition: opacity .25s linear;
+}
+.tp-backdrop.tp-active {
+    opacity: .9;
+}
+.tp-modal .tp-close.tp-square {
+    background: #ccc;
+    border-radius: 0;
+    border: 0;
+    top: 0;
+    right: -40px;
+}
+.tp-modal .tp-close {
+    display: none;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 40px;
+    height: 40px;
+    background: #fff url("data:image/svg+xml,%3Csvg width='11' height='11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11 1.368L9.632 0 5.5 4.142 1.368 0 0 1.368 4.142 5.5 0 9.632 1.368 11 5.5 6.858 9.632 11 11 9.632 6.858 5.5 11 1.368z' fill='%23959595'/%3E%3C/svg%3E") center center no-repeat;
+    border: none;
+    box-shadow: 0 0 10px 0 rgba(28, 37, 68, 0.15);
+    outline: none;
+    z-index: 300100;
+    border-radius: 40px;
+    opacity: 0;
+    cursor: pointer;
+    transform: scale(.25, .25);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.tp-modal .tp-close:hover,
+.tp-modal .tp-close:focus {
+    box-shadow: 0 0 10px 2px rgba(28, 37, 68, 0.15);
+}
+.tp-modal .tp-close:focus {
+   border: 1px solid;
+}
+.tp-modal .tp-close.tp-active {
+    display: block;
+    opacity: 1;
+    transform: scale(1, 1);
+}
+.tp-modal .tp-iframe-wrapper[dir="rtl"] .tp-close {
+  right: initial;
+  left: -20px;
+}
+
+.tp-modal .tp-iframe-wrapper.piano-id-modal-ver-2 .tp-close {
+  top: 0;
+  right: 0;
+  width: 64px;
+  height: 64px;
+  box-shadow: none;
+  outline: none;
+  border-radius: 0;
+  border-left: 1px solid rgba(15, 15, 21, 0.2);
+  background: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg %3E%3Cpath d='M3 3L13 13M13 3L3 13' stroke='%230F0F15' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E%0A") center center no-repeat;
+  opacity: 0.3;
+}
+
+.tp-modal .tp-iframe-wrapper.piano-id-modal-ver-2 .tp-close.tp-active {
+  opacity: 0.3;
+}
+
+.tp-modal .tp-iframe-wrapper.piano-id-modal-ver-2 .tp-close:hover,
+.tp-modal .tp-iframe-wrapper.piano-id-modal-ver-2 .tp-close:focus {
+  box-shadow: none;
+  border: none;
+  border-left: 1px solid rgba(15, 15, 21, 0.06);
+  opacity: 1;
+}
+
+.tp-modal .tp-iframe-wrapper.piano-id-modal-ver-2[dir="rtl"] .tp-close {
+  right: auto;
+  left: 0;
+  border-left: none;
+  border-right: 1px solid rgba(15, 15, 21, 0.2);
+}
+
+.tp-modal .tp-iframe-wrapper.piano-id-modal-ver-2[dir="rtl"] .tp-close:hover,
+.tp-modal .tp-iframe-wrapper.piano-id-modal-ver-2[dir="rtl"] .tp-close:focus {
+  border-left: none;
+  border-right: 1px solid rgba(15, 15, 21, 0.06);
+}
+
+.tp-modal {
+    z-index: 300050;
+}
+@media screen and (max-width: 650px) {
+    .tp-modal .tp-close {
+        right: 0;
+    }
+
+    .tp-modal .tp-iframe-wrapper[dir="rtl"] .tp-close {
+      right: initial;
+      left: 0;
+    }
+}
+.tp-modal .tp-iframe-wrapper.tp-curtain {
+    width: 600px;
+    height: 480px;
+}
+.tp-modal-open {
+    overflow: hidden !important;
+    height: 100vh;
+    -webkit-overflow-scrolling: touch;
+}
+.tp-modal-open.tp-modal-resizing {
+    -webkit-overflow-scrolling: auto;
+}
+/*Bug fix of firefox v57*/
+.tp-modal-close {
+    overflow: auto;
+}
+.tp-iframe-wrapper {
+    position: relative;
+    margin: 50px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.21);
+}
+.tp-iframe-wrapper.no-shadow {
+  box-shadow: unset;
+}
+.tp-modal {
+    overflow-x: hidden;
+    overflow-y: scroll !important;
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translate3d(0, 0, 0);
+}
+.tp-modal .tp-message {
+    font-family: "Graphik Web Regular", Helvetica, Arial, sans-serif;
+    padding: 10px;
+}
+.tp-modal .tp-btn-container {
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+.tp-cxense-placeholder-modal {
+    width: 100%;
+    background-color: #fff;
+    max-width: 912px;
+    display: block;
+    overflow: hidden;
+    height: auto;
+    opacity: 1;
+}
+.tp-widget-placeholder > div::after {
+    display: block;
+    content: "";
+    clear: both;
+}
+.tp-btn {
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0 18px;
+    line-height: 40px;
+    border-collapse: separate;
+    border-radius: 4px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    color: #fff;
+    border: none;
+    box-shadow: inset 0 -1px 0 rgba(216, 218, 221, 0.0);
+    background: #3878D8;
+    background-position: bottom;
+    text-shadow: none;
+    font-family: "Graphik Web Regular", Helvetica, Arial, sans-serif;
+    white-space: nowrap;
+    outline: 0;
+}
+.tp-please-wait.tp-active {
+    display: block;
+    opacity: .9;
+    transition: opacity .25s linear;
+}
+.tp-please-wait {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #999;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    text-align: center;
+    color: #fff;
+    font-weight: lighter;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+}
+.tp-please-wait.tp-overlap {
+  position: fixed;
+  z-index: 300150;
+}
+.tp-please-wait > .tp-icon {
+    width: 46px;
+    height: 46px;
+    background-image: url('data:image/gif;base64,R0lGODlhMAAwAOZnAJmZmbe3t7m5uf39/bu7u7a2tri4uL29vcHBwfv7+/f397+/v/n5+cXFxf///7q6uv7+/svLy8nJydHR0fPz88PDw83NzcfHx76+vvX19by8vPHx8evr6+3t7ePj47W1tefn593d3e/v79vb2+np6c/Pz/z8/NfX19/f38DAwMLCwtPT09nZ2dXV1eXl5crKysbGxuHh4fr6+vj4+MTExJqamszMzMjIyM7OzvLy8tDQ0PT09NTU1Pb29tbW1t7e3uDg4Jubm+7u7urq6tjY2Ozs7Nra2vDw8NLS0uTk5Nzc3JycnObm5ujo6LGxsbKysrOzs+Li4qKiorS0tK+vr6ysrK2traioqKSkpK6urqmpqaWlpaOjo6ampqqqqqGhoZ6enqenp7CwsKCgoKurq5+fn52dnf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjMGY5MTc1YS1jNWIyLWQ5NDUtYTFjMS1kM2MwZjY3MmM3NWEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NjkyNDJGODQzODBBMTFFNDgzNzJBMzE2M0M3NkExREYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NjkyNDJGODMzODBBMTFFNDgzNzJBMzE2M0M3NkExREYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NGY0YmQyN2MtY2Q5Mi0xNTQzLTk4NzgtODVmNTVmNDQxOTkyIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YTQ3MGYzNGUtMzgwOC0xMWU0LTkwNzctZjkzMmE2MjQ3OTQ2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEBQQAZwAsAAAAADAAMAAAB/+AZ4KDhIWGh4iJiouMjY6IZmINK0AkHUIcHj43T2aPnwBiJSRFHZciIkcbGzk5FEctUACfi1AjQxwcpaepq60UFDsZSQW0h1grJCS4uqZCqKqswMEZGT0hXcaDUx5NykO4RaXPvdLBwtY9OQLGAAggIE3eyxxAN1BhZUFBY2EfNiDQ9eihoOCLWY4ANGDCBN68FVYYURlhraCCGTOQIGSEwIULhvBYePlkxUVBjAwY2GgEJUkSjwwvbHwEYMLFGSkZEFjEBYUHlx7ZaROEAGdKGRmyJcLhoalLA0MJpTgqQwaQRGJiRInStEHUQhOqJhgrtBAAHjG0Rmkx8yuAJmP/x5Joe8YKECBpY1z5ashKXBMmPhi6gOIukJV8DaEADNhIoSUhUEhGQSaxISeABwyQ4WlQlR+gUfiwfOiIZs2CBx0IEQJ0CtKGJpwegIPQDdass8AuZEAzBAhXB01QQlwJlt2EtPz+LYSQjxHQR4BBPujLcggKCLGIPiIIdUFLHIh3MIAQESPojXj/XiPB+ASEeLCYz2L69yBJxichVIKIfyJcfHcGGAQMMcAQARDSABEnNFiFgFIUUMAHH0Q0yAMNNrjTd1pIKOFeg5Dhw4g+WCAgFAEEIOEXhCzBQwswtgDibmOkmGIBNRSCAIw88FABdVTYGICFhHjRIw8rrLDF/25lGOBkilIYAoAESa6AhEykAQCFAE4a8ARdZ1RhJRITTPAAaVUIoCaXASJSAZll6kBFYmE88MCaYijyBQ4T6KBDCSXMGVUYBBBgpwAB2JdIFX4CigMOAYC5CABWaFCooQ8cx0gBjuJggQUVtOnIFwUcoIGlhY7UCAAGPPqpDRFEoMGSi0gxBQYH5IqqFZIeAsAUr8IawQsSqIDPGEvUUMMSZWxBBQELLIABrqZqQEaviZDxgrDESnDDBRfA0EADNFSgAgIIpJBCtNQSQKs2Y2AQa7ffhjtuuSqcmy67GEChaFRaICCBt9/CIC4N5ZqL7roLGPBuYgCEIQC44R6csB++C0CBBbZRBdGFEwZgoEIFFaRwQAFZYLGegCy3zEggACH5BAUEAGcALAIAAgAsACwAAAf/gGeCg4SFQVYpJSNRTExJShMqVEGFlZaXgmQSUSAgTSQkQxwcRUUdHUM6VpishVk8Li5MnZ+ho6YdQkIiIihPrZhSFh5JSbGznrakp7siR0cbJ1zAhWIhUR7Ex7TKuM3QGxtFBdSCGjExUdjFLj8wT1djYGBnWlMvLrzgOTkUDdQpgABBh82DDirAnhAJx4+CwwitHqBAIRBdiyrlBFGJ0s/hjh00MFH58WPiQB2UMgoK8sPjjgwZyFX6wiIEyYkLVFaS8BFmhiNYKt1QEsLmDww6Lb3w2aPHiEJkRighGsJC0ksomvZQoAAKIQsjwirRUeOqpSVMuHJ1MUiLESNh/0d4MXvJidoZM5wIUsGCxdsXdDH9wDuDgY8zQXz07YsxsCUohRkw2LHEC5HLLJA4xiRCsuQnBk6IJoJ08yUGMlJLUCFa9CrTllLLSKAkgo/bh2FXIpOgdwISJVoIb1FGdyXfCShM4DHcjHFCYExIN6FgOY/rS54Pij5dAY4V4FdoHyRlgPkBOy4gWY8k6Pgq5s8M4JACyYT7ZMafeXB+QIgp990ngH4rQGDgAC+EocOCOkigHwUGGghFEBaUYGEJ4wXgwIYQMJAdARbigEMK2lGw4YZPnRGGiDhYYEEXxo2Rw4YMOKCXIBW4aIENFZQFmxgICAFBDhUQcoWLNtgQQetOplFRQAEfRPlFIQcoGUEEL3jlmBYBPPnka4SUccOVL7wggZZmcRlAlwVMkV0lWpQpwZw3aOCjSjU4YcCaaxYwzSVizCnBDRdcgIF7GUEhgAF7rnlFK1MMWugFMDQwIDBcOPGAAJwyGsBcwIhBKKUNNEADDRg40cWUQVAyBhZWBEAAAZt2asCj5VxBAwyVmlpBBSoggEAKCyyAwQEHaKDBrA/UGsCfGYEhQKmn/hrssMUem+yytG4qhnNXdXEADdZeS6yx2nJLABRSbMbFFAioYG626T5AxZS61QDrFAIgewABATxBhhR3AhMIACH5BAUEAGcALAIAAgAsACwAAAf/gGeCg4SFggs2RCgeLlFGgk5LhpOUhjVVNz9RHh5JLi5MICBNJCQgE041lauFSEAxMZudn6GjpUMcHCFTrJVfNigor7GcnqCjpLgcRUUdZ1u9hU9GPz/Bw5vGoaQkys0dQkPRhEohIdbCMUQqTltlQUFlXU4wP7nfQiIi4wsjSuXnUESo0ssKjw7g8ok4Es3ICH/lJmgZJ4hMCIVHjmy4sYqFEYf+UgCgOAiAjYUaN2wQMElKCxYeHfIiWQhDyg05hHQxBIMIEZgsPtCcdABnDgoUQhSycuKETxYLhlKycRQpBaGDIvhoesLGSKmGAMRAumNHElWCWvhYe2In2ElW/8ruyJDhiSAELfL6oPG2Egu6dAch4cEj75W+lJwA7kFB0IoVhG0grjSkh2UFZwI8fvxgMiUcCkIreHEGiekVXjxPKiBagZEbE2IjkaLa0JUZuGecsRA7tpnahnIz2FBCh3EdaIELWsKgOYMzJaJH/6r8TBDnz21IL/G7+pkyMsLLOAMDh3kcX7yf0ZIgQfghByzIt5Da+4f27VHstmDDBtbqOuCXgA1X9BdBBA2o14EJDCZQwBkvHHigW8A9MQCDJpwBxhkPRPDChwRUh8IAJA6ghCBdfCjBilgAl0WJJM50RgorSnDDAtRNxgEEEJBYRHJn2HjDBRdAoVoLPCbJEuIhGgxJJAxkTIaCA1Ty6IEhYzRwAQwwNNAAQW9hMUACVDrAQBiTeMGllw3Q8ESO4wDgxQdHODAAlRpU4gSbNFRQAQG0UTSGEwUUgMAGJoSAAytPtNlnBSog8AEXvXyRRQABFFrABx9M1AsVj6oQKQIpCEAFFmWcUYMqYHBBxgcGGIBppoWSFAYCoiJAagoLLIDBAQdoQAABDzwggACxzhrABy2SVEYAupLaKwa/BjssscciK2sAVPT1QAq8+lqtsMMae2ysdk2GBRQY+AqsteWem4V3VTwRAAEaPGBAAWLUR1EgACH5BAUEAGcALAIAAgAsACwAAAf/gGeCg4SFghoSLSExQEonNhhZhpOUkwBnDSw/KChAMTFRHh5JLi4eFlSXlauEOkohIZudn6FJpExMICBGUKyVUhIjI0qvsp6go6W5IE0kJDxYvoViPixGwq+xs8ikLsvNJEMgAdKCAUQs1tevLQhUWGAAS2NbZzQjzM5DQxwcMNIHTpxAZ23EBS/SdOjrV6SILwE+BBJBZyFMOUFejDAs0qFDg1UtfEQcKOFioRscOHYUYmBSmQktYkZ8YNLQg5VCRHCoV0gFDx4xWzypOYmAkJwiRLAoVGWF058aiFJ6kVTEkSMnkThd8UJqpR9Xj2yIourMhAlItFr0OomM2A1w/50IwnD2LAK2lU7AzZEDiSAcOnScXYvXEBW+OSgIOaOlhGMdNwpXIkGhMgUoHxw7Jid5koXKO3bAwICjNA4tnSmFDk2kgYXXFr6kNhQmg+0MIF7AtjDbkJTbGTrYGD68bG9BPZL3oBChefPjhAAomK7gzA3nEZZAFzSGuoINFV6IfzFm+5krM9IrIPFAgnsJV8yfSZ9eiZP3N6aYL8GgP4MIYdwg4AUqmFeEfwycUUMDFzR4AU+9OSHDhDL0oF0ADcIAQ0vH/ZAAhUYMoiEMDTQgRW9WJKCiioRgUGKJUc1GggkrDlFWGCXSQEMFcnW2gglA0miIADpWYCRChakwwMSSQLqEgJEqqIAAamyVcMaSS1Y3yRUVRInAl1R4BQIEEAxw5QAHVEKFlF+mkIIBsl0kgAIOOEDmkr440WYKCyyAARQnsjKGFTnUaSeZPJTjZp9+HnBAAFZMciIUBRSQgAMi1AlBBCYd0CcGGDiqAQGkPiCAAAYYEMCqlYJgqAwY1ATGB6A6esCoBDxgKqqqsloAAU0MQAJhNW1hgKi46npqqqsGUGkBYnTGhROklrors6t+UAV0XHghxgcBpFoAFFnEZ1IgACH5BAUEAGcALAIAAgAsACwAAAf/gGeCg4SFZ1UEFzonI0pEKxEHhpOUlV4VPiwsRiONISE/KChAKC9WlaiFVREnJ0REm51Kn6GjMVFRPmKplV8NLS0+rbBGnLOgtrceHkk6XLyFVjo8wMKumsa0yVHLSS4xU9CDKys81MEnJQdVgjU1YFhZCCfczC4uTEwI0ARISOTnaGjhVcWCPXwgQFxIVWDCBH/kbnQRJ0iLD4QJm1SoVEWHDof+CFAsBINJRhIkPkwaY6OER4e7RhoC0QQlCRBYDKXAUaKnjpgyCwmwOYSDj0JaLODgWUJAUEo3hhTlwAEKIRoWsuKg8bSSEaocivwYFMaGjawWcnad5CVskQ4d/2ISiGDWBoa1lVbAhTtBkIQIgCNMxDspC1whQjicufKicQSuhClFQSxCxJMnEiQ0Vhl50ovKlRsQyJw5TOdJTyofOeIDwY3XEk5TWn1kgwcaFy68XiK7UJkNwDdwgJE7d43ehIJsyMF8QwMY0GEcR96OefMKMBpopz6oDIXvFIRg0L6du6AdO767MNCAhvvB1KegR2+EivsKFZyYt5ChfwYJW+CHnyTckdCDf1MEgUAFKjT4DHU9RNgDBWacMUWDCCDAWW8jKOBhDycIgkWGJH6B3AweemiVIA9kmEIKBvQGwgw0KgACIV28mMICC1Bx2gQMBEljAIUUwCOPGFwRGdMCMgQZJAqGgHEAkhgcoORaCCQgQ5MM7AAfjhiEecCYpzy1QgJobimDSJRYMeaYGhAwxRgjZUGCCSagqaUNqVABZ5wEPCCGiak8gcIAA+CppzhVaABooA8IMIUXUoARBAAABHEGFRlQAAEEiCaapwUUbSEAAZAKoKoBBgQQQAEFfPCBEA448GmoJsygQVBPpCoAq66+GusHENR66wBnJPHlSFxMoeqvrboKq6xFGPtpEU4RJgUVrEYrrKwH0JpACBueJoUWWTzxAaxQOGFFGAFUKE4gACH5BAUEAGcALAIAAgAsACwAAAf/gGeCg4SFS2QGFRETLS0rOA0EVYWUlZaDVws6SCsrPC0+PidELCxGRA1kl6uFXg06ExOcno2ipKYjI0oTWayXYyklJbCynZ+go6VGuUohITZSvoVkETg4wrBInMe2yrrOPyhKTtKCUDYWFtfDExICXlJmgmZcVRhI3yHhKEAL0gER0Km7tiCMLy8S9KHgByQGDVZQIkgUSGNLOUFXJjCMESNKikteXryQGNDAxUIqGnb04AGKpQsSJIyM0OtkoQArWQLhQknDjZgyrdisFIClhyRJdBS6cuHGTwkfhlpqgNSFVXKDFlzYesOfVEs+rLpgQmTQFhgwtl7g+bWSlrFM/0CAqFmgAVoYAtpeKiFXLg5BFRoIhoFFryUrcps0cXFmCw3BDbwarhSiCYnLTrLQ2EzjyWRLMC5frhCggukKXT5XcjKk9RAkGk5XGKOaUhcOuDn8WKCit4ralMDk5sAkBYLjCIAXqlGkeREOyI8rJxSkg/UORTCk2J4iyPRBQq43ecB9QZnvZ8IIWS8EyJQF8BcU/v5EhH0RPqzEx1Bz+osjR9hHGAYEYmDSd0lsAOARnh3goIPRKEfFBhRuIMQSZzjx4AGeKXdCDjlQyIMgXBygwYka0FZbFRRQAGIOHZ5RwIkEEDAFcFG02KIHhGBR44+TfFZCBjvs0GIBhTxR49IDTKZm2AIZRFlkCJUIwOQDAgjg5Fcp9NBDlBlsYBElWzCZpQAGqCKVDgoo4GWUeVnixZkG1OnEeRchNsMMbXr5AitVoFlnAIRaoSIrITCgKJ9tKuWLFoMSGkABBTihxRdajFFDDWNcUYAORSQgg6IM7KnAn+VgUYCklH5wQBEOOAABBAPUaoIJCYg6qqI7EGCTGVQQ2ioHscpKq6245rorEHo50SoExc5a6wC35ioqCQFM9kUVU3QQ7bHU4jrDCDcCl8UOIIigALU9tGdDAWBcFAgAIfkEBQQAZwAsAgACACwALAAAB/+AZ4KDhIVBV1AYMBE4JRYSCAVeQYWVlpeCYQQRFjiNOjoTSCsrPC1IKV6Yq4VaKhE2NhadJSWho6UtLT4nNlasqwcvLxGws422oqSmuycnRDfAlV4wEhLExrTJuKa8zywsJ2LSgk8XN9bXxQ0FgmVBQWBSZAQ43kTgRiMC0lMX/+iuaegC7EoDfCz0jRiBgJUYGDD+nUvBhZygLhaMKFQS4gAmLQ0aQPw3xWKhCAs5hgjxxFIZFSFFwiBjspIGlT9+jPhSyUAFGjRC0qxZ6UOInChQRCjUpYJToC2JWkLwIykQIOMGEVDhtAIBqZhWoLgao8UgLAhUqK0gBSwmIDH/4kb5dQYKgrsq2rm9ZCNGlL9La2C4e7fiXktk/nrwAOQMlhSQU2g4jInF4iRJqFRZsAByVsqVKmBO4gIBFM6ct4C2RMWFaxclBGDAwLnM6kpbXDDZPULD7NmUbhfaDQJElAPIkQMQTghA8efJlTMn1KR6EyYPNGifPF3QFxLgSUQJsF0DmO5ntoQnEcIJgfcEDE+HMqT+kAn04FdBL4GDfw4qcEHAAwR+gJ4HRRThnxM1CECgAALwxFwWHXSQYBOCZAEhhFRMx0OFFZYgiBQbCmCAbbeRIYIQLHbwGRQmGmBAVKv9IMKNQjQ2CBcyGhBAAKqAZsMRR9woQkmEiOHj2I8BqHbYARtsQKQILFRiRgFMFlDAFXsdkEMOUW5QBEGVYPGjlgV8kAVYFlBAwZdRrqIFmgQ0MQAJHVpUhQc77ODml9Gs4kWaIDhgqANA0IiJGEb0kEEGfrqJgzRhfGCCA0IYCgEEOaxgwBlSLLEEF1oEgAMHCijgKKR+msQFBYduCsEAtJqQwK0yMMDADDOk2sOqRxBlwA6azlqrrbjququvjv7glgAdbErrACYgm0CuuvaaKhOfHlYACzMce+u12M6QARHMLVHACyEUkQOvRwwxwg1TmGFRIAAh+QQFBABnACwCAAIALAAsAAAH/4BngoOEhYJPGhUSNjYvMBhnV4aTlJRdAhcSLxERNhYWOCUlOhMlC5KVqYRXCxc3EpqcnqCipBNIKxJkqpVlDzAXrrCbnZ+hOqS4Kzw8DWO8hVcVDcCury+bs8cTtyvLLS0r0INUNA3n1TcqU2FfZjU1ZmdeBi+4POA+PicP0E4VNMxRgyFgCzQV+FrsO0HkgCoqFSIGbOBw3KAXC4kQYdGP0hUVKiIChGKxkAaGG1kYoUJpAQKQEUtOepLSiBEiUgwVQMDzpReZk6aoHEH0RaEtKZLyFAOUUgqiI5QoYTnIwIIFSQU0rVRCaogQE2oI4nL1aoqtlcJ8DfHjRxVBTv8wYLg6BW0lCW1/oLhxJogGuXLtptKLAkUIQQcSH9AqmFILFEAiZzmj+ICVxpQQAInBeYETDaAPYME8KQtnzhYKgAZNmlKU11F8CCBAm0DrSR5ye/hRm/btQjVyJ0niQcCD4w/E/h40fHgUA8g7Lj9TxoV1FyimCNjOePoZJuCZGBHDXUDO6U5AqAeBw8t2AwZ+TofRZP0ZKfDh153+g0ST/ywFYEAABHpHwoEkMCGIFQQSONlvKwwxxIE4CPJFgwEUsBwHHEpI1RlPZFhAAUy1pkQRHHIQgnL3jTjiB61J0EEHRaD4RCFZFPDBjjA2poEQM9J4QlA7IpCDAx7YhYHECCIIASQJBhnCxY4dOOAABDygdQSTTQphQFofWAnBmEPIREYMG2ywJZMwqMLDlWMOIOcZJPFCBAU5pKmmCBFAU8KYEMg5gAkmCKGDhWfUMMYVUFgAwg47UIBnmke0OQ4GDAg6qAkJJCCDDAwwMIMCCvTQQwYZRIpnDh0EIFMXHshJaKeegioqqaWiqioFRkQJlAEczNrpp6GOSuqpqe7ggYZ21QDFCGcMG+qtx2aQwwlPsNiYGVPYoESZpObQhBIS9DhOIAAh+QQFBABnACwCAAIALAAsAAAH/4BngoOEhTVbVAYYNDCNKgRPXTWFlJWWglxTFQ0wFxc3EhIvERE2Ni8PXZerhVsENDQNnJ6goqQ2FhY4JTRXrJdgBSoVFbGcnbWjpbm7JTopv5RdGAjDxcbIoMq4OLs6OhMWZNGCVSkI1dY0KVBXUmdLS4JaATfN4BNISB/RWSnn6IYZUPULwbd8SFaseMCKzIIF/9AxJCcozIV8CnnwKHBpC4aHEFMYmERRUJAGGXm0aGGlkhkCGD4+zFKSkgGNK30gGUPpyYEDMTG0rGkz54kTDQpx0fDzJz+ilS74OHqCyLhBHzQwPRCAJFRDNqoSYWEDgKAvBAho1fD10hUiY/9ZsNAiiEratFDaXroh14iRCmdqGLhLQO+lKn5HjCAS5MuDxw8CGL60QvEIJV60CIBcZbKlBUpCK3lARYBpAVw8V6ISonWIC1BOC1BdqUvrHz8mfDDAW4A82oTK4P6BgkUB3ryDACdkBoVzFCM+BJgeQPlyQWaAaAeiZAr1AL+vn4lBPsYIJ9/LiD8TJkr5FVYCFJi/XpCHKPgjXJlPfz0NDwB6gMEX833wwRPrKZHEgh50NoWBBq7nwoRJAKEcGQh0MEAOKlw3ARMTuiCBIGNs4MCJDiBIWxUggMDEi50JYgKKEBRh3WRBGNFEiyCcYJYgBZwIwZBMqOYDCU3sCALqFYUAMSQEAwyAw2QNDEHClU1MQMkWM0AZpZR6NcABB1aSkMQ7lDzwZZQmuHAjRTWwUMSYZA6RlyUvfGmCCQmc4URJWaDQQQdzjrkAKxMMsGcCjMoQwxS/ICiCEEIMOicM0bzAJ6MJyCADAyKcEYAXZ4ABxhdeFGDDGRscIcKkg3bQITkCZNDopwwwMIMCCvSQQQY7UEBBDhu0+uqkTTxF0RY/dIrrDLv2+muwwxJrrAgtpAbVFEzkqmu0vgJLrbVH/KBiWwA44cMO0UorrrA5dIBEFj96tsQTF7DgghBHHNGBBz7A4ER4vwQCACH5BAUEAGcALAIAAgAsACwAAAf/gGeCg4SFQVhZHwQpKhUIGAFOZ0GFlZaXglhPCykICI0VNDQNDTAXDQZhmKuVAQucnZ8VoaMwphc3EimsrFAHGK+cnqCipaY3uRIvB7yVWwQHv8DCn42jpRe4EsoRETfNg2QaGtG/rwRUXWNLNTVLY2FQCMkv3TYWU81WBATj0RhQpPB6Vi+CjXsWBLDywo8fuQJjwGVSYdCCBRw4VmF58KChhiwAJA4CEMAixhIlqlwKIIAjP1UiC1E5WUKHhS+VxAjYyRFmTJkodeiYoKLSzqNWfl4SMHTCBCSFnhgwsBNKSKWVAMBwigSJBEIBpk6NiNXSlq4r0g6yEqCtASpl/zGpSMuDx64zBdq2xRnXUpi6PFqsWHJGbwAofTFZaMG4xZkrBSIH8JL4EoEWPjILsBI5ssDKlar4OEGahpMPqAuAAV2JC2nSOAQMGTDkASXWhMAQ2U1khQsHwD3UwE0oCIvjLE6YAO5AxnDigoIYmW6EiALmDvhCBzOi+wgfIhxAGK8FeibvIyYAGT/egPkzWZTIV3IDB/sBE94vCME/xIEPAwQ4wBHvtfDDgSGcYYYMAg7wBHReoCDhD0oQNkKAZ5iAAnQRACEhChcI8oEJJJKYFGtXxBADECyeeMYQJCaQAAlXJQYAD1GoGMMKhAgg449QVdaABx5EkaMYlfwog9gMd8VlQBJEFllCJV30sKQMDDCAQFwCuOBCElCiwMUlS2bJwAwT1CgRABeAwISXYK5ig5kzzKAAEypJpAULTbj5pgtbspJlnQoo0MMISLJixQokkNCnn+BEQGihPWSQQRMRfBBGGUEEUUYXUNwQAwccDNHoo4E2Q0AOlFaawQ4UUJDDBhscIYIIQnRQBKmmOprET12c0YOrO8AqK6224qrrrkOYygMWWAXggqXGHlvrrbnqSuoIiPWF2Aax5jDrtcp2QIIOiYJmxhk3nJAEB7iSEAUPDSgoUSAAIfkEBQQAZwAsAgACACwALAAAB/+AZ4KDhIU1Ul5OAQ8ajQZQVVg1hZSVloJfWQIEjQcHGBgLCykICClQXJeqhVJQDwSwnZ+ho6UqKhUEW6uXZlQCAg+vnBqeoKKkCLgVNDQGYLyFXAXAwcOcxqEpycs0DQ0qV9GCVwbm1cIGVliCQUGCXWIH3d8wMGLRXgEB58BO4wa8NbB34QKUVWH27TMH5cu4QQcGFrxxA5+laQr3OZn0UFANAgUv3JAgQRylJVMKqNynpSOlJyJJSrhQhpKVDypVtnT5kuSLFxE0FPryoShOKjwtYfgZoWkYQhVyDBCCwGJSSjVUNI1gQ8UgJw7COthw9VIXrjYsWOgiaIRYBzn/yl7CoFYtgTNLGEAQG0DuJbU4cESoMQWCYQgU/F66gaOE4zARDkPgodiSAccldEwJMaDzgAeVK3nRQVrHAg6eB1QJTQnLhNcTYOwYcKZzKtaFXiNBYkGBid8mauIetGT3ihU6fAMXPhzv8eM6KCSYnqD5oDI8svMoQYJ6AjLWBbUY3+KFEuoywp+x4sPHeBUSZMhPH/7AiRPtAzyRz4CBiPAT3HefFkvs0F9/UzRXBQtENMjDOz4cOMMPzUnAwoVEeHWGEzN0OIMCVlWmxQhGGHGhSWe48KECCjDxTmU16DACiUZYQMgULLLYAxChWaCEEjOOsBohIyjQw5EZvKAY2gYhNPnjDa0d0UMGVCYpFwYo/PBDk0Q4REkAVWawAwU/cNRRjECgkOWWSFlCg5hjUkCBB1l0REYLMcSQZpZ3qRJBnBTksMEGRDzBSxY6eBBFFHmmmUI0DciZg6AbHCGCCy9MocUYYJgxxhVPwPCDC0l4oGijQo0TQBGUHmGpCEJ0UAQHHAxBQhMggMCEC6SaGoUSIUbDxQmDvipErLPWSsKtuvJaqgcWSHEVFCgY24GstNrKbLMu8FCnX4hyECu2ym4bhQRDhraEGBUgoUQSukYxQgkpWPFiNIEAACH5BAUEAGcALAIAAgAsACwAAAf/gGeCg4SFg1QfAQ+LBU+Gj5CRglYBApaLBAQaGgcHGAdnWJKjhE8BBgaWApianJ4YCwsCpJJZAbeoqqybnbCxKQgFtIVYHwW3uKmrD5munr/ACClhw4LGBce4U2RcYGc1NUFlWFkGvwgIKioVVLRaH/DYt1lfpFIf0esVFY6SFiEyNiAw5mRMtTNfBKjbR4OGJA0OHAxwcOSDFwAHBQFwwpBGgwZaHoVhENFBggGiMhIi0/BjAxoGC3mAQDMiCpWGyHyEAeOCIQEDaNL0gfPRE54XkhKqUWTAGZocij4CcCDphRspBk0ZwJVrFqmPuFy9IUECoa4DboJ99KBs2VmC/0yY4NpvbaEuZV+8uBGkgFy5QuxCovEiguEzNhIoNjFB8KMPhg1DQaFY8QfHhrTY2GxDw5nKCUJiJvTFgmkLDc7IWC2jzGhCZk5bMMtaRpDXg2rg2I3DAoPfvzHi/laieAkcZ4AzcD3cjI7nOmycmUF9xpXhZ6RM2K7jgpHqCgJg97J9O4IXCtIrsIBdAJL3SM58UK9gCPYXK/Kv8GKGQo//PTiB2xU8FLjCBEsI0kMGDBqBWwUttFAgAoI8wSCDO1gxWhc++BBhC6LVkEQGO5QYg3B2ARDBCR36EAEhH5RIwYzsCbYAESfk6IOGhIQwIwU55ADKWlOwwAIROMJgSM0XIgCZwwYbYAAWFCMYYSQRLUjxiABBQrnBETagWA0AKSgxQpVGSnKDl0eIIMIPZBx0xQQhmHmmEQ+MYsOXboogRAc8fDVKFS+g8EMIdZ65AC0w9PlnB0VwgMIFTnRRRjhlbOGECifEAAQKhiKqxJDDcCDEo5FyMAQJTYAAAhMuJOGBB1F4CuqhRtQ1zBZndABppEOs2uqrsc5aq60oSFfUFGekuiqrrsJa7LFArGBXDWKc0cSzw0oraxRACFLDaJs2FgUTSaDAgg2LHhQIACH5BAUEAGcALAIAAgAsACwAAAf/gGeCg4SFgldZUAUCBgUfYl5chpOUlVUfAZkGBgKdDw8EoWKSlaWFYgWpmQGbnQKgoRoaBwGmpWFnH7qqmpyeoQSzBwcYU7aGBxAmTQQfvKy+r7HCGBgLB8eDLw7cDiDOBVBnUmdBAGdLYGdVAdQL7ylZxzwQEN0JH1Zjx0/V8CkInJjCMaCePQcbymQbZAAegodUKh0YMOCMwQwfFhKiAvChChVXJmGZQZEihBIaDWnxqKICAoWFgJgoOUBFyklaPlbYKcCQiZ8UV9yk5GQnjaOEAAxJ8NPEmRpDKRE42qABtkEJsjIVE5WSlKpVYWwRZERrgh9dKxloAKNtrTMK/2TIyJq2Epa2Fy40qPFBrtwOdSupyHvhxpkIDBIz0BGY0pQbkG84CaGYQWNKVyRolvBgyIwZiUNeLjRm84sKOT5/3jeaEJgXsF/AgKug9rnWg4JE2B3hRe3fuJPaGD78SI/jPYITsmBhuIQzyHvgUv6FOfMGRDJoz1BA+RktOMLjwHBhewYc3gOUWF/iA5Qd8Hd4P3NDB3stS0RQ2E+BK+4wE0yggw44BHHGCvxRcEJwCAQYIAaDUJDDhBtU0doWKyCh4QSDAOBBDhuECERrEqxgIhKGERLiBkccEcFlGrTAAw8mWkiIESweIYIIGgT2hA8tyMgDDYZsUYSOOwrxQMJaBJxwApAtIPHFJAbsKIIQHXTw3FAvEOHkky2UcoEQWGZZxAheaBQGDiyw4KWTPZmSZQdFcMDBEBPYWIoXN4wwghFtegnhMXTaeScJJITQgCBjLHHGPhH5EEIISvwJKAsGLGRAE3YOgWgTIIDAhAtJeOBBFDEAgcIPP1DqpxE++KeRD0N4SgKoopJqKqqqrjpppS+kpcStoY6q66mpouBrCBzWdQ4OLuR6LKrJGrHobZdRsYAFLIQQQwwj+BBBjxoFAgAh+QQFBABnACwCAAIALAAsAAAH/4BngoOEhWYBZ1ZiUAUFH09ZWlKFlJWWg1MhCQ5CBx8fjQGiAQYBVJOXqYQGRRCuDg5Fn6GiBgYCuFNcqpddHgMDrhCwDrMFo7a4Ag8PT7yUGjPAwK+cxsi3uA8EBAJbz4I2JuPTrhQZWYI1AEFnUl5T2tvcGmTgCQnkwChQvF9U8who0HAgXSob+PCNI0EFnKAxUwQSPHDAyqUHMmQkNLECgENCViYewIChS6UuOzJqTIDgI6UrFEkuOACGEgoGDFS2dPlS5oIFHwoFwEkUCU9LVH4uSJHi2yAQM2bgBOHxaCUDS1MgeDAIioKoUQ1apfSFKYKzWAQRUcB2hpKxl/8+nEWgYsoZMzvYsnUC1xIXuipUIGjXo7CCIX0vaajAuMIWCRkyFMaR2JKTxhWoGIkc2W5lSltoiKYRgAnnDJ8tNVjdAIOIHbB3lEldaAnrBipyUNhNoQZtQjVgCIfRQDfvdr/VXVh+AUaRHNBzJB+0hPkFGklybNg+fdCN7zcQnNi+vd/0MBLSSyAAY8OR9y+6f3jxIv2TJ+9FiPDQnUYE+i9ccUYR+uknVmpd2BDBghIMIoIQELaQHAY2VBgBAYI4AWEHHNqTGhYWhGiBDWEMggKHHRTxVmoN4IBDiDQQMkWKRRTBQYOVCVDCji56UcgJNnLAwRBc9SXGBDrsWELWCpRgAYKQQwxBgpFITICkDjaMUUkBQ5LgZRMwWEXACkhUiWQVl9DgJQlNgADCCVp81IUEPKxAZpWIpCIBm26CwIQLlPGiBQ0+tNBCnWRiyIsKbfrpggtJeECECllgAUYNNYCBRRUY6EDECScUykOdH33gARN/JhFpFDHEAAQKP4QQwggjGMHCp6EaOsGBz2AxwaOResCqq7DKqkStLNwKqg8wfGGVEycEy+qrxYZwrK3KWmBRX1ZEAESr1MZqba1G+FCBh6llQSEPRlhLxAQ3EFDFEg4FAgAh+QQFBABnACwCAAIALAAsAAAH/4BngoOEhWBnFigdPSYmCkIgO1aFlJWWhCMzCY0DnRCfDg4dU1Vfl6eFASQyCa2cnhChDhAfHwVOUqinKAwyrK4mnQOgoUW1BQUBVGa6hQ87DNG+wMLERQe2yAEBBVjNgi8zM9G9rB06BVpjQUFjXgFaTtnb2wZazRMKCuLkIU/NVpLVMyCgCqoXPfTtmwEiyzdBZZwEMEBRgAAvlwT02KhwwsNCZCpafOCt0oYMGxOm+Eipi0UBDx4YqKQkg02UC1hWchnzAYF/hArs2HGzhE5LVnwSWFpSkAcKQ3d4OHppylICGgoMekKhK1SDVCuNwaqhLBdBPHLk6Eok7KUnZf8PHHByZkkHtWrFuLUkRa5cDTWebBi8gcneSwYOYFiMpcERwhEOW8qyGMMCKz6OaD4CRXIlLAtCL5gSQ4RpEWE8UyojesGDIadFqKYUJIXtFBg6CNktJMjsQgiCBy/SoXiHGr8JCUeQoonxDoeSC1JBXcUCFEWyF+ki/cyYCuAraFjBoTwHutK3hK8QgIZ5Dhe6O6FBnwYVJ0PyD/nRfUGD/zRscQYIJBRIwiS/YQHDfw1UIEgJBTbRhEe/CXABDBgGIAgVEjYBAggYqcbFBSReyJ0gRnwIAhMnzJbCDTeQmNNWHzLBhAsweFaABDzCeEUhE9zoggtJzLSXFS+8wKPVBBpUEsOQSXjggYZhZRHBlUrGV8kUSUQpZRQOHhWABTZcGcELIVaCgJQeRBFDDEj8+FBjOFhA5pWdndJAm28CgQIKEqR5SRgp6FACDnWSSSUqC/TpJwo/hLDCAlWcJYgZUnghwAtITGDooXZO8dATPzwaaQhKjGAECywQcYIPLfCwwgqdelpCCTaA9ZAUifwQqRKprtrqqy3ESusEtiIwBlVUIBECqiOoyqqrsBp77AWCUlXFBSxEuyoR1BYr6wQpyKlaFQRcUAIPJ5yAhA00GJAtKoEAACH5BAUEAGcALAIAAgAsACwAAAf/gGeCg4SFZlM3I0NHCjM5RSEvBUuFlZaXglBEGTMMnjIyCaImJgMzLAWYqpVMCq6dn6EJpAO1AxAdAquqIRk9ro2woKOlthAQDjsLu5UbGb6/wbHExscODhRczIISOzvPvq5DJQFnXEtLUloGKzm3yNcmH2HMJRQU3s89Rk67T0DwHID48MHLqhs57uHb4aHKNkFZGAxoQuBDgQJXVG3IkfCehYeFshC8WKCcpS0dNmxMeABkpSskAwT4QKkQiyMqVbZ0WWlLSZkBshSaIuKI0Q02eF7yAtSAAW2DgIiYegSFUkxPAjg1AGWQEyFCpoogcxXTVgECpAgq0QGskBZl/zFRQYtW6BkSHfJ2sBu30he6aM84KVIkr4e+mKY8WPyAiwoOhItIQHypymICBMgg4cCZA+VLXDBjdvJjyBDOWz5XAiOaQIEkpk2DUV1Jg20ND0jo1g2ANiEAB4IHb0KceG/fg4Qf0OCBOAgQZZAPwkAdw4MRz5+nll6mOgYDOpiIZyJGuqAF6BdAQcDEhXsa5sWkSF+Finv3RsxrSME/BZYzUSQhYEPIcYHAgQhgUMMZEXjgoAcf+VaACgh2dUYWDkahYUaqSVGBCiCq8J8gLWgYQwwr0KZBBSyqQAAhTpwYAxBAIPDZEzTQwGIFXRRSwoxAoIDCB4iR0cCRORpQCc0XIQiJwg8h7HQVGRfAcGQDKkRXCRRCQhlCCEkphcgFVR6pBSYYeBmCEiPgQM9DXKQgwQ1kVtmPKgh8yeYIRrAAw5mrbKFBBC9IMCeZRO7ywJ5G9EnECTq0pFYQQWgZAAw2RECooTfc8MRDThDBJwssPOqDDy3wsAISE0ygQwk4WGBBppteYJBLEpD66Amoprpqq6/GOqumL2BQlhU47Nqrqqy6WgKss9pQAaBxkYHACqjywCywz+IQgQa+BcGUCi/g8KoNF2AAxRVBPBQIACH5BAUEAGcALAIAAgAsACwAAAf/gGeCg4SFghJnTRtnPWdDIzZThpOUkzVPJxsZPT0KCjMzDAwyMglnRlA1lauEBR47OxmbnZ+ho6UJCSZDBqyVW0YUwrGznqCipLm6JgMeW76FAR05OcPEtMejyibMAwMzGNCCMBvl1cNNFlNXY6pfgjpCy94DEBAl0C9HR+bVLGK+oKCgV8/eClYXRIjYVy6GuEFUOJyxB8GBAwuVDAhRuPDIQ0M87Fl04IELJRJCNioM97GQipEJZEwxY4hIh5spNbScRMPBAAcdPlgp9KRIkZsdXuykxMLEBgQFCkgZVEMJB6NFQiytJOZD1AJOIHIYe7XKVkplvgYI8O4MjiFD/8YePEvJytq1Q80wIQF3CBW6le4GKCCIhGESKABXgrLWgIGpTSKTgKGYEhnHjrWUAMG5yZPKk6QYEEBazAjOnLuAnkSa9JQYTGIzWc26dQAXuHHTLlTjge8HApLkdqFq9yACyAk8QJGkeRIwxo8nN3DCg3UP0aUjL4DjepQs2bFoGK/ByYIo6GMgyG7lgPsDZLLEmB/jRHYD7w+YRBEDiH8y0WEg4AE6nSEBECgkqNRuUyywgICfnVFFgij88EMYu6XgoIMmnVHDChaGEIIOtAmQgoYL9ALRDyKGoMRqYiAg44nPEBKBi0qMMEJlXqiggoxQGSIFCzmOYAQqgFVQgbyPCCxAiWlGGsECCyztBAUNNCjp4xWVEHDklEScEMFOBzTQAJZK/rUKBmCecIIPLVQgzgMXwACDmViG5QsBRIT5Zgst8BCBAACaUUMNZnwRxgcqSHDDBXWa2YCa0IjBw5+BrrACEhPoUEIJOFhgQwQRvODoo3VWwOVHX8AAZ6acdvppqKOWKoGjkD5QxlZkvMCDprF6CqqopJrqaAqr0qVFChMEO6uoo75wwwOq0abFGSlcEIEFFrxAw1KBAAAh+QQFBABnACwCAAIALAAsAAAH/4BngoOEhUFiND4eRUdHQi4sF05BhZWWl2cAWRMdORQUOzsZGT09CgozFD5iAJiuhE4oRxsbOZ6go6WnMzMMDC5Tr5hcLSIis7W3oqSmqL4MMjI/wpVTTULGjbTKuafOvtEJGQbUgiodHULYxxsgZwVeX2BgZ16D4DIJ+iYv1DBFRdCtIwJF2BQg+fQlMGFiwqsUHDgERAckSzlBTobsMzFggARMUIZElNiBBaWLgpYkYcix4wNLUpIMERmxAcpKOFp2nLGl0gQSQEXavIlzwJkBECAAKUSlSROgJE4QveQCaVIIBQYBOAHCaZMRJ6caKpLUgYMhg6qAWNvVithLT//MmqUwRtALJkzWInmLiYLcDWTOBInhwgVevpgE5BjQAUGwKoULh0CM6cmHyx/GYEjCOclQypW0FBhdIEwED6g9OAF9iXQBKy1SewjD2lKA2wGcKInCO0qZ2oWW4A4wJUSM4zHMACcUZPgH48iVLxcUxIB1AwVYANmOou50QdcNfECCojyKLt8FCVgvAMqNH/B/UEnPhb0AKhp+hNifIn2VBwAKoAUZ++3HQ3oBAAigFEGwoMSDI1QxnRQEVEiAAILQMMKGI3y0HBQWEjDfGVpsaIQRLGixnAYsakCAFIIAYAGKLLCAQw2s1RDAAQew+AEhZNTIAhFE3MDaBxjwyCPqF4XAQOQJUL6EmBULYJDkAU9UMgYPUJ7gQwsYvpVFCgtUiYEG0hVihZdftsBDAzjeVIMBCKRAZpk9XRJAmzzwsIKRNxGAwKB2LhCYKw+46ecKSEygAjVdGFBBBSoMWueIrxSwaKMT6FCCBAbYc8YSS5whxRVQpNAADZOqUCkCbpVTRQlIcOopDjhYYEMEEbwgwQ0XXABDA6u2ugB6KI2BwASdllBCrrr26iuwwhLLagUB0DOVFg14+qwF0b4wbbDDrqpBnnx1QYANudqwq7i/kkvDB1gAV0MXUGigwgU33NDAAgKIsUWc1AQCADs=');
+    margin: 100px auto 20px auto;
+}
+.tp-please-wait > .tp-icon.tp-centered {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.tp-iframe-wrapper.no-width .tp-close,
+.tp-iframe-wrapper.no-height .tp-close,
+.tp-modal.no-width .tp-close,
+.tp-modal.no-height .tp-close {
+    display: none;
+}
+
+.tp-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.tp-banner > .tp-container-inner,
+.tp-banner > .tp-container-inner > iframe {
+  width: inherit !important;
+}
+</style><style type="text/css" id="qual_style-lgx"></style><style type="text/css" id="qual_style-lyy"></style><script type="text/javascript" src="./Your Videos on Vyond_files/analytics"></script><script type="text/javascript" src="./Your Videos on Vyond_files/analytics(1)"></script></head>
+<body class="en_US has-user">
+<script type="text/javascript">
+if (self !== top) {
+            jQuery('body').hide();
+    }
+</script>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXV7MD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<script type="text/javascript">
+        jQuery.extend(CCStandaloneBannerAdUI, {"actionshopSWF":"https:\/\/d3v4eglovri8yt.cloudfront.net\/animation\/66453a3ba2cc5e1b\/actionshop.swf","apiserver":"http:\/\/ga.vyond.com\/","clientThemePath":"https:\/\/d3v4eglovri8yt.cloudfront.net\/static\/b51fc9816191318d\/<client_theme>","userId":"0dEL5Gr6-Vss"});
+</script>
+
+<div class="page-container">
+
+
+<div class="site-header">
+    <div class="navbar site-nav site-nav--legacy" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="https://ga.vyond.com/yourvideos" title="Vyond">
+                      <img alt="Vyond" src="./Your Videos on Vyond_files/vyond_logo_legacy.png">
+                  </a>
+            </div>
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+<li class="dropdown">
+    <a class="dropdown-toggle" href="https://support.vyond.com/?_ga=2.55710635.1611712325.1632236792-1702393178.1630600287" data-toggle="dropdown" aria-expanded="false">Help<span class="dropdown-caret"></span></a>
+    <ul class="dropdown-menu dropdown-menu-help">
+
+        <li>
+            <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" onclick="zE.activate({hideOnClose: true});amplitudeTrackCtaHelp(&#39;quick_search&#39;);return false;">Quick Search</a>
+        </li>
+        <li>
+            <a href="https://support.vyond.com/" onclick="amplitudeTrackCtaHelp(&#39;help_center&#39;);" target="_blank">Help Center</a>
+        </li>
+        <li>
+            <a href="https://product.vyond.com/" onclick="amplitudeTrackCtaHelp(&#39;whats_new&#39;);" target="_blank">What’s New</a>
+        </li>
+    </ul>
+</li>
+
+<script>
+    $('.dropdown-menu-help').click(function(e) {
+        e.stopPropagation();
+    });
+</script>
+<li class="dropdown">
+    <a class="dropdown-toggle" href="https://app.vyond.com/v2/profile?_ga=2.22164795.1611712325.1632236792-1702393178.1630600287" data-toggle="dropdown" aria-expanded="false">
+        <span class="hidden-sm hidden-md hidden-lg">Your Account</span>
+        <div class="site-nav__profile-image">
+            <div class="badge-circle">JR</div>
+        </div><span class="dropdown-caret"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-user">
+        <li class="dropdown-user-profile">
+            <div class="dropdown-user-profile__display-name">
+                joshua rego            </div>
+            <div class="dropdown-user-profile__status">
+                Essential | <a href="https://www.vyond.com/pricing">Upgrade now</a>            </div>
+        </li>
+        <li class="divider"></li>
+        <li><a href="https://app.vyond.com/v2/profile">Profile Settings</a></li>
+        <li><a href="https://app.vyond.com/v2/users/list">Users</a></li>
+        <li><a href="https://app.vyond.com/v2/security">Security</a></li>
+        <li><a href="https://app.vyond.com/v2/subscription">Subscription</a></li>
+        <li class="divider"></li>
+        <li><a href="https://app.vyond.com/video/list" onclick="amplitudeTrackSwitchVideoMaker(&#39;Go to Vyond Studio&#39;)">Go to Vyond Studio</a></li>
+        <li class="divider"></li>
+        <li><a class="gtm-logout" href="https://ga.vyond.com/logoff">Log Out</a></li>
+    </ul>
+</li>
+
+<script>
+    $('.dropdown-menu-user').click(function(e) {
+        e.stopPropagation();
+    });
+</script>
+                </ul>
+            </div>
+    </div>
+</div>
+
+<script>
+    jQuery('.logout-link').click(function(){
+        amplitudeTrackEvent(AMPLITUDE_EVENT.LOGOUT, null);
+    });
+    </script>
+
+<!-- END OF HEADER -->
+
+<div class="free-trial-banner">
+    <span class="glyph-pro glyph-warning-sign"></span>
+    All good things must come to an end. This page will be retired by the end of September 2021. Please ensure you have copied all required videos to Vyond Studio before then. For more information please contact <a href="mailto:support@vyond.com">support@vyond.com</a></div>
+<script>
+    (function(){
+        // Log last upsell date.
+        $('.free-trial-banner a[href$=\"pricing\"]').click(function(){
+            SetCookie('last_upsell_date', moment().format('MM/DD/YYYY'));
+        });
+    }());
+</script>
+
+<div class="my-video-container">
+<script src="./Your Videos on Vyond_files/70x3iky0kr.jsonp" async=""></script>
+<script src="./Your Videos on Vyond_files/E-v1.js.download" async=""></script>
+<script>
+window._wq = window._wq || [];
+_wq.push({ id: '70x3iky0kr', onReady: function(video) {
+    video.bind('play', function() {
+        amplitudeTrackEvent(AMPLITUDE_EVENT.VM5_START_IN_APP_VIDEO, {
+            page_url: window.location.href,
+            wistia_id: '70x3iky0kr',
+            message: 'Make Videos Faster'
+        });
+
+        return video.unbind;
+    })
+}});
+</script>
+
+<div class="vm5-banner">
+    <div class="container">
+        <div class="vm5-banner__video-wrapper">
+            <img src="./Your Videos on Vyond_files/laptop.png" alt="">
+            <div class="vm5-banner__video">
+                <div class="wistia_responsive_padding" style="padding:56.46% 0 0 0;position:relative;">
+                    <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+                        <span class="wistia_embed wistia_async_70x3iky0kr popover=true popoverAnimateThumbnail=true videoFoam=true wistia_embed_initialized" style="display:inline-block;height:100%;position:relative;width:100%" id="wistia-70x3iky0kr-1"><div id="wistia_41.thumb_container" class="wistia_click_to_play" style="position: relative; height: 221.938px; width: 393.109px;"><div id="wistia_71.thumbnail" tabindex="0" style="cursor: pointer; display: block; height: 221.938px; overflow: hidden; outline: none; position: relative; width: 393.094px;" class=""><div id="wistia_87.big_play_button_background" style="height: 81px; position: absolute; width: 127px; z-index: 1; background-color: rgba(46, 59, 67, 0.76); left: 133px; top: 70px; transition: all 80ms ease-out 0s; mix-blend-mode: normal;"></div><div id="wistia_87.big_play_button_graphic" tabindex="0" role="button" aria-label="Play" style="background: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH8AAABRCAYAAAD7G3lVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAATFJREFUeNrs22FtwkAYx+F2QcAkMAfgYBKQwBxMQh1MwiRQB+CgEoaDzkG5S1a+E5IF+n+e5D4ve3+7N0s4mgYAAAAAAAAAAAAA7jFN06cp5MavjuWsTSMzfjWWszORzPizQzmvJpMZ3xYIj28LiG8LpMeffdsCufGrn3LeTS0z/uzLFsiNbwuEx7cFxL9ugY1pZsafdSaaG78abIHc+LaA+MvbAi/+XG5Sww9L2QLtEm/+P/2oUzkfbduexc+LX51L/DdrP09fzvaZf4GVhjf7/Vv3vVFk/bfvMUhg/PoAZG+6efE9Aw+MP/oCSGZ8tz0wvtseGn9w2zPjdyaXF99n9aHx3fbA+G57aHy3PTC+N/mh8b3DD4zvtofGd9tD47vtAAAAAAAAAAAAADymiwADAOSj1JBfF8xMAAAAAElFTkSuQmCC&quot;) 0px 0px / 127px 81px no-repeat transparent; cursor: pointer; display: block; height: 81px; outline: none; position: absolute; width: 127px; z-index: 1; left: 133px; top: 70px;" class=""></div><img id="wistia_71.thumbnail_img" alt="Wistia video thumbnail" src="./Your Videos on Vyond_files/b16ba537edb5a2b3014c1f4c8bd48e0e.webp" style="border: 0px; display: block; float: none; height: 221.938px; margin: 0px; max-height: none; max-width: none; padding: 0px; position: absolute; width: 393.094px; left: 0px; top: 0px;"></div></div></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="vm5-banner__main">
+            <h1 class="vm5-banner__main__title">
+                Make Videos <b>Faster</b>            </h1>
+            <div class="vm5-banner__main__content">
+                The all-new Vyond Studio is fast, intuitive and already included with your subscription! No registration. No cost.            </div>
+            <ul class="vm5-banner__main__bullets row">
+                <li class="col-sm-4">
+                    <span class="vm5-banner__main__bullet__icon vm5-banner__main__bullet__icon--preview"></span>
+                    Faster Previews                </li>
+                <li class="col-sm-4">
+                    <span class="vm5-banner__main__bullet__icon vm5-banner__main__bullet__icon--props"></span>
+                    Easily Branded Props                </li>
+                <li class="col-sm-4">
+                    <span class="vm5-banner__main__bullet__icon vm5-banner__main__bullet__icon--timeline"></span>
+                    Expanded Timeline                </li>
+            </ul>
+            <div class="vm5-banner__cta">
+                <a class="btn btn-orange btn-lg text-uppercase" href="https://app.vyond.com/videos/list" target="_blank" onclick="amplitudeTrackEvent(AMPLITUDE_EVENT.VM5_LEGACY_BANNER_CTA, { trigger: &#39;start_now&#39; })">
+                    Start Now                </a>
+                <a class="btn btn-default btn-lg text-uppercase" href="https://product.vyond.com/" target="_blank" onclick="amplitudeTrackEvent(AMPLITUDE_EVENT.VM5_LEGACY_BANNER_CTA, { trigger: &#39;whats_new&#39; })">
+                    What’s New                </a>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-header">
+        <h1 class="h2">
+            <ol class="breadcrumb video-breadcrumb">
+                <li class="base" data-folder-id="" data-category="all" data-page="1" data-sort-by="lastmod" data-status="" data-keyword="" data-folder-name="">Your Videos</li>
+            </ol>
+        </h1>
+    </div>
+
+    <div class="row" id="video-listing">
+        <div class="col-md-4 col-md-push-8">
+            <div id="videos-nav" class="list-group folder-list folder-access">
+                <div class="list-group-item folder-item active droppable" data-folder-id="" data-category="all" data-page="1" data-sort-by="lastmod" data-status="" data-keyword="" data-folder-name="">
+                    <span class="caret-container">
+                        <span class="caret"></span>
+                    </span>
+                    <span class="title folder-name">Your Videos</span>
+                    (<span class="video-count count-all">23</span>)
+                </div>
+
+                <div id="videos-folders-nav" class="list-group-item sub-folder-list"></div>
+
+                <div class="list-group-item folder-item" style="display:none" data-page="1" data-status="" data-category="folders/sharedwith" data-sort-by="lastmod">
+                    <span class="title folder-name">Shared with you</span>
+                    (<span class="video-count count-sharedwith">0</span>)
+                </div>
+
+                <div class="list-group-item folder-item" data-category="trash" data-sort-by="lastmod">
+                    <span class="title folder-name">Trash</span>
+                    (<span class="video-count count-trash">0</span>)
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-md-pull-4">
+            <input type="hidden" name="ct" value="W42ANOfNAJAYV_dvt8hC1Q58v+9ZCixZMcBGgYN5gPRrbemTgXW9hUPt07lLh+jkV_cjmL4g67XnppltiFx8KkcLVNRn6VPzFlbgV3j3aFj7IVbJhQ4sZ0Kyly6Ua7MdY8DpyLekS2YBHs0t0Tv0OVlT8fneKF88CWcPWclOarQhGJIPmIUkqLyvZrP_Dl88al44p9EFAOz6capAvwDjiS6iCKUoqo_NkBpf04CyU=">
+
+<div class="grid video-listing-grid hide-folders folder-access" id="video-listing-grid">
+    <div class="video-list-header">
+        <div class="video-status-filter pull-right">
+            Show:            <a class="link-secondary active" data-status="">All</a> /
+            <a class="link-secondary" data-status="draft">Draft</a> /
+            <a class="link-secondary" data-status="published">Private</a>
+        </div>
+    </div>
+
+    <div class="grid-viewport video-listing" id="videos">
+        <table class="table table-hover table-generic">
+            <thead>
+                <tr>
+                    <td class="td-thumbnail"></td>
+                    <td class="td-title">Video Title</td>
+                    <td class="td-date">Last Modified</td>
+                    <td class="td-tools hidden-mobile"></td>
+                </tr>
+            </thead>
+            <tbody>
+
+<tr id="video-0kroHxgNHZNc" class="video draggable-row ui-draggable" data-drag-video="0kroHxgNHZNc" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/29014098.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">jjvlogs's Animation</span>
+        </div>
+        <span class="duration text-note">0:04</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">14 Jul 2018 | 02:39:36</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0kroHxgNHZNc" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0kroHxgNHZNc">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0jbxs3AWhqZo" class="video draggable-row ui-draggable" data-drag-video="0jbxs3AWhqZo" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/29014048.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">boris oooooooo</span>
+        </div>
+        <span class="duration text-note">0:55</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">14 Jul 2018 | 01:33:50</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0jbxs3AWhqZo" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0jbxs3AWhqZo">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0osBQUd2r4gw" class="video draggable-row ui-draggable" data-drag-video="0osBQUd2r4gw" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/29013395.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">xcvbhnjm</span>
+        </div>
+        <span class="duration text-note">0:50</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">14 Jul 2018 | 01:10:52</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0osBQUd2r4gw" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0osBQUd2r4gw">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0pEsDmLeyD1k" class="video draggable-row ui-draggable" data-drag-video="0pEsDmLeyD1k" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/29013333.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">jjvlogs's Animation</span>
+        </div>
+        <span class="duration text-note">0:03</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">13 Jul 2018 | 14:19:44</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0pEsDmLeyD1k" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0pEsDmLeyD1k">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0Mwmsrbi-FLA" class="video draggable-row ui-draggable" data-drag-video="0Mwmsrbi-FLA" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/29012130.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">bikew</span>
+        </div>
+        <span class="duration text-note">0:45</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">12 Jul 2018 | 23:55:24</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0Mwmsrbi-FLA" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0Mwmsrbi-FLA">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-07zoXiBACo5o" class="video draggable-row ui-draggable" data-drag-video="07zoXiBACo5o" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/29011773.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">kkkjkjkj</span>
+        </div>
+        <span class="duration text-note">0:03</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">12 Jul 2018 | 18:19:16</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/07zoXiBACo5o" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="07zoXiBACo5o">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0cZLa8eeNEbo" class="video draggable-row ui-draggable" data-drag-video="0cZLa8eeNEbo" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/29011760.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">jjvlogs's Animation</span>
+        </div>
+        <span class="duration text-note">0:13</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">12 Jul 2018 | 18:06:10</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0cZLa8eeNEbo" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0cZLa8eeNEbo">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0rn_MbxPCggM" class="video draggable-row ui-draggable" data-drag-video="0rn_MbxPCggM" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/29011699.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">b</span>
+        </div>
+        <span class="duration text-note">1:18</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">12 Jul 2018 | 17:54:39</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0rn_MbxPCggM" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0rn_MbxPCggM">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-02fKd6fsbX18" class="video draggable-row ui-draggable" data-drag-video="02fKd6fsbX18" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/29011346.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">fgbhn</span>
+        </div>
+        <span class="duration text-note">0:15</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">12 Jul 2018 | 14:21:19</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/02fKd6fsbX18" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="02fKd6fsbX18">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-02W1xV7gVmK0" class="video draggable-row ui-draggable" data-drag-video="02W1xV7gVmK0" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/29007582.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">cfgbhn</span>
+        </div>
+        <span class="duration text-note">0:05</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">12 Jul 2018 | 14:00:08</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/02W1xV7gVmK0" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="02W1xV7gVmK0">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0z8nGtxnlbe4" class="video draggable-row ui-draggable" data-drag-video="0z8nGtxnlbe4" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/28999343.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">jjvlogs's Animation</span>
+        </div>
+        <span class="duration text-note">1:10</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">6 Jul 2018 | 12:15:12</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0z8nGtxnlbe4" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0z8nGtxnlbe4">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0k9BLLMsCS6A" class="video draggable-row ui-draggable" data-drag-video="0k9BLLMsCS6A" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/28995346.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">grounded 222222</span>
+        </div>
+        <span class="duration text-note">3:02</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">5 Jul 2018 | 16:17:10</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0k9BLLMsCS6A" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0k9BLLMsCS6A">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0bHA6Ogq7N_g" class="video draggable-row ui-draggable" data-drag-video="0bHA6Ogq7N_g" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/28993923.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">Boris is bored</span>
+        </div>
+        <span class="duration text-note">1:20</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">5 Jul 2018 | 16:03:12</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0bHA6Ogq7N_g" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0bHA6Ogq7N_g">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0pFq-HUiNv3E" class="video draggable-row ui-draggable" data-drag-video="0pFq-HUiNv3E" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/28993913.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">macdonnals</span>
+        </div>
+        <span class="duration text-note">0:43</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">5 Jul 2018 | 15:51:18</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0pFq-HUiNv3E" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0pFq-HUiNv3E">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0NYfNAr_m31o" class="video draggable-row ui-draggable" data-drag-video="0NYfNAr_m31o" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/28995171.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">grounded</span>
+        </div>
+        <span class="duration text-note">1:47</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">4 Jul 2018 | 13:25:24</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0NYfNAr_m31o" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0NYfNAr_m31o">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0f3v56Xh5dmo" class="video draggable-row ui-draggable" data-drag-video="0f3v56Xh5dmo" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/28995075.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">ooooooo</span>
+        </div>
+        <span class="duration text-note">1:07</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">4 Jul 2018 | 11:59:41</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0f3v56Xh5dmo" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0f3v56Xh5dmo">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0GoVK7DrzSK8" class="video draggable-row ui-draggable" data-drag-video="0GoVK7DrzSK8" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/28993721.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">jjvlogs's Animation</span>
+        </div>
+        <span class="duration text-note">0:04</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">3 Jul 2018 | 19:22:10</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0GoVK7DrzSK8" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0GoVK7DrzSK8">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0ewqo3CaeH4A" class="video draggable-row ui-draggable" data-drag-video="0ewqo3CaeH4A" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/28989674.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">Caillou Gets Grounded 2</span>
+        </div>
+        <span class="duration text-note">2:17</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">2 Jul 2018 | 20:30:06</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0ewqo3CaeH4A" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0ewqo3CaeH4A">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-00Q5UaMfhBY0" class="video draggable-row ui-draggable" data-drag-video="00Q5UaMfhBY0" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/28989636.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">caillou gets grounded</span>
+        </div>
+        <span class="duration text-note">0:22</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">1 Jul 2018 | 23:02:17</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/00Q5UaMfhBY0" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="00Q5UaMfhBY0">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+
+<tr id="video-0MraCmxPIthw" class="video draggable-row ui-draggable" data-drag-video="0MraCmxPIthw" data-drag-video-current-folder="">
+    <td class="td-thumbnail">
+        <div class="status-container">
+            <div class="vthumb vthumb-64">
+                <div class="vthumb-clip">
+                    <div class="vthumb-clip-inner"><span class="valign"></span><img src="./Your Videos on Vyond_files/28989586.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="status draft">
+                <span class="draft-text">Draft</span>
+                <span class="password-protected-text">Password-Protected</span>
+                <span class="private-text">Private</span>
+            </div>
+        </div>
+    </td>
+    <td class="td-title">
+        <div>
+            <span class="title">jjvlogs's Animation</span>
+        </div>
+        <span class="duration text-note">0:04</span>
+    </td>
+    <td class="td-date">
+        <div class="datetime">
+                            <div class="grid-row-cell datetime">1 Jul 2018 | 21:48:12</div>
+                    </div>
+    </td>
+    <td class="td-tools hidden-mobile">
+        <div class="tools-container">
+                                <div class="btn-group btn-group-compact pull-right">
+                        
+                        <a class="btn btn-link dimmed" data-toggle="dropdown">
+                            <span class="glyph-pro glyph-more text-larger"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                                                            <li>
+                                    <a href="https://app.vyond.com/video/migrate/0MraCmxPIthw" data-action="video-migrate-vm5">
+                                        <span class="glyph-pro glyph-flash"></span> Create a Copy in Vyond Studio                                    </a>
+                                </li>
+                                                        <li>
+                                <a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-action="video-delete" data-video="0MraCmxPIthw">
+                                    <span class="glyph-pro glyph-bin"></span> Delete                                </a>
+                            </li>
+                                                    </ul>
+                    </div>
+                                    </div>
+    </td>
+</tr>
+            </tbody>
+        </table>
+    </div>
+
+<div class="go-pagination" data-target="#video-listing-grid" data-end-point="/ajax/listmovies">
+    <ul>
+        <li class="disabled"><a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-page="1">&lt;&lt;</a></li>
+        <li class="disabled"><a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-page="1">&lt;</a></li>
+        <li>
+            <form class="go-pagination-form" data-max-page="2">
+                Page <input class="form-control" type="text" name="page" value="1"> of <span class="go-pagination-max">2</span>
+            </form>
+        </li>
+        <li class=""><a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-page="2">&gt;</a></li>
+        <li class=""><a href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-page="2">&gt;&gt;</a></li>
+    </ul>
+</div>
+
+</div>
+
+<div id="autosave-overlay" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title">Your video was autosaved</h3>
+            </div>
+            <div class="modal-body">
+                <span class="autosave-message"></span>
+            </div>
+            <div class="modal-footer">
+                <button class="load-manualsave btn btn-default text-uppercase">Manually saved</button>
+                <button class="load-autosave btn btn-default btn-orange text-uppercase">Load autosaved</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script type="text/javascript">
+    var _cio = _cio || [];
+    (function() {
+        var a,b,c;a=function(f){return function(){_cio.push([f].
+        concat(Array.prototype.slice.call(arguments,0)))}};b=["load","identify",
+        "sidentify","track","page"];for(c=0;c<b.length;c++){_cio[b[c]]=a(b[c])};
+        var t = document.createElement('script'),
+        s = document.getElementsByTagName('script')[0];
+        t.async = true;
+        t.id    = 'cio-tracker';
+        t.setAttribute('data-site-id', '0338e55d5a2b9b9bdd26');
+        t.src = 'https://assets.customer.io/assets/track.js';
+        s.parentNode.insertBefore(t, s);
+    })();
+</script>
+<script type="text/javascript">
+    _cio.identify({"id":"GA_12218194","email":"joshuamartinrego05@gmail.com","encrypted_email":"0Sqfe7q8JPtZ-U-kT5o8MLaDV_IiwozR5F7Chz3bKPLQ~","created_at":1530412412,"username":"jjvlogs","rolepower":23,"role":"gopublish","is_deleted":false,"unsubscribed":false,"is_plus":4,"confirmation_code":"","plan_name":"gopublish","expiry_ts":"1657364400","has_subscription":true,"duration":"1 year","last_login_ts":1547610921,"last_active_ts":1632236856,"receive_newsletter":true});
+</script>
+<!-- modals -->
+<div class="modal" id="export-details" role="dialog" aria-hidden="true" style="z-index:1050;">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header has-back">
+        <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
+        <button class="modal-back" title="Back" data-dismiss="modal" aria-hidden="true">&lt;</button>
+        <h3 class="modal-title">Video formats comparison</h3>
+    </div>
+    <div class="modal-body">
+
+            <table id="video-comparison-table">
+                <tbody><tr>
+                    <td style="width:50px;"></td>
+                    <td style="width:70px;"></td>
+                    <td style="width:140px;"><div class="head">360p</div></td>
+                    <td style="width:140px;"><div class="head">HD 720p</div></td>
+                    <td style="width:140px;"><div class="head">Full HD 1080p</div></td>
+                </tr>
+                <tr>
+                    <td rowspan="4" style="border-right:1px solid #ccc"><h5>Video</h5></td>
+                    <td style="text-align:left;"><strong>Resolution</strong></td>
+                    <td><strong>640 x 360</strong></td>
+                    <td><strong>1280 x 720</strong></td>
+                    <td><strong>1920 x 1080</strong></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;">Encoding</td>
+                    <td>H.264</td>
+                    <td>H.264</td>
+                    <td>H.264</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;">Bit rate</td>
+                    <td>3,200 kbps</td>
+                    <td>3,200 kbps</td>
+                    <td>3,200 kbps</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;">Frame rate</td>
+                    <td>24 frames / sec</td>
+                    <td>24 frames / sec</td>
+                    <td>24 frames / sec</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td rowspan="4" style="border-right:1px solid #ccc"><h5>Audio</h5></td>
+                    <td style="text-align:left;">Encoding</td>
+                    <td>AAC</td>
+                    <td>AAC</td>
+                    <td>AAC</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;">Sampling rate</td>
+                    <td>44.1 kHz</td>
+                    <td>44.1 kHz</td>
+                    <td>44.1 kHz</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;"><strong>Bit rate</strong></td>
+                    <td><strong>192 kbps</strong></td>
+                    <td><strong>192 kbps</strong></td>
+                    <td><strong>192 kbps</strong></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;">Channels</td>
+                    <td>Stereo</td>
+                    <td>Stereo</td>
+                    <td>Stereo</td>
+                </tr>
+            </tbody></table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+    </div>
+    </div>
+</div>
+
+<script>
+var videoCounts = {"all":"23","trash":"0"};
+
+// Folder counts. To be updated by myvideos.js.
+var folderCounts = 0;
+
+</script>
+
+<script src="./Your Videos on Vyond_files/video.js.gz.js.download"></script>
+<script src="./Your Videos on Vyond_files/myvideos.js.gz.js.download"></script>
+
+<div id="trial-unlock-overlay" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title">Subscribe to unlock more features</h3>
+            </div>
+
+            <div class="modal-body text-center">
+                <div class="trial-upsell trial-upsell-unlock">
+                    <h2><img src="./Your Videos on Vyond_files/lock.png" alt=""> Unlock these features now</h2>
+
+                    <p class="text-feature">
+                        Remove the full screen watermark<br>
+                        Download up to 1080P (Full HD)<br>
+                        One-click publish                    </p>
+
+                    <div class="text-muted">
+                        <div>Publish to <img class="logo" src="./Your Videos on Vyond_files/logo_ga.png" alt=""> or export to</div>
+                        <div>
+                            <img class="logo-partner" src="./Your Videos on Vyond_files/logo_youtube20.png" alt="">
+                            <img class="logo-partner" src="./Your Videos on Vyond_files/logo_wistia20.png" alt="">
+                            <img class="logo-partner" src="./Your Videos on Vyond_files/logo_vidyard20.png" alt="">
+                        </div>
+                        <div>... and many more!</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <a class="btn btn-orange" href="https://ga.vyond.com/business/videoplans?hook=preview.site">View Plans &amp; Pricing</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="trial-expired-overlay" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="left: auto;margin-right: auto;margin-left: auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title">
+                    Your plan has expired!                </h3>
+            </div>
+            <div class="modal-body text-center">
+                <img style="width: 100%;" src="./Your Videos on Vyond_files/expired.png" alt="">
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-orange" href="https://www.vyond.com/pricing">View Plans &amp; Pricing</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-alpha-vm5" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h3 class="modal-title">Before You Head To Vyond Studio</h3>
+            </div>
+            <div class="modal-body">
+                <img class="center-block img-responsive" src="./Your Videos on Vyond_files/video_copy.png" srcset="https://d3v4eglovri8yt.cloudfront.net/static/b51fc9816191318d/go/img/vm5_alpha/video_copy.png 1x, https://d3v4eglovri8yt.cloudfront.net/static/b51fc9816191318d/go/img/vm5_alpha/video_copy_2x.png 2x"><br>
+                <p>
+                    There may be content in this video that is not compatible with Vyond Studio (e.g. imported videos, PPT files, retired content, retired music).                </p>
+                <p>
+                    Your original video will not be impacted by making this copy to Vyond Studio. Videos created and edited in Vyond Studio cannot be copied to Legacy Video Maker.                </p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-default text-uppercase" href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" data-dismiss="modal">Cancel</a>
+                <a class="btn btn-orange text-uppercase proceed-migration" href="https://ga.vyond.com/yourvideos?_ga=2.96413465.448801913.1630173172-886475028.1626291397#" target="_blank">Proceed</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- FOOTER -->
+
+<footer class="site-footer">
+    <div class="container">
+        <a href="https://www.vyond.com/terms">Terms of Service</a> | <a href="https://www.vyond.com/privacy">Privacy Policy</a> | <a href="https://www.vyond.com/cookies">Cookie Policy</a>
+    </div>
+</footer>
+
+
+<div id="studio_container" style="display: none;">
+    <div id="studio_holder"><!-- Full Screen Studio -->
+        <div style="top: 50%; position: relative;">
+            You can't use Vyond because Flash might be disabled. <a href="https://get.adobe.com/flashplayer/">Enable Flash</a>.
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- END OF PAGE STRUCTURE -->
+
+
+
+<div id="offer_container">
+</div>
+<script type="text/javascript">
+    </script>
+
+<script type="text/javascript">
+
+</script>
+
+
+
+<script type="text/javascript" id="">var _vyccq=window._vyccq||[];</script>
+<script type="text/javascript" id="" src="./Your Videos on Vyond_files/consent"></script><style id="wistia_22_style" type="text/css" class="wistia_injected_style">
+@font-face {
+font-family: 'WistiaPlayerInterNumbersSemiBold';
+font-feature-settings: 'tnum' 1;
+src: url(data:application/x-font-woff;charset=utf-8;base64,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);
+}
+</style><div role="dialog" id="wistia-70x3iky0kr-1_popover_container" aria-modal="true" aria-label="Vyond Studio - Faster, Richer, Better (Race car)"><div id="wistia-70x3iky0kr-1_popover" class="wistia_popover_embed" style="height: 580px; width: 1031px; position: absolute; top: 0px; left: -99999px;"><div id="wistia_chrome_23" class="w-chrome" tabindex="-1" style="display: inline-block; height: 580px; line-height: normal; margin: 0px; padding: 0px; position: relative; vertical-align: top; width: 1031px; zoom: 1; outline: none; overflow: hidden; box-sizing: content-box;"><div id="wistia_grid_53_wrapper" style="display: block; width: 1031px; height: 580px;"><div id="wistia_grid_53_above" style="height: 0px; font-size: 0px; line-height: 0px;"> </div><div id="wistia_grid_53_main" style="width: 1031px; left: 0px; height: 580px; margin-top: 0px;"><div id="wistia_grid_53_behind"></div><div id="wistia_grid_53_center" style="width: 100%; height: 100%;"><div class="w-video-wrapper w-css-reset" style="height: 100%; position: absolute; top: 0px; width: 100%; opacity: 1; background-color: rgb(0, 0, 0);"><video id="wistia_simple_video_101" crossorigin="anonymous" poster="https://fast.wistia.com/assets/images/blank.gif" aria-label="Video" defaultplaybackrate="1" src="blob:https://ga.vyond.com/c3ba6999-af3e-4c03-a77e-b035d76ad42c" controlslist="nodownload" playsinline="" preload="none" type="video/m3u8" x-webkit-airplay="allow" style="background: transparent; display: block; height: 100%; max-height: none; max-width: none; position: static; visibility: visible; width: 100%; object-fit: fill;"></video></div><div class="w-ui-container" style="height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; opacity: 1;"><div class="w-vulcan-v2 w-css-reset" id="w-vulcan-v2-52" style="box-sizing: border-box; cursor: default; height: 100%; left: 0px; position: absolute; visibility: visible; top: 0px; width: 100%;"><div class="w-vulcan--background w-css-reset" style="height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"><div class="w-css-reset" data-handle="statusBar"></div><div class="w-css-reset" data-handle="backgroundFocus"><button aria-label="Play Video" class="w-css-reset w-vulcan-v2-button" tabindex="0" style="width: 0px; height: 0px; pointer-events: none;"></button></div><div class="w-css-reset" data-handle="thumbnail"><div><div class="w-css-reset" style="height: 100%; left: 0px; opacity: 1; position: absolute; top: 0px; width: 100%; display: block;"><img class="w-css-reset" srcset="https://embedwistia-a.akamaihd.net/deliveries/b16ba537edb5a2b3014c1f4c8bd48e0e.webp?image_crop_resized=640x360 320w, https://embedwistia-a.akamaihd.net/deliveries/b16ba537edb5a2b3014c1f4c8bd48e0e.webp?image_crop_resized=640x360 640w, https://embedwistia-a.akamaihd.net/deliveries/b16ba537edb5a2b3014c1f4c8bd48e0e.webp?image_crop_resized=960x540 960w, https://embedwistia-a.akamaihd.net/deliveries/b16ba537edb5a2b3014c1f4c8bd48e0e.webp?image_crop_resized=1280x720 1280w, https://embedwistia-a.akamaihd.net/deliveries/b16ba537edb5a2b3014c1f4c8bd48e0e.webp?image_crop_resized=1920x1080 1920w, https://embedwistia-a.akamaihd.net/deliveries/b16ba537edb5a2b3014c1f4c8bd48e0e.webp?image_crop_resized=1920x1080 3840w" src="./Your Videos on Vyond_files/b16ba537edb5a2b3014c1f4c8bd48e0e(1).webp" alt="Video Thumbnail" style="height: 580px; left: 0px; position: absolute; top: 0px; width: 1031px; clip: auto; display: block; border-width: 0px; border-style: solid; border-color: rgb(0, 0, 0); box-sizing: content-box;"></div></div></div></div><div aria-live="polite" class="w-vulcan--aria-live w-css-reset" aria-atomic="true" style="position: absolute; left: -99999em;"></div><div class="w-vulcan-overlays-table w-css-reset" style="display: table; pointer-events: none; position: absolute; width: 100%;"><div class="w-vulcan-overlays--left w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 0px;"><div class="w-css-reset" style="height: 543px;"></div></div><div class="w-vulcan-overlays--center w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 100%;"><div class="w-css-reset" style="height: 543px;"><div class="w-css-reset" data-handle="bigPlayButton" style="pointer-events: auto;"><div class="w-bpb-wrapper w-css-reset w-css-reset-tree" style="display: block; left: calc(50%); margin-left: -67.1224px; margin-top: -42.9583px; position: absolute; top: calc(50%);"><button class="w-big-play-button w-css-reset-button-important w-vulcan-v2-button" aria-label="Play Video: Vyond Studio - Faster, Richer, Better (Race car)" style="cursor: pointer; height: 85.9167px; box-shadow: none; width: 134.245px;"><div style="background: rgb(46, 59, 67); display: block; left: 0px; height: 85.9167px; mix-blend-mode: darken; position: absolute; top: 0px; width: 134.245px;"></div><div style="background-color: rgba(46, 59, 67, 0.7); height: 85.9167px; left: 0px; position: absolute; top: 0px; transition: background-color 150ms ease 0s; width: 134.245px;"></div><svg x="0px" y="0px" viewBox="0 0 125 80" enable-background="new 0 0 125 80" focusable="false" alt="" style="fill: rgb(255, 255, 255); height: 85.9167px; left: 0px; stroke-width: 0px; top: 0px; width: 100%; position: absolute;"><rect fill-rule="evenodd" clip-rule="evenodd" fill="none" width="125" height="80"></rect><polygon fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" points="53,22 53,58 79,40"></polygon></svg></button></div></div><div class="w-css-reset" data-handle="clickForSoundButton" style="pointer-events: auto;"><div class="w-css-reset w-css-reset-tree" data-handle="click-for-sound-backdrop" style="display: none; height: 100%; left: 0px; pointer-events: auto; position: absolute; top: 0px; width: 100%;"><button aria-label="Click for sound" class="w-vulcan-v2-button" style="background: rgba(0, 0, 0, 0.8); border: 2px solid transparent; border-radius: 50%; cursor: pointer; height: 56.3828px; width: 56.3828px; line-height: 56.3828px; outline: none; pointer-events: auto; position: absolute; right: 22.1641px; text-align: left; top: 22.1641px;"><svg viewBox="0 0 237 237"><style>
+      @keyframes VOLUME_SMALL_WAVE_FLASH {
+          0% { opacity: 0; }
+         33% { opacity: 1; }
+         66% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+
+      @keyframes VOLUME_LARGE_WAVE_FLASH {
+          0% { opacity: 0; }
+         33% { opacity: 1; }
+         66% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+
+      .volume__small-wave {
+        animation: VOLUME_SMALL_WAVE_FLASH 2s infinite;
+        opacity: 0;
+      }
+
+      .volume__large-wave {
+        animation: VOLUME_LARGE_WAVE_FLASH 2s infinite .3s;
+        opacity: 0;
+      }
+    </style><polygon fill="white" points="88 107 65 107 65 131 89 131 112 154 112 84"></polygon><g fill="none" stroke="white" stroke-width="10" stroke-linecap="round"><path class="volume__small-wave" d="M 142 86 C 151 107 151 130 142 151"></path><path class="volume__large-wave" d="M 165 74 C 178 97 178 140 165 163"></path></g></svg></button></div></div><div class="w-css-reset" data-handle="playPauseNotifier" style="pointer-events: auto;"><div class="w-play-pause-notifier" style="background: rgba(0, 0, 0, 0.6); border-radius: 50%; height: 150.354px; left: 50%; pointer-events: none; position: absolute; opacity: 0; top: 50%; transform: translate(-50%, -50%) scale(0.8); transition: opacity 0.8s ease 0s, transform 0.8s ease 0s; width: 150.354px;"><div style="height: 85.9167px; left: 50%; pointer-events: none; position: absolute; top: 50%; transform: translate(-50%, -50%); width: 53.6979px;"><div style="height: 100%; width: 100%;"><div style="display: block; height: 100%; width: 100%;"><svg x="0px" y="0px" viewBox="0 0 10 12" enable-background="new 0 0 10 12" focusable="false" class="w-css-reset w-css-reset-tree" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;"><g><rect x="0" y="0" width="3.5" height="12"></rect><rect x="6.5" y="0" width="3.5" height="12"></rect></g></svg></div><div style="display: none; height: 100%; width: 100%;"><svg x="0px" y="0px" viewBox="0 0 10 12" enable-background="new 0 0 10 12" focusable="false" class="w-css-reset w-css-reset-tree" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;"><polygon points="11.556,7.5 0,15 0,0"></polygon></svg></div></div></div></div></div><div class="w-css-reset" data-handle="playPauseLoading" style="pointer-events: auto;"><div class="w-css-reset w-css-reset-tree" style="height: 100%; left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"><button aria-label="Play Video" class="w-vulcan-v2-button" style="background: rgba(0, 0, 0, 0.6); border: 0px; border-radius: 50%; cursor: pointer; display: none; height: 150.354px; left: 50%; margin: 0px; padding: 0px; pointer-events: auto; position: absolute; opacity: 0; outline: none; top: 50%; transform: translate(-50%, -50%) scale(0.8); transition: opacity 200ms ease 0s, transform 600ms ease 0s; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 150.354px;"><div style="box-sizing: border-box; height: 100%; padding: 50.7445px 50.7445px 50.7445px 62.0211px;"><div style="height: 100%; width: 100%;"><div style="display: none; height: 100%; width: 100%;"><svg x="0px" y="0px" viewBox="0 0 11.556 16" enable-background="new 0 0 11.556 16" focusable="false" class="w-css-reset w-css-reset-tree" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;"><g><rect x="0" y="0" width="3.5" height="12"></rect><rect x="6.5" y="0" width="3.5" height="12"></rect></g></svg></div><div style="display: block; height: 100%; width: 100%;"><svg x="0px" y="0px" viewBox="0 0 11.556 16" enable-background="new 0 0 11.556 16" focusable="false" class="w-css-reset w-css-reset-tree" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;"><polygon points="11.556,7.5 0,15 0,0"></polygon></svg></div></div></div></button></div></div><div class="w-css-reset" data-handle="annotationOverlay" style="pointer-events: auto;"><div><div style="position: absolute; display: flex; flex-direction: column; pointer-events: none; max-width: 50%; width: 100%; align-items: flex-start;"></div><div style="position: absolute; display: flex; flex-direction: column; pointer-events: none; max-width: 50%; width: 100%; right: 0px; align-items: flex-end; margin-top: 0px;"></div></div></div></div></div><div class="w-vulcan-overlays--right w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 0px;"><div class="w-css-reset" style="height: 543px;"></div></div></div><div class="w-bottom-bar w-css-reset" style="bottom: 0px; border-collapse: collapse; display: table; height: 37px; pointer-events: none; position: absolute; right: 0px; table-layout: auto; width: 100%;"><div class="w-bottom-bar-lower w-css-reset" style="position: relative;"><div style="height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"><div style="background: rgb(46, 59, 67); display: none; height: 100%; mix-blend-mode: darken; left: 0px; opacity: 1; position: absolute; top: 0px; transition: opacity 0s ease 0s; width: 100%;"></div><div style="background: rgba(46, 59, 67, 0.85); height: 100%; opacity: 1; left: 0px; position: absolute; top: 0px; transition: opacity 0s ease 0s; width: 100%;"></div></div><div style="display: none;"><div style="background: rgb(46, 59, 67); display: none; height: 100%; mix-blend-mode: darken; left: 0px; opacity: 1; position: absolute; top: 0px; transition: opacity 0s ease 0s; width: 100%;"></div><div style="background: rgba(46, 59, 67, 0.85); height: 100%; opacity: 1; left: 0px; position: absolute; top: 0px; transition: opacity 0s ease 0s; width: 100%;"></div></div><div class="w-bottom-bar-left w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 0px; opacity: 1; transition: opacity 0s ease 0s;"><div class="w-bottom-bar-left-inner w-css-reset" style="height: 37px; position: relative; pointer-events: auto; white-space: nowrap;"><div class="w-css-reset" data-handle="smallPlayButton" style="display: inline-block; vertical-align: top;"><div class="w-vulcan-button-wrapper w-css-reset" style="display: inline-block; height: 37px; position: relative; vertical-align: top; width: 42.9583px;"><button tagname="button" class="w-vulcan-v2-button w-css-reset w-css-reset-tree w-css-reset-button-important" aria-label="Play Video" title="Play Video" style="background-color: rgba(0, 0, 0, 0); box-shadow: none; cursor: pointer; height: 100%; position: relative; transition: background-color 150ms ease 0s; width: 100%;"><div class="w-vulcan-icon-wrapper" data-handle="smallPlayButton" style="box-sizing: border-box; height: 100%; position: relative; transform: scale(1.001); transition: transform 200ms ease 0s;"><div style="box-sizing: border-box; height: 100%; margin-left: 1.07396px; padding: 10.7396px 0px 9.66563px; position: relative; width: 100%;"><div style="height: 100%; width: 100%;"><div style="display: none; height: 100%; width: 100%;"><svg x="0px" y="0px" viewBox="0 0 11.556 16" enable-background="new 0 0 11.556 16" focusable="false" class="w-css-reset w-css-reset-tree" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%; vertical-align: top;"><g><rect x="0" y="0" width="3.5" height="12"></rect><rect x="6.5" y="0" width="3.5" height="12"></rect></g></svg></div><div style="display: block; height: 100%; width: 100%;"><svg x="0px" y="0px" viewBox="0 0 11.556 16" enable-background="new 0 0 11.556 16" focusable="false" class="w-css-reset w-css-reset-tree" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%; vertical-align: top;"><polygon points="11.556,7.5 0,15 0,0"></polygon></svg></div></div></div></div></button></div></div></div></div><div class="w-bottom-bar-middle w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 100%; opacity: 1; transition: opacity 0s ease 0s;"><div class="w-bottom-bar-middle-inner w-css-reset" style="height: 37px; position: relative; pointer-events: auto; white-space: nowrap; opacity: 1; transform: translateY(0px); transition: opacity 0ms ease 0s, transform 0ms ease 0s;"><div class="w-css-reset" data-handle="playbar" style="height: 100%; position: relative;"><div class="w-playbar-wrapper w-css-reset w-css-reset-tree" style="display: flex; height: 100%; width: 100%;"><div class="w-playbar__time" style="box-sizing: content-box; color: white; font-family: WistiaPlayerInterNumbersSemiBold, Helvetica, sans-serif; font-size: 13.9615px; letter-spacing: 0.536979px; line-height: 37px; padding-left: 5.36979px; pointer-events: none; position: relative; text-align: center; width: 30.0708px;">1:06</div><div aria-label="Playbar" aria-orientation="horizontal" aria-valuemax="65.917" aria-valuemin="0" aria-valuenow="0" aria-valuetext="0:00" role="slider" tabindex="0" style="cursor: pointer; flex: 1 1 0%; height: 37px; outline: none; margin-left: 16.1094px; margin-right: 10.7396px; position: relative;"><canvas height="37" width="823" style="height: 37px; left: -16.1094px; position: absolute; top: 0px; width: 823.726px;"></canvas><div style="border-radius: 50%; height: 12.0283px; left: -6.01417px; opacity: 0; position: absolute; top: 12.4858px; width: 12.0283px;"></div></div></div></div></div></div><div class="w-bottom-bar-right w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 0px; opacity: 1; transition: opacity 0s ease 0s; white-space: nowrap;"><div class="w-bottom-bar-right-inner-anchor w-css-reset" style="height: 37px; position: relative; pointer-events: auto; white-space: nowrap; display: inline-block; right: 0px; top: 0px; vertical-align: top;"><div class="w-bottom-bar-right-inner w-css-reset" style="height: 37px; position: relative; pointer-events: auto; white-space: nowrap; display: inline-block; opacity: 1; right: 0px; top: 0px; transform: translateY(0px); transition: opacity 0ms ease 0s, transform 0ms ease 0s;"><div class="w-css-reset" data-handle="volumeButton" style="display: inline-block; vertical-align: top;"><div class="w-vulcan-button-wrapper w-css-reset" style="display: inline-block; height: 37px; position: relative; vertical-align: top; width: 42.9583px;"><button tagname="button" class="w-vulcan-v2-button w-css-reset w-css-reset-tree w-css-reset-button-important" aria-label="Mute" title="Mute" style="background-color: rgba(0, 0, 0, 0); box-shadow: none; cursor: pointer; height: 100%; position: relative; transition: background-color 150ms ease 0s; width: 100%;"><div class="w-vulcan-icon-wrapper" data-handle="volumeButton" style="box-sizing: border-box; height: 100%; position: relative; transform: scale(1.001); transition: transform 200ms ease 0s;"><svg x="0px" y="0px" viewBox="0 0 40 34" enable-background="new 0 0 40 34" focusable="false" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;"><g style="transform: translateX(1.25px); transition: transform 100ms ease 0s;"><g><path d="M13.8,14.2c-0.5,0.5-1.4,0.8-2,0.8h-1.6C9.5,15,9,15.5,9,16.2v1.6c0,0.7,0.5,1.2,1.2,1.2h1.6c0.7,0,1.6,0.4,2,0.8l2.3,2.3c0.5,0.5,0.8,0.3,0.8-0.4v-9.6c0-0.7-0.4-0.8-0.8-0.4L13.8,14.2z"></path></g><g><path fill="none" stroke="#ffffff" stroke-line-cap="round" stroke-miterlimit="10" stroke-width="2" d="M22,11.7c0,0,1.1,2.5,1.1,5s-1.1,5-1.1,5" style="opacity: 1; transition: opacity 100ms ease 0s;"></path><path fill="none" stroke="#ffffff" stroke-line-cap="round" stroke-miterlimit="10" stroke-width="2" d="M25.8,9.2c0,0,1.7,3.8,1.7,7.5c0,3.7-1.7,7.5-1.7,7.5" style="opacity: 1; transition: opacity 100ms ease 0s;"></path></g><g style="opacity: 0; transition: opacity 100ms ease 0s;"><line fill="none" stroke="#ffffff" stroke-line-cap="round" stroke-miterlimit="10" stroke-width="1.8102" x1="19.2" y1="15" x2="23.2" y2="19"></line><line fill="none" stroke="#ffffff" stroke-line-cap="round" stroke-miterlimit="10" stroke-width="1.8102" x1="19.2" y1="19" x2="23.2" y2="15"></line></g></g></svg></div></button></div></div><div class="w-css-reset" data-handle="settingsButton" style="display: inline-block; vertical-align: top;"><div class="w-vulcan-button-wrapper w-css-reset" style="display: inline-block; height: 37px; position: relative; vertical-align: top; width: 42.9583px;"><button tagname="button" class="w-vulcan-v2-button w-css-reset w-css-reset-tree w-css-reset-button-important" aria-expanded="false" aria-label="Show settings menu" title="Show settings menu" style="background-color: rgba(0, 0, 0, 0); box-shadow: none; cursor: pointer; height: 100%; position: relative; transition: background-color 150ms ease 0s; width: 100%;"><div class="w-vulcan-icon-wrapper" data-handle="settingsButton" style="box-sizing: border-box; height: 100%; position: relative; transform: scale(1.001); transition: transform 200ms ease 0s;"><svg x="0px" y="0px" viewBox="0 0 40 34" enable-background="new 0 0 40 34" focusable="false" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;"><g><g><path d="M28.3,16.4h-1.9c-0.4,0-0.8-0.3-0.9-0.7l-0.4-1.1c-0.2-0.3-0.1-0.8,0.2-1.1l1.3-1.3c0.3-0.3,0.3-0.7,0-1l-0.4-0.4c-0.3-0.3-0.7-0.3-1,0l-1.3,1.3c-0.3,0.3-0.8,0.3-1.1,0.1l-1.1-0.5c-0.4-0.1-0.7-0.5-0.7-0.9V9.1c0-0.4-0.3-0.7-0.7-0.7h-0.6c-0.4,0-0.7,0.3-0.7,0.7v1.7c0,0.4-0.3,0.8-0.7,0.9l-1.2,0.5c-0.3,0.2-0.8,0.1-1.1-0.2l-1.2-1.2c-0.3-0.3-0.7-0.3-1,0l-0.4,0.4c-0.3,0.3-0.3,0.7,0,1l1.2,1.2c0.3,0.3,0.3,0.8,0.1,1.1l-0.5,1.2c-0.1,0.4-0.5,0.7-0.9,0.7h-1.6c-0.4,0-0.7,0.3-0.7,0.7v0.6c0,0.4,0.3,0.7,0.7,0.7h1.6c0.4,0,0.8,0.3,0.9,0.7l0.5,1.2c0.2,0.3,0.1,0.8-0.1,1.1l-1.2,1.2c-0.3,0.3-0.3,0.7,0,1l0.4,0.4c0.3,0.3,0.7,0.3,1,0l1.2-1.2c0.3-0.3,0.8-0.3,1.1-0.2l1.2,0.5c0.4,0.1,0.7,0.5,0.7,0.9v1.7c0,0.4,0.3,0.7,0.7,0.7h0.6c0.4,0,0.7-0.3,0.7-0.7V24c0-0.4,0.3-0.8,0.7-0.9l1.1-0.5c0.3-0.2,0.8-0.1,1.1,0.1l1.3,1.3c0.3,0.3,0.7,0.3,1,0l0.4-0.4c0.3-0.3,0.3-0.7,0-1l-1.3-1.3C25,21,25,20.5,25.1,20.2l0.4-1.1c0.1-0.4,0.5-0.7,0.9-0.7h1.9c0.4,0,0.7-0.3,0.7-0.7v-0.6C29,16.7,28.7,16.4,28.3,16.4z M23.8,17.5c0,2.2-1.8,3.9-3.9,3.9c-2.2,0-3.9-1.8-3.9-3.9s1.7-3.9,3.9-3.9C22.1,13.6,23.8,15.3,23.8,17.5z"></path></g></g></svg></div></button></div></div><div class="w-css-reset" data-handle="fullscreenButton" style="display: inline-block; vertical-align: top;"><div class="w-vulcan-button-wrapper w-css-reset" style="display: inline-block; height: 37px; position: relative; vertical-align: top; width: 42.9583px;"><button tagname="button" class="w-vulcan-v2-button w-css-reset w-css-reset-tree w-css-reset-button-important" aria-label="Fullscreen" title="Fullscreen" style="background-color: rgba(0, 0, 0, 0); box-shadow: none; cursor: pointer; height: 100%; position: relative; transition: background-color 150ms ease 0s; width: 100%;"><div class="w-vulcan-icon-wrapper" data-handle="fullscreenButton" style="box-sizing: border-box; height: 100%; position: relative; transform: scale(1.001); transition: transform 200ms ease 0s;"><svg x="0px" y="0px" viewBox="0 0 40 34" enable-background="new 0 0 40 34" focusable="false" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;"><g><g><polyline fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="31.4,12.6 31.4,8.7 25.8,8.7"></polyline><polyline fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="14.7,8.7 9.1,8.7 9.1,12.6"></polyline><polyline fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="25.8,24.8 31.4,24.8 31.4,20.9"></polyline><polyline fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="9.1,20.9 9.1,24.8 14.7,24.8"></polyline></g><rect x="13.7" y="12.3" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" enable-background="new" width="13.3" height="8.9"></rect></g></svg></div></button></div></div></div></div><div class="w-ellipsis w-css-reset" style="height: 37px; position: relative; pointer-events: auto; white-space: nowrap; display: none;"></div></div></div></div><div class="w-foreground w-css-reset" style="height: 100%; left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"><div class="w-css-reset" data-handle="contextMenu" style="pointer-events: auto;"></div><div class="w-css-reset" data-handle="loadingHourglass" style="pointer-events: auto;"></div><div class="w-css-reset" data-handle="focusOutline" style="pointer-events: auto;"><div class="w-focus-outline" style="box-shadow: rgb(255, 255, 255) 0px 0px 0px 2px inset; display: none; height: 100%; left: 0px; pointer-events: none; position: absolute; right: 0px; width: 100%;"></div></div><div class="w-css-reset" data-handle="modalOverlay" style="pointer-events: auto;"></div></div></div><style id="wistia_59_style" type="text/css" class="wistia_injected_style">
+      #wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset{font-size:14px;}
+#wistia_chrome_23 #wistia_grid_53_wrapper div.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper span.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper ul.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper li.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper label.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper fieldset.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper button.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper img.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper a.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper svg.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper p.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper a.w-css-reset{border:0;}
+#wistia_chrome_23 #wistia_grid_53_wrapper h1.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:2em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper h2.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:1.5em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper h3.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:1.17em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper p.w-css-reset{margin:1.4em 0;}
+#wistia_chrome_23 #wistia_grid_53_wrapper a.w-css-reset{display:inline;}
+#wistia_chrome_23 #wistia_grid_53_wrapper span.w-css-reset{display:inline;}
+#wistia_chrome_23 #wistia_grid_53_wrapper svg.w-css-reset{display:inline;}
+#wistia_chrome_23 #wistia_grid_53_wrapper ul.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper ol.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper li.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper ul:before.w-css-reset{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper ol:before.w-css-reset{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper li:before.w-css-reset{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper ul:after.w-css-reset{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper ol:after.w-css-reset{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper li:after.w-css-reset{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper label.w-css-reset{background-attachment:scroll;background-color:transparent;background-image:none;background-position:0 0;background-repeat:no-repeat;background-size:100% 100%;float:none;outline:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper button.w-css-reset{background-attachment:scroll;background-color:transparent;background-image:none;background-position:0 0;background-repeat:no-repeat;background-size:100% 100%;border:0;border-radius:0;outline:none;position:static}
+#wistia_chrome_23 #wistia_grid_53_wrapper img.w-css-reset{border:0;display:inline-block;vertical-align:top;border-radius:0;outline:none;position:static}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset button::-moz-focus-inner{border: 0;}
+      #wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree {font-size:14px;}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree div{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree span{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree ul{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree li{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree label{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree fieldset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree button{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree img{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree a{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree svg{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree p{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree a{border:0;}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree h1{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:2em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree h2{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:1.5em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree h3{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:1.17em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree p{margin:1.4em 0;}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree a{display:inline;}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree span{display:inline;}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree svg{display:inline;}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree ul{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree ol{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree li{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree ul:before{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree ol:before{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree li:before{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree ul:after{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree ol:after{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree li:after{display:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree label{background-attachment:scroll;background-color:transparent;background-image:none;background-position:0 0;background-repeat:no-repeat;background-size:100% 100%;float:none;outline:none}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree button{background-attachment:scroll;background-color:transparent;background-image:none;background-position:0 0;background-repeat:no-repeat;background-size:100% 100%;border:0;border-radius:0;outline:none;position:static}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree img{border:0;display:inline-block;vertical-align:top;border-radius:0;outline:none;position:static}
+#wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-tree  button::-moz-focus-inner{border: 0;}
+      #wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-max-width-none-important{max-width:none!important}
+      #wistia_chrome_23 #wistia_grid_53_wrapper .w-css-reset-button-important{border-radius:0!important;color:#fff!important;}
+    </style></div></div><div id="wistia_grid_53_front"></div><div id="wistia_grid_53_top_inside"><div id="wistia_grid_53_top" style="height: 0px; font-size: 0px; line-height: 0px;"> </div></div><div id="wistia_grid_53_bottom_inside"><div id="wistia_grid_53_bottom" style="height: 0px; font-size: 0px; line-height: 0px;"> </div></div><div id="wistia_grid_53_left_inside"><div id="wistia_grid_53_left" style="height: 0px; font-size: 0px; line-height: 0px;"> </div></div><div id="wistia_grid_53_right_inside"><div id="wistia_grid_53_right" style="height: 0px; font-size: 0px; line-height: 0px;"> </div></div></div><div id="wistia_grid_53_below" style="height: 0px; font-size: 0px; line-height: 0px;"> </div><style id="wistia_54_style" type="text/css" class="wistia_injected_style">#wistia_grid_53_wrapper{-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;font-family:Arial,sans-serif;font-size:14px;height:100%;position:relative;text-align:left;width:100%;}
+#wistia_grid_53_wrapper *{-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}
+#wistia_grid_53_above{position:relative;}
+#wistia_grid_53_main{display:block;height:100%;position:relative;}
+#wistia_grid_53_behind{height:100%;left:0;position:absolute;top:0;width:100%;}
+#wistia_grid_53_center{height:100%;overflow:hidden;position:relative;width:100%;}
+#wistia_grid_53_front{display:none;height:100%;left:0;position:absolute;top:0;width:100%;}
+#wistia_grid_53_top_inside{position:absolute;left:0;top:0;width:100%;}
+#wistia_grid_53_top{width:100%;position:absolute;bottom:0;left:0;}
+#wistia_grid_53_bottom_inside{position:absolute;left:0;bottom:0;width:100%;}
+#wistia_grid_53_bottom{width:100%;position:absolute;top:0;left:0;}
+#wistia_grid_53_left_inside{height:100%;position:absolute;left:0;top:0;}
+#wistia_grid_53_left{height:100%;position:absolute;right:0;top:0;}
+#wistia_grid_53_right_inside{height:100%;right:0;position:absolute;top:0;}
+#wistia_grid_53_right{height:100%;left:0;position:absolute;top:0;}
+#wistia_grid_53_below{position:relative;}</style></div></div></div><button id="wistia-70x3iky0kr-1_popover_popover_close_button" class="wistia_placebo_close_button" alt="Close" role="button" tabindex="-1" aria-label="Close" style="background: transparent; border: none; cursor: pointer; height: 18px; left: -99999px; opacity: 0; position: absolute; top: 0px; width: 21px; z-index: 10002; overflow: hidden; margin: 0px; padding: 0px;"><img alt="Click to close video" style="height: 34px; width: 34px; position: absolute; max-width: none; right: 2px; top: 1px;"></button></div>
+<script type="text/javascript" id="">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","//connect.facebook.net/en_US/fbevents.js");fbq("init","784667875001149");fbq("track","PageView");</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=784667875001149&amp;ev=PageView&amp;noscript=1"></noscript>
+<script type="text/javascript" id="">(function(){function b(a,b,d){document.cookie=a+"\x3d"+escape(b)+"; path\x3d/; max-age\x3d"+d+";"}function g(a){return(a=document.cookie.match("(^|;) ?"+a+"\x3d([^;]*)(;|$)"))?unescape(a[2]):null}var c=5,h=900;window.addEventListener("load",function(){var a=document.referrer,c=g("gasessid");""===a&&(a=g("lasturl"));if((""===a||null===c)&&"undefined"!==typeof ga){a=new Date;try{var d=ga.getAll();a=new Date;var e=d[0].get("clientId");var f=e+"."+a.getTime();ga("set","dimension1",e);ga("set","dimension2",
+f);dataLayer.push({GAClientId:e,GASessionId:f});b("gasessid",f,h)}catch(k){}}});window.addEventListener("beforeunload",function(){b("lasturl",window.location.href,c)});window.addEventListener("unload",function(){b("lasturl",window.location.href,c)})})();</script><script type="text/javascript" id="">(function(e,c){function k(a,g){a.prototype[g]=function(){this._q.push([g].concat(Array.prototype.slice.call(arguments,0)));return this}}function l(a){function g(m){a[m]=function(){a._q.push([m].concat(Array.prototype.slice.call(arguments,0)))}}for(var h=0;h<n.length;h++)g(n[h])}var d=e.amplitude||{_q:[],_iq:{}},b=c.createElement("script");b.type="text/javascript";b.integrity="sha384-girahbTbYZ9tT03PWWj0mEVgyxtZoyDF9KVZdL+R53PP5wCY0PiVUKq0jeRlMx9M";b.crossOrigin="anonymous";b.async=!0;b.src="https://cdn.amplitude.com/libs/amplitude-7.2.1-min.gz.js";
+b.onload=function(){e.amplitude.runQueuedFunctions||console.log("[Amplitude] Error: could not load SDK")};c=c.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);b=function(){this._q=[];return this};c="add append clearAll prepend set setOnce unset".split(" ");for(var f=0;f<c.length;f++)k(b,c[f]);d.Identify=b;b=function(){this._q=[];return this};c=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"];for(f=0;f<c.length;f++)k(b,c[f]);d.Revenue=b;var n="init logEvent logRevenue setUserId setUserProperties setOptOut setVersionName setDomain setDeviceId enableTracking setGlobalUserProperties identify clearUserProperties setGroup logRevenueV2 regenerateDeviceId groupIdentify onInit logEventWithTimestamp logEventWithGroups setSessionId resetSessionId".split(" ");
+l(d);d.getInstance=function(a){a=(a&&0!==a.length?a:"$default_instance").toLowerCase();d._iq.hasOwnProperty(a)||(d._iq[a]={_q:[]},l(d._iq[a]));return d._iq[a]};e.amplitude=d})(window,document);
+amplitude.getInstance().init(google_tag_manager["GTM-TXV7MD"].macro(7),google_tag_manager["GTM-TXV7MD"].macro(8),{apiEndpoint:"api2.amplitude.com",includeUtm:!0,includeReferrer:!0},function(e){window.dispatchEvent(new Event("amplitude_loaded"));window.location.hostname.startsWith("app.")&&(e=e.options.deviceId,document.cookie="amp_device_id\x3d"+e+";path\x3d/;domain\x3dvyond.com")});1==google_tag_manager["GTM-TXV7MD"].macro(9)&&amplitude.getInstance("VideoAsUnit").init(google_tag_manager["GTM-TXV7MD"].macro(10),null,{apiEndpoint:"api2.amplitude.com"},function(){window.dispatchEvent(new Event("amplitude_loaded:VideoAsUnit"))});</script><script type="text/javascript" id="">amplitude.getInstance().logEvent("Page view",{page_url:window.location.toString(),referral:document.referrer});</script><script type="text/javascript" id="">var _kiq=_kiq||[];(function(){var a=document,b=a.getElementsByTagName("script")[0];a=a.createElement("script");a.type="text/javascript";a.async=!0;a.src="\/\/s3.amazonaws.com\/j.kissinsights.com\/u\/364\/b6218934c79aae40781124b6cfd94df4d8f23b98.js";b.parentNode.insertBefore(a,b)})();</script><script type="text/javascript" id="">piAId="715453";piCId="3286";piHostname="pi.pardot.com";(function(){function a(){var b=document.createElement("script");b.type="text/javascript";b.src=("https:"==document.location.protocol?"https://pi":"http://cdn")+".pardot.com/pd.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)}window.attachEvent?window.attachEvent("onload",a):window.addEventListener("load",a,!1)})();</script><script type="text/javascript" id="">tp=window.tp||[];tp.push(["setAid",google_tag_manager["GTM-TXV7MD"].macro(11)]);tp.push(["setSandbox",1!=google_tag_manager["GTM-TXV7MD"].macro(12)]);tp.push(["setUseTinypassAccounts",!1]);tp.push(["setUsePianoIdUserProvider",!1]);tp.push(["setUsePianoIdLiteUserProvider",!0]);tp.push(["setCxenseSiteId","1140862806177409904"]);tp.push(["setExternalJWT",google_tag_manager["GTM-TXV7MD"].macro(13)]);tp.push(["init",function(){tp.experience.init()}]);
+(function(a){var b=document.createElement("script");b.type="text/javascript";b.async=!0;b.src=a;a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})("//cdn.tinypass.com/api/tinypass.min.js");</script><iframe data-product="web_widget" title="No content" tabindex="-1" aria-hidden="true" src="./Your Videos on Vyond_files/saved_resource(1).html" style="width: 0px; height: 0px; border: 0px; position: absolute; top: -9999px;"></iframe><script src="./Your Videos on Vyond_files/adsct" type="text/javascript"></script><iframe id="cx_rep_iframe_0.3144744986765713" name="cx_rep_iframe_0.3144744986765713" width="1" height="1" scrolling="no" frameborder="0" src="./Your Videos on Vyond_files/sp1.html" style="display: none;"></iframe><div><iframe title="Opens a widget where you can find more information" id="launcher" tabindex="-1" style="width: 108px; height: 50px; padding: 0px; margin: 10px 20px; position: fixed; bottom: 30px; overflow: visible; opacity: 0; border: 0px; z-index: 999998; transition-duration: 250ms; transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1); transition-property: opacity, top, bottom; top: -9999px; visibility: hidden;" src="./Your Videos on Vyond_files/saved_resource(2).html"></iframe></div><iframe id="qualaroo_dnt_frame" src="./Your Videos on Vyond_files/frame.html" style="width: 1px; height: 1px; display: none; opacity: 0;"></iframe></body><script src="./Your Videos on Vyond_files/f(1).txt"></script></html>
