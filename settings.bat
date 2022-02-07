@@ -2,7 +2,6 @@ title Vyond Legacy Offline Settings Script
 :: Interactive config.bat changer
 :: Author: Fanimation36#1811
 :: License: MIT
-set borwsertype=Chromium
 
 :: DON'T EDIT THIS FILE! If you need a text version of the settings like it used to be, edit utilities\config.bat. This file is now just an interface for changing that file.
 
@@ -68,7 +67,7 @@ if !VERBOSEWRAPPER!==y (
 )
 :: Browser options
 if !INCLUDEDCHROMIUM!==y (
-	echo ^(2^) Browser set to[92m included !browsertype! [0m
+	echo ^(2^) Browser set to[92m included Chromium [0m
 	if !APPCHROMIUM!==y (
 		echo     ^(3^) Headless mode is[92m ON [0m
 	) else ( 
