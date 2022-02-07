@@ -813,13 +813,24 @@ echo Time to choose. && goto wrapperidle
 
 :reopen_webpage
 if !INCLUDEDCHROMIUM!==n (
-	if !CUSTOMBROWSER!==n (
+        if !INCLUDEDSLIMJET!==n (
+	    if !CUSTOMBROWSER!==n (
 		echo Opening Vyond Legacy Offline in your default browser...
 		start http://localhost:4343
 	) else (
 		echo Opening Vyond Legacy Offline in your set browser...
 		start !CUSTOMBROWSER! http://localhost:4343 >nul
 	)
+	) else (
+	echo Opening Vyond Legacy Offline using included Chromium...
+	pushd utilities\Slimjet
+	if !APPCHROMIUM!==y (
+		start slimjet.exe --allow-outdated-plugins --user-data-dir=the_profile --app=http://localhost:4343 >nul
+	) else (
+		start slimjet.exe --allow-outdated-plugins --user-data-dir=the_profile http://localhost:4343 >nul
+	)
+	popd
+)	
 ) else (
 	echo Opening Vyond Legacy Offline using included Chromium...
 	pushd utilities\ungoogled-chromium
