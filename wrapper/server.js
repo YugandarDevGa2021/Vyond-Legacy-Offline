@@ -33,7 +33,6 @@ const thl = require("./theme/load");
 const tsv = require("./tts/voices");
 const tsl = require("./tts/load");
 const sts = require("./starter/save");
-const std = require("./starter/delete");
 const stt = require("./starter/thmb");
 const url = require("url");
 

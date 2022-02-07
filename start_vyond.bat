@@ -750,7 +750,7 @@ echo Vyond Legacy Offline has been started^^! The video list should now be open.
 :: Post-Start ::
 ::::::::::::::::
 
-title Wrapper: Offline v!WRAPPER_VER! ^(build !WRAPPER_BLD!^)
+title Vyond Legacy Offline v!WRAPPER_VER! ^(build !WRAPPER_BLD!^)
 if !VERBOSEWRAPPER!==y ( goto wrapperstarted )
 :wrapperstartedcls
 cls
