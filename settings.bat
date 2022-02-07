@@ -2,7 +2,6 @@ title Vyond Legacy Offline Settings Script
 :: Interactive config.bat changer
 :: Author: Fanimation36#1811
 :: License: MIT
-set borwsertype=Chromium
 
 :: DON'T EDIT THIS FILE! If you need a text version of the settings like it used to be, edit utilities\config.bat. This file is now just an interface for changing that file.
 
@@ -68,7 +67,7 @@ if !VERBOSEWRAPPER!==y (
 )
 :: Browser options
 if !INCLUDEDCHROMIUM!==y (
-	echo ^(2^) Browser set to[92m included !browsertype! [0m
+	echo ^(2^) Browser set to[92m included Chromium [0m
 	if !APPCHROMIUM!==y (
 		echo     ^(3^) Headless mode is[92m ON [0m
 	) else ( 
@@ -120,6 +119,11 @@ if exist "utilities\Slimjet" (
 	echo ^(9^) Ungoogled Chromium browser use is[92m ON [0m
 ) else ( 
 	echo ^(9^) Ungoogled Chromium browser use is[91m OFF [0m
+)
+if exist "wrapper\config-online.json" (
+	echo ^(10^) The Offline LVM Server is[92m ON [0m
+) else ( 
+	echo ^(10^) The Offline LVM Server is[91m OFF [0m
 )
 :: Dev options
 :: These are really specific options that no casual user would ever really need
@@ -272,6 +276,13 @@ if "!choice!"=="9" goto browserChange
 if "!choice!"=="?9" (
 	echo When first getting Vyond Legacy Offline, Chromium will be used by default.
 	echo if you don't have admin rights on your computer, you can turn this off and that will fix the problem for you.
+	goto reaskoptionscreen
+)
+if "!choice!"=="10" goto configChange
+if "!choice!"=="?10" (
+	echo By default, The server for the lvm is offline.
+        echo:
+	echo by turning this off, it can fix some bugs that are going on because the server offline is in beta right now.
 	goto reaskoptionscreen
 )
 :: Dev options
@@ -514,6 +525,21 @@ if exist "main-norpc.js" (
 	:: enable
 	ren main.js main-norpc.js
 	ren main-rpc.js main.js
+)
+popd
+goto optionscreen
+
+:configChange
+echo Toggling setting...
+pushd wrapper
+if exist "config-online.json" (
+	:: disable
+	ren config.json config-offline.json
+	ren config-online.json config.json
+) else ( 
+	:: enable
+	ren config.json config-online.json
+	ren config-offline.json config.json
 )
 popd
 goto optionscreen
