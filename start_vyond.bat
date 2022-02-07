@@ -53,6 +53,10 @@ pause && exit
 :: patch detection
 if exist "patch.jpg" goto patched
 
+:: Main.js file restorer
+pushd wrapper
+if not exist main.js ( goto restore_main )
+
 :: Prevents CTRL+C cancelling (please close with 0) and keeps window open when crashing
 if "%~1" equ "point_insertion" goto point_insertion
 start "" /wait /B "%~F0" point_insertion
@@ -1104,3 +1108,8 @@ echo :: Runs through all of the scripts code, while never launching or installin
 echo set DRYRUN=n>> utilities\config.bat
 echo:>> utilities\config.bat
 goto returnfromconfigcopy
+
+:return_main
+	set MAIN=wrapper\main.js
+	echo require("./server");>> !main!
+goto returnfromenvcopy
