@@ -727,24 +727,35 @@ PING -n 6 127.0.0.1>nul
 
 :: Open Wrapper in preferred browser
 if !INCLUDEDCHROMIUM!==n (
-	if !CUSTOMBROWSER!==n (
+        if !INCLUDEDSLIMJET!==n (
+	    if !CUSTOMBROWSER!==n (
 		echo Opening Vyond Legacy Offline in your default browser...
-		if !DRYRUN!==n ( start http://localhost:4343 )
+		start http://localhost:4343
 	) else (
 		echo Opening Vyond Legacy Offline in your set browser...
-		echo If this does not work, you may have set the path wrong.
-		if !DRYRUN!==n ( start !CUSTOMBROWSER! http://localhost:4343 )
+		start !CUSTOMBROWSER! http://localhost:4343 >nul
 	)
+	) else (
+	echo Opening Vyond Legacy Offline using included Chromium...
+	pushd utilities\Slimjet
+	if !APPSLIMJET!==y (
+		start slimjet.exe --allow-outdated-plugins --user-data-dir=the_profile --app=http://localhost:4343 >nul
+	) else (
+		start slimjet.exe --allow-outdated-plugins --user-data-dir=the_profile http://localhost:4343 >nul
+	)
+	popd
+)	
 ) else (
 	echo Opening Vyond Legacy Offline using included Chromium...
 	pushd utilities\ungoogled-chromium
 	if !APPCHROMIUM!==y (
-		if !DRYRUN!==n ( start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile --app=http://localhost:4343 )
+		start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile --app=http://localhost:4343 >nul
 	) else (
-		if !DRYRUN!==n ( start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile http://localhost:4343 )
+		start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile http://localhost:4343 >nul
 	)
 	popd
 )
+goto wrapperidle
 
 echo Vyond Legacy Offline has been started^^! The video list should now be open.
 
@@ -824,7 +835,7 @@ if !INCLUDEDCHROMIUM!==n (
 	) else (
 	echo Opening Vyond Legacy Offline using included Chromium...
 	pushd utilities\Slimjet
-	if !APPCHROMIUM!==y (
+	if !APPSLIMJET!==y (
 		start slimjet.exe --allow-outdated-plugins --user-data-dir=the_profile --app=http://localhost:4343 >nul
 	) else (
 		start slimjet.exe --allow-outdated-plugins --user-data-dir=the_profile http://localhost:4343 >nul
@@ -845,20 +856,31 @@ goto wrapperidle
 
 :open_server
 if !INCLUDEDCHROMIUM!==n (
-	if !CUSTOMBROWSER!==n (
+        if !INCLUDEDSLIMJET!==n (
+	    if !CUSTOMBROWSER!==n (
 		echo Opening the server page in your default browser...
 		start https://localhost:4664
 	) else (
-		echo Opening the server page in your set browser...
+		echo Opening the server in your set browser...
 		start !CUSTOMBROWSER! https://localhost:4664 >nul
 	)
+	) else (
+	echo Opening the server page using included Slimjet...
+	pushd utilities\Slimjet
+	if !APPSLIMJET!==y (
+		start slimjet.exe --allow-outdated-plugins --user-data-dir=the_profile --app=http://localhost:4664 >nul
+	) else (
+		start slimjet.exe --allow-outdated-plugins --user-data-dir=the_profile http://localhost:4664 >nul
+	)
+	popd
+)	
 ) else (
 	echo Opening the server page using included Chromium...
 	pushd utilities\ungoogled-chromium
 	if !APPCHROMIUM!==y (
-		start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile --app=https://localhost:4664 >nul
+		start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile --app=http://localhost:4664 >nul
 	) else (
-		start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile https://localhost:4664 >nul
+		start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile http://localhost:4664 >nul
 	)
 	popd
 )
