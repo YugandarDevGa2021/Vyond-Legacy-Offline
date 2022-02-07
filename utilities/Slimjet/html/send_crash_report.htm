@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<HTML i18n-values="dir:textdirection;" id="uber" class dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Send crash report</title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+var is_browser_ = '1';
+function $(id) {
+  return document.getElementById(id);
+}
+function onOK() {
+   $('submit_button').disabled = 'disabled';
+   var include_config=$('include_config_info').checked?'1':'0';
+   var user_desc=$('user_mail').value + '\n' + $('user_desc').value;
+   document.sjReturnValue = escape(include_config + '\t' + user_desc + '\t' + is_browser_);
+   location.href='sjcmd://submit_crash_report ' + document.sjReturnValue;
+}
+function onCancel() {
+    document.sjReturnValue = '';
+    window.close();
+}
+function initDialog(crashed_url,is_browser) {
+  if (crashed_url!="") {
+	  $('user_desc').value="URL:" + crashed_url + "\n";
+  }
+  is_browser_=is_browser=='0'?'0':'1';
+}
+</SCRIPT>
+</head>
+<BODY style="font-size:13px; font-family:Verdana, Geneva, sans-serif">
+<div style="width:500px">
+  <span>Slimjet crashed during last session. Would you like to send the crash report?</span>
+    <p>
+	    <label>Email:<input type="email" id="user_mail" /></label>
+    </p>
+    <span>Describe what you were doing before the crash:</span>
+    <p>
+      <textarea value = "" type="text" id = "user_desc" style="width:500px;height:40px"></textarea>
+    </p>
+    <p>
+      <label><input type="checkbox" id="include_config_info" checked value = "0" />Include configuration information</label>
+    </p>
+
+  <table width="100%" border="0">
+    <tr align="center">
+      <td width="50%"><button id="submit_button" type="button" onclick = "onOK();" style="min-width:80px">Submit</button></td>
+      <td><button type="button" onclick = "onCancel();" style="min-width:80px" >Cancel</button></td>
+    </tr>
+  </table>
+</div>
+</BODY>
+</HTML>

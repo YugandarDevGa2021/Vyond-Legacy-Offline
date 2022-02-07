@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Tip of the day</title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+var lc_='';
+var tips_='';
+var save_index_=0;
+var show_index_=0;
+var tip_titles=new Array();
+var tip_descriptions=new Array();
+var tip_links=new Array();
+function $(e) {
+    return document.getElementById(e);
+}
+function openLearnMore() {
+   var sLink=tip_links[show_index_];
+   if (sLink=='') {
+       return;
+   }
+   if(sLink.indexOf('/')==0) {
+     open('http://www.slimjet.com' + sLink);
+   } else {
+     open('http://www.slimjet.com/mlredir.php?lc=' + lc_ + '&file=' + sLink);
+   }
+}
+function showTip() {
+    var idx = show_index_;
+    var t=$('tip-title');
+    var d=$('tip-desc');
+    var l=$('tip-link');
+    var p=$('tip-prev');
+    var n=$('tip-next');
+    if (typeof tip_titles[idx] == 'undefined') {
+        return;
+    }
+    if(tip_titles[idx]!='') {
+       t.innerText = tip_titles[idx];
+       d.innerText = tip_descriptions[idx];
+    } else {
+        t.innerText='';
+        d.innerText='';
+    }
+
+    l.style.visibility=(tip_links[idx]=='')?'hidden':'visible';
+    p.style.visibility=(idx==0)?'hidden':'visible';
+    n.style.visibility=(idx==tip_titles.length-1)?'hidden':'visible';
+
+}
+function showNext() {
+    var idx = show_index_;
+    var update_next = false;
+
+    idx++;
+    if (idx==tip_titles.length) idx--;
+    if (idx>=save_index_) {
+        save_index_=idx;
+        update_next=true;
+    }
+
+    show_index_=idx;
+    showTip();
+    if(update_next) {
+        location='sjcmd://save_tip_index ' + (save_index_+1);
+    }
+}
+function showPrev() {
+    var idx = show_index_;
+    idx--;
+    if (idx<0) idx=0;
+    show_index_=idx;
+    showTip();
+}
+function parseItems(items,idx) {
+    if (items.length>1) {
+        tip_titles[idx]='';
+        tip_descriptions[idx]='';
+        tip_links[idx]='';
+        for (var i=0; i<items.length;i++) {
+            if (items[i].indexOf('title=')==0) {
+                tip_titles[idx]=items[i].substr(6);
+            } else if (items[i].indexOf('tip=')==0) {
+                tip_descriptions[idx]=items[i].substr(4);
+            } else if (items[i].indexOf('link=')==0) {
+                tip_links[idx]=items[i].substr(5);
+            }
+        }
+        return ++idx;
+    }
+    return idx;
+}
+function parseTips(s) {
+    var tips=s.split('\n\n\n\n');
+    var idx=0;
+    for (var i=0;i<tips.length;i++) {
+        if (tips[i].indexOf('\n')!=-1) {
+            var items=tips[i].split('\n');
+            idx=parseItems(items,idx);
+        }
+    }
+}
+function initDialog(lc,tips,show_index) {
+    show_index_ = show_index;
+    save_index_ = show_index;
+    lc_ = lc;
+    tips_ = tips;
+    parseTips(tips);
+    showTip();
+    save_index_++;
+    location='sjcmd://save_tip_index ' + save_index_;
+}
+</SCRIPT>
+</head>
+<BODY style="font-size:13px; font-family:Verdana, Geneva, sans-serif">
+<div style="width:400px">
+    <div style="position: relative;text-align: center; height:48px;width:400px;font-weight: bold;">
+        <span style="height: 48px; line-height: 48px;width: 48px;display: inline-block;background-size: 48px 48px; background-image: url('images/tips.png')">&nbsp;</span>
+        <span id="tip-title" style="height:48px; line-height: 48px;display:inline-block;">&nbsp;</span>
+    </div>
+    <p id="tip-desc" style="height:90px;width:400px;overflow-y: auto;">
+      &nbsp;
+    </p>
+  <table width="100%" border="0">
+    <tr align="center">
+      <td width="100%">
+          <img id="tip-prev" type="button" onclick = "showPrev();" style="min-width:25px;float: left;" src='images/back.png' >
+          <button id="tip-link" type="button" onclick = "openLearnMore();">Learn more</button>
+          <img id="tip-next" type="button" onclick = "showNext();" style="min-width:25px; float: right;" src='images/forward.png' >
+      </td>
+    </tr>
+  </table>
+</div>
+</BODY>
+</HTML>

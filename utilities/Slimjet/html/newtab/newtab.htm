@@ -1,0 +1,2316 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>New Tab</title>
+<!-- V1604261420 -->
+<link rel="stylesheet" href="overlay.css">
+<script type="text/javascript" src="overlay.js"></script>
+<style type="text/css">
+html{
+  margin: 0;
+}
+* {
+}
+a:focus {
+  outline:none;
+}
+.sb-block
+{
+  position: relative;
+  min-width: 120px;
+  min-height: 80px;
+
+  width: 120px;
+  height: 80px;
+  margin: 0px;
+  float:left;
+  overflow:hidden;
+
+  border: solid 2px #dbcad2;
+
+  background-color:white;
+
+  -webkit-border-radius:4px;
+  border-radius:4px;
+  opacity: 0.7;
+}
+.sb-block:hover
+{
+  border: solid 2px #3366CC;
+  -webkit-box-shadow: 0px 0px 20px #3366CC;
+  box-shadow: 0px 0px 20px #3366CC;
+  opacity: 1;
+}
+
+.sb-snapshot{
+  cursor:pointer;
+  width:120px;
+  height:80px;
+  margin:0 auto;
+  background-position:center;
+  background-repeat:no-repeat;
+  z-index:-1;
+  BORDER-BOTTOM: medium none;
+  BORDER-LEFT: medium none;
+  BORDER-TOP: medium none;
+  BORDER-RIGHT: medium none;
+}
+.sb-block-tl
+{
+  clip: rect(auto 19px 19px auto);
+  top: 0;
+  left: 0;
+  clip: rect(auto, 19px, 19px, auto);
+  position: absolute;
+  width: 38px;
+  height: 38px;
+
+}
+
+.sb-block-tr
+{
+  clip: rect(auto auto 19px 19px);
+  top: 0;
+  right: 0;
+  clip: rect(auto, auto, 19px, 19px);
+  position: absolute;
+  width: 38px;
+  height: 38px;
+
+}
+
+.sb-block-bl
+{
+  clip: rect(19px 19px auto auto);
+  bottom: 0;
+  left: 0;
+  clip: rect(19px, 19px, auto, auto);
+  width: 38px;
+  height: 38px;
+
+  position: absolute;
+}
+
+.sb-block-br
+{
+  clip: rect(19px auto auto 19px);
+  bottom: 0;
+  right: 0;
+  clip: rect(19px, auto, auto, 19px);
+  width: 38px;
+  height: 38px;
+
+  position: absolute;
+}
+
+.sb-block-tc
+{
+  clip: rect(auto auto 19px auto);
+  top: 0;
+  clip: rect(auto, auto, 19px, auto);
+  left: 19px;
+  right: 19px;
+  height: 38px;
+  width: 182px;
+
+  position: absolute;
+}
+
+.sb-block-bc
+{
+  clip: rect(19px auto auto auto);
+  bottom: 0;
+  clip: rect(19px, auto, auto, auto);
+  left: 19px;
+  right: 19px;
+  height: 38px;
+  width: 182px;
+
+  position: absolute;
+}
+
+.sb-block-cl
+{
+  clip: rect(auto 19px auto auto);
+  left: 0;
+  clip: rect(auto, 19px, auto, auto);
+  top: 19px;
+  bottom: 19px;
+  width: 38px;
+  height: 122px;
+
+  position: absolute;
+}
+
+.sb-block-cr
+{
+  clip: rect(auto auto auto 19px);
+  right: 0;
+  clip: rect(auto, auto, auto, 19px);
+  top: 19px;
+  bottom: 19px;
+  width: 38px;
+  height: 122px;
+
+  position: absolute;
+}
+
+.sb-block-cc
+{
+  position: absolute;
+  top: 19px;
+  left: 19px;
+  right: 19px;
+  bottom: 19px;
+  background-color: #FFFFFF;
+}
+
+.sb-block-body
+{
+  zoom: 1;
+}
+
+.sb-block-body
+{
+  position: relative;
+  padding: 9px;
+}
+
+.sb-blockcontent
+{
+  position: relative;
+  margin: 0 auto;
+  min-width: 1px;
+  min-height: 1px;
+}
+
+.sb-blockcontent-body
+{
+}
+
+.sb-blockcontent-body
+{
+  position: relative;
+  padding: 0;
+  color: #242F35;
+  font-family: Tahoma, Arial, Helvetica, Sans-Serif;
+  font-size: 13px;
+}
+
+ul
+{
+  list-style-type: none;
+}
+
+ul
+{
+  margin: 0;
+  padding: 0;
+}
+
+.sb-blockcontent-body ul li
+{
+  line-height: 125%;
+  color: #5D7989;
+  padding: 0 0 0 12px;
+
+  background-repeat: no-repeat;
+}
+
+.sb-blockcontent-body li
+{
+  color: #242F35;
+  font-family: Tahoma, Arial, Helvetica, Sans-Serif;
+  font-size: 13px;
+}
+
+li
+{
+  margin: 0;
+  padding: 0;
+}
+
+.sb-blockcontent-body a:link
+{
+  color: #316993;
+}
+
+.sb-blockcontent-body a:link
+{
+  color: #242F35;
+  font-family: Tahoma, Arial, Helvetica, Sans-Serif;
+  font-size: 13px;
+}
+
+.sb-blockcontent-body a
+{
+  color: #316993;
+}
+
+.sb-blockcontent-body a
+{
+  color: #242F35;
+  font-family: Tahoma, Arial, Helvetica, Sans-Serif;
+  font-size: 13px;
+}
+
+a
+{
+  margin: 0;
+  padding: 0;
+}
+
+.cleared
+{
+  display:block;
+  clear: both;
+  float: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: 0;
+  height:0;
+  overflow:hidden;
+}
+
+.sb-blocktitle {
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  color: #22485D;
+  margin: 5px 0;
+  padding: 2px;
+}
+
+.sb-align-right {
+  text-align: right;
+}
+.sb-float-right{
+  float:right;
+}
+.sb-toolicon {
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-bottom: 1px;
+  padding-top: 1px;
+  border: none;
+}
+.sb-align-center {
+  text-align: center;
+}
+.sb-toollink{
+  display:block;
+  float:left;
+}
+a.sb-toollink:link {
+}
+a.sb-toollink:visited {
+}
+a.sb-toollink:hover {
+}
+
+.style1 {
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  color: #22485D;
+  margin: 5px 0;
+  padding: 2px;
+  text-align: left;
+}
+.style2 {
+  text-align: left;
+}
+.sb_search_css{
+  width:400px;
+  height:35px;
+  margin:0px auto;
+  background-image: url('images/searchbox_bg.gif');
+  background-repeat: repeat-x;
+}
+
+#sb_newtab_content {
+  margin: 0 auto;
+}
+#sb_dial_tpl {
+  display: none;
+}
+#sb_search_box{
+  margin: 40px 0px 20px 0px;
+  vertical-align: middle;
+}
+#searchbox_right{
+  width: 11px;
+  height: 36px;
+}
+#sb_custom_box{
+  width:120px;
+  height:34px;
+  right: 40px;
+  padding-right: 20px;
+  position: fixed;
+  visibility: hidden;;
+}
+#sb_search_bar{
+  visibility: hidden;
+}
+#sb_smallbutton_css{
+}
+#sb_quick_dial{
+  margin: 0px 0px 0px 0px;
+  visibility: hidden;
+}
+#most-visited-sites-list{
+  width: 480px;
+  height: 250px;
+}
+#quick-dial-sites-list{
+  width: 480px;
+  height: 280px;
+}
+#sb_bg_video{
+position: fixed;
+right: 0;
+bottom: 0;
+min-width: 100%;
+min-height: 100%;
+width: auto;
+height: auto;
+z-index: -9;
+}
+
+.site-icon {
+  height: 16px;
+  padding: 4px;
+  vertical-align: middle;
+  width: 16px;
+}
+
+.site-name {
+  padding: 0px;
+  width: 400px;
+  min-width: 400px;
+  vertical-align: middle;
+}
+#reorder-sites-list-dropmarker {
+  background-clip: padding-box;
+  background-color: hsl(214, 91%, 65%);
+  border: 3px solid hsl(214, 91%, 65%);
+  border-bottom-color: transparent;
+  border-radius: 0;
+  border-top-color: transparent;
+  box-sizing: border-box;
+  display: none;
+  height: 8px;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  z-index: 10;
+}
+#sb_mic_on {
+  width:136px;
+  height:136px;
+  border: 5px solid #ffffff;
+  background-color: rgba(255, 0, 0, 0);
+  position:relative;
+  border-radius: 50%;
+}
+#sb_mic_recording
+{
+  width:136px;
+  height:136px;
+  border: 5px solid #ff9999;
+  background-color: rgba(255, 0, 0, 0);
+  position:relative;
+  border-radius: 50%;
+  -webkit-animation:sb_mic_recording 1s linear 0.25s infinite alternate;
+}
+
+@-webkit-keyframes sb_mic_recording
+{
+  from {background: red;}
+  to {background: white;}
+}
+
+/*Most visited sites list and Reorder sites list*/
+    /* Editable List properties */
+  list > * {
+    -webkit-box-align: center;
+    -webkit-transition: 150ms background-color;
+    border: none;
+    border-radius: 0;  /* TODO(dbeam): Is this necessary? */
+    box-sizing: border-box;
+    display: -webkit-box;
+    /*height: 32px;*/
+    margin: 0;
+  }
+
+  list > .spacer {
+    /* The above height rule should not apply to spacers. When redraw is called
+       on the list they will be given an explicit element height but this ensures
+       they have 0 height to begin with. */
+    height: 0;
+  }
+
+  list:not([disabled]) > :hover {
+    background-color: rgb(228, 236, 247);
+  }
+
+
+  list:not([hasElementFocus]) > [selected],
+  list:not([hasElementFocus]) > [lead][selected] {
+    background-color: #d0d0d0;
+    background-image: none;
+  }
+
+  list[hasElementFocus] > [selected],
+  list[hasElementFocus] > [lead][selected],
+  list:not([hasElementFocus]) > [selected]:hover,
+  list:not([hasElementFocus]) > [selected][lead]:hover {
+    background-color: rgb(187, 206, 233);
+    background-image: none;
+  }
+
+  list[hasElementFocus] > [lead],
+  list[hasElementFocus] > [lead][selected] {
+    border-bottom: 1px solid rgb(120, 146, 180);
+    border-top: 1px solid rgb(120, 146, 180);
+  }
+
+  list[hasElementFocus] > [lead]:nth-child(2),
+  list[hasElementFocus] > [lead][selected]:nth-child(2) {
+    border-top: 1px solid transparent;
+  }
+
+  list[hasElementFocus] > [lead]:nth-last-child(2),
+  list[hasElementFocus] > [lead][selected]:nth-last-child(2) {
+    border-bottom: 1px solid transparent;
+  }
+
+  list[disabled] > [lead][selected],
+  list[disabled]:focus > [lead][selected] {
+    border: none;
+  }
+
+  list[disabled] {
+    opacity: 0.6;
+  }
+
+  list > .heading {
+    color: #666;
+  }
+
+  list > .heading:hover {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  list .deletable-item {
+    -webkit-box-align: center;
+    list-style-type:none;
+    height: 25px;
+  }
+
+  list .deletable-item > :first-child {
+    -webkit-box-align: center;
+    -webkit-box-flex: 1;
+    -webkit-padding-end: 5px;
+    display: -webkit-box;
+  }
+
+  list .row-delete-button {
+    -webkit-transition: 150ms opacity;
+    background-color: transparent;
+    border: none;
+    display: block;
+    height: 16px;
+    opacity: 1;
+    width: 16px;
+  }
+
+  list > *:not(:hover):not([selected]):not([lead]) .row-delete-button,
+  list:not([hasElementFocus]) > *:not(:hover):not([selected]) .row-delete-button,
+  list[disabled] .row-delete-button,
+  list .row-delete-button[disabled] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+    /* HostedApp entries use the disabled closing button to display the App's
+     * favicon, as an indicator that instead of deleting the permission here
+     * the user has to remove the hosted app.*/
+  list div[role='listitem'][managedby='HostedApp'] .row-delete-button {
+    opacity: 1;
+  }
+
+  list .row-delete-button:hover {
+
+  }
+
+  list .row-delete-button:active {
+
+  }
+
+  list .static-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  list[type='text'][inlineeditable] input {
+    box-sizing: border-box;
+    margin: 0;
+    width: 100%;
+  }
+
+  list > :not([editing]) [displaymode='edit'] {
+    display: none;
+  }
+
+  list > [editing] [displaymode='static'] {
+    display: none;
+  }
+
+  list > [editing] input:invalid {
+    background-color: pink;
+  }
+
+  .list-inline-button {
+    -webkit-appearance: none;
+    -webkit-transition: opacity 150ms;
+    background: rgb(138, 170, 237);
+    border: none;
+    border-radius: 2px;
+    color: white;
+    font-weight: bold;
+    opacity: 0.7;
+  }
+
+  .list-inline-button:hover {
+    opacity: 1;
+  }
+</style>
+<link id="themecss" rel="stylesheet">
+<script src="js/cr.js" type="text/javascript"></script>
+<script src="js/cr/event_target.js" type="text/javascript"></script>
+<script src="js/cr/ui.js" type="text/javascript"></script>
+<script src="js/cr/ui/array_data_model.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_selection_model.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_selection_controller.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_single_selection_model.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_item.js" type="text/javascript"></script>
+<script src="js/cr/ui/list.js" type="text/javascript"></script>
+<script src="js/cr/ui/focus_manager.js" type="text/javascript"></script>
+<script src="js/util.js" type="text/javascript"></script>
+<script src="js/cr/ui/deletable_item_list.js" type="text/javascript"></script>
+<script type="text/javascript">
+  //Kent@FlashPeak: site list class
+  cr.define('options', function() {
+    /** @const */ var ArrayDataModel = cr.ui.ArrayDataModel;
+    /** @const */ var DeletableItem = options.DeletableItem;
+    /** @const */ var DeletableItemList = options.DeletableItemList;
+    /** @const */ var List = cr.ui.List;
+    /** @const */ var ListItem = cr.ui.ListItem;
+    /** @const */ var ListSingleSelectionModel = cr.ui.ListSingleSelectionModel;
+
+    /**
+     * Creates a new Site list item.
+     * @param {Object} siteInfo The information of the Site.
+     * @constructor
+     * @extends {DeletableItem.ListItem}
+     */
+    function SiteListItem(siteInfo) {
+      var el = cr.doc.createElement('li');
+      el.__proto__ = SiteListItem.prototype;
+      el.siteinfo_ = siteInfo;
+      el.decorate();
+      return el;
+    };
+
+    SiteListItem.prototype = {
+      __proto__: DeletableItem.prototype,
+
+      /** @override */
+      decorate: function() {
+        DeletableItem.prototype.decorate.call(this);
+        this.siteTitle = this.siteinfo_.title;
+        this.siteUrl = this.siteinfo_.url;
+        this.siteIcon = this.siteinfo_.icon;
+        this.buttonName = this.siteinfo_.button_name;
+
+        var iconEl = cr.doc.createElement('img');
+        iconEl.className = 'site-icon';
+        iconEl.src = this.siteinfo_.icon == undefined? 'chrome://favicon/size/16@1x/' + this.siteinfo_.url: this.siteinfo_.icon ;
+        iconEl.draggable = false;
+        this.contentElement.appendChild(iconEl);
+
+        this.siteNameElem = cr.doc.createElement('div');
+        this.siteNameElem.className = 'site-name';
+        this.siteNameElem.textContent = this.siteinfo_.title;
+        this.siteNameElem.title = this.siteinfo_.title;
+        this.contentElement.appendChild(this.siteNameElem);
+
+        this.draggable = true;
+      },
+    };
+
+
+    /**
+     * Creates a new site list.
+     * @param {Object=} opt_propertyBag Optional properties.
+     * @constructor
+     * @extends {cr.ui.List}
+     */
+    var SiteList = cr.ui.define('list');
+
+    SiteList.setSiteList = function(siteList) {
+      this.siteList_ = siteList;
+    }
+
+    SiteList.getSiteList = function() {
+      if(this.siteList_ != undefined) {
+        return this.siteList_;
+      }
+      return [];
+    }
+
+    SiteList.prototype = {
+      __proto__: DeletableItemList.prototype,
+      draggedItem: null,
+      dropPos: null,
+      hideDropMarkerTimer_: null,
+      /** @override */
+      decorate: function() {
+        DeletableItemList.prototype.decorate.call(this);
+        this.selectionModel = new ListSingleSelectionModel();
+      },
+
+      createItem: function(siteInfo) {
+        var item = new SiteListItem(siteInfo);
+        item.deletable = false;
+        return item;
+      },
+
+    };
+
+    return {
+      SiteList: SiteList,
+      SiteListItem: SiteListItem
+    };
+  });
+  //END OF Kent@FlashPeak: site list class
+
+  //overlay dialogs
+  var Edit_URL_dialog;
+  var Customize_TabsPage_dialog;
+  var Reorder_Sites_dialog;
+  var Most_Visited_Sites_dialog;
+  var Speech_Recognition_dialog;
+  //site list
+  var SiteList = options.SiteList;
+  var mostVisitedSiteList;
+  var sortableSiteList;
+  var most_visited_sites_data_ = [];
+  //most visited data receiver
+  var most_visited_sites_;
+  var ntp = {
+    most_visited_sites : undefined,
+    setMostVisitedPages : function (data, hasBlacklistedUrls) {
+      if (most_visited_sites_ != undefined) {
+        return;
+      }
+      most_visited_sites_ = data;
+      this.most_visited_sites = data;
+      for (var i=0; i < data.length; i++) {
+        var data_item = data[i];
+        var data_info = {
+          'url': data_item.url,
+          'title': data_item.title
+        };
+        most_visited_sites_data_.push(data_info);
+      }
+			if(SB_LAYOUT_BGTYPE==3) {
+				setQuickDialBgVideo(SB_LAYOUT_BGVIDEO);
+      }else if(SB_LAYOUT_BGTYPE==2) {
+        setQuickDialBgImage(SB_LAYOUT_BGIMAGE);
+      }else if(SB_LAYOUT_BGTYPE==0) {
+        if(SB_THEME_ID!='') {
+            setQuickDialBgImage('chrome://theme/IDR_THEME_NTP_BACKGROUND');
+        }else{
+            //theme not active
+            if (SB_BUTTON_OUT_OPACITY==1) {
+                changeButtonOpacity(OPACITY_VALUE);
+            }
+        }
+      }else if(SB_LAYOUT_BGTYPE==1){
+        if(SB_LAYOUT_BGCOLOR==""){
+          SB_LAYOUT_BGCOLOR='ffffff';
+        }
+        setQuickDialBgColor('#' + SB_LAYOUT_BGCOLOR);
+      }
+
+      pvInitQuickDialButtons();
+      setTimeout('pvResizeLayout()',100);
+      if(SB_SHOW_WEATHER=='1') {
+        showWeatherInfo();
+      }
+
+      mostVisitedSiteList = $('most-visited-sites-list');
+      SiteList.decorate(mostVisitedSiteList);
+      mostVisitedSiteList.dataModel = new cr.ui.ArrayDataModel(most_visited_sites_data_);
+      mostVisitedSiteList.autoExpands = true;
+      mostVisitedSiteList.addEventListener('click', handleClickSiteList_);
+
+      sortableSiteList = $('quick-dial-sites-list');
+      SiteList.decorate(sortableSiteList);
+      sortableSiteList.autoExpands = true;
+
+      sortableSiteList.addEventListener('dragstart', handleResortDragStart_);
+      sortableSiteList.addEventListener('dragenter', handleResortDragEnter_);
+      sortableSiteList.addEventListener('dragover', handleResortDragOver_);
+      sortableSiteList.addEventListener('drop', handleResortDrop_);
+      sortableSiteList.addEventListener('dragleave', handleResortDragLeave_);
+
+    },
+    themeChanged : function ( opt_hasAttribution ) {
+      window.location.reload();
+    }
+  }
+
+    //vars
+	var SB_LAYOUT_ROW = 2;
+	var SB_LAYOUT_COL = 4;
+	var	SB_LAYOUT_BGCOLOR='#ffffff';
+	var SB_LAYOUT_BGIMAGE='';
+	var SB_LAYOUT_BGVIDEO='';
+    var SB_BUTTON_START = 1;
+	var SB_LAYOUT_MINWIDTH = 950;
+	var SB_LAYOUT_MAXWIDTH = 950;
+	var SB_LAYOUT_MINHEIGHT = SB_LAYOUT_MINWIDTH * 3 / 4;
+	var SB_LAYOUT_MAXHEIGHT = SB_LAYOUT_MAXWIDTH * 3 / 4;
+	var SB_SNAPSHOT_MINWIDTH = 90;
+	var SB_SNAPSHOT_MAXWIDTH = 450;
+	var SB_SNAPSHOT_MINHEIGHT = 60;
+	var SB_SNAPSHOT_MAXHEIGHT = 300;
+	var SB_BUTTON_COUNT = SB_LAYOUT_ROW * SB_LAYOUT_COL + SB_BUTTON_START;
+  var OPACITY_VALUE = 1;
+  var OPACITY_BACKGROUND_VALUE = 0.7;
+
+    var SB_CMD = "sjcmd";
+    var SB_CMD_START = "('";
+    var SB_CMD_END = "')";
+
+    var sb_gAuto = new Array();
+    var sb_gLinks = new Array();
+    var sb_gTitles = new Array();
+    var sb_gImages = new Array();
+    var sb_gIcons = new Array();
+    var sb_gEngineName = "";
+    var sb_gEngineIcon = "";
+	var sb_gSearch = false;
+  var sb_gLayoutShowed = false;
+  var g_bInitButtons = false;
+
+        sb_gLinks.length = SB_BUTTON_COUNT;
+        sb_gTitles.length = SB_BUTTON_COUNT;
+        sb_gImages.length = SB_BUTTON_COUNT;
+        sb_gIcons.length = SB_BUTTON_COUNT;
+
+    var g_sb_button_width = 0;
+    var g_sb_button_height = 0;
+    var g_nLayoutWidth = 0;
+    var g_nLayoutHeight = 0;
+
+    var nButtonSpacing=45;
+    var nRowSpacing=0;
+	var nSideMargin=10;
+	var nTopMargin=30;
+	var nSideSpacing=50;
+	var nBottomMargin=30;
+	var nVerticalSpace=150;
+  var SB_LAYOUT_BGTYPE=0; //theme type
+  var sb_gWeatherBoxHidden=1;
+</script>
+<script type="text/javascript" src="newtab.js"></script>
+<script type="text/javascript">
+//recale values after newtab.js
+  var SB_BUTTON_MINWIDTH = SB_SNAPSHOT_MINWIDTH + 45;
+  var SB_BUTTON_MAXWIDTH = SB_SNAPSHOT_MAXWIDTH + 45;
+  var SB_BUTTON_MINHEIGHT = SB_SNAPSHOT_MINHEIGHT + 60;
+  var SB_BUTTON_MAXHEIGHT = SB_SNAPSHOT_MAXHEIGHT + 60;
+  var nMaxCellWidth=SB_SNAPSHOT_MAXWIDTH+2*nSideMargin+nButtonSpacing;
+  var nMinCellWidth=SB_SNAPSHOT_MINWIDTH+2*nSideMargin+nButtonSpacing;
+</script>
+<script type="text/javascript">
+    //functions
+    var ListItem = cr.ui.ListItem;
+    function pvShowToolButtons(button_index, is_show) {
+      var visibility_toolbar = is_show == '0'? 'hidden': '';
+      var top_toolbar = pvGetID('sb_top_toolbar_'+button_index);
+      var bottom_toolbar = pvGetID('sb_bottom_toolbar_'+button_index);
+      if (top_toolbar && bottom_toolbar) {
+        top_toolbar.style.visibility = visibility_toolbar;
+        bottom_toolbar.style.visibility = visibility_toolbar;
+      }
+    }
+    function showRefreshButton(button_index) {
+      var refresh_button = pvGetID('sb_refresh_button_'+button_index);
+      if (refresh_button) {
+        refresh_button.style.display = '';
+      }
+    }
+    function hideRefreshButton(button_index) {
+      var refresh_button = pvGetID('sb_refresh_button_'+button_index);
+      if (refresh_button) {
+        refresh_button.style.display = 'none';
+      }
+    }
+    function getTargetFromDropEvent_(e) {
+      var target = e.target;
+      while (target != null && !(target instanceof ListItem)) {
+        target = target.parentNode;
+      }
+      return target;
+    }
+
+    function handleResortDragStart_(e) {
+      var target = e.target;
+      if (target instanceof ListItem) {
+        sortableSiteList.draggedItem = target;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', target.title);
+      }
+    }
+
+    function handleResortDragEnter_(e) {
+      e.preventDefault();
+    }
+
+    function handleResortDragOver_(e) {
+      var dropTarget = getTargetFromDropEvent_(e);
+      if (!(dropTarget instanceof ListItem) ||
+          dropTarget == sortableSiteList.draggedItem) {
+        hideDropMarker_();
+        return;
+      }
+      var rect = dropTarget.getBoundingClientRect();
+      var dy = e.clientY - rect.top;
+      var yRatio = dy / rect.height;
+      var dropPos = yRatio <= .5 ? 'above' : 'below';
+      sortableSiteList.dropPos = dropPos;
+      showDropMarker_(dropTarget, dropPos);
+      e.preventDefault();
+    }
+
+    function handleResortDrop_(e) {
+      var dropTarget = getTargetFromDropEvent_(e);
+      hideDropMarker_();
+
+      var dropPos = sortableSiteList.dropPos;
+      var dropButtonName = dropTarget.buttonName;
+      var draggedButtonName = sortableSiteList.draggedItem.buttonName;
+
+      var i = 0;
+      var originalIndex = -1;
+      for (i = 0; i < sortableSiteList.dataModel.length; i++) {
+        if (sortableSiteList.dataModel.item(i).button_name == draggedButtonName) {
+          originalIndex = i;
+          break;
+        }
+      }
+      if (originalIndex == -1) {
+        return;
+      }
+      sortableSiteList.dataModel.splice(originalIndex, 1);
+
+      var newIndex =  -1;
+      for (i = 0; i < sortableSiteList.dataModel.length; i++) {
+        if (sortableSiteList.dataModel.item(i).button_name == dropButtonName) {
+          newIndex = i;
+          break;
+        }
+      }
+      if (newIndex == -1) {
+        return;
+      }
+      if (dropPos == 'below') {
+        newIndex += 1;
+      }
+      var site_info = {
+        'url': sortableSiteList.draggedItem.siteUrl,
+        'title': sortableSiteList.draggedItem.siteTitle,
+        'icon': sortableSiteList.draggedItem.siteIcon,
+        'button_name': sortableSiteList.draggedItem.buttonName
+      };
+      sortableSiteList.dataModel.splice(newIndex, 0, site_info);
+
+      sortableSiteList.selectionModel.selectedIndex = newIndex;
+
+      saveReorderSites(originalIndex,newIndex,dropPos == 'below'? '1':'0');
+    }
+    function handleResortDragLeave_(e) {
+      hideDropMarker_();
+    }
+    function showDropMarker_(target, pos) {
+      window.clearTimeout(sortableSiteList.hideDropMarkerTimer_);
+      var marker = $('reorder-sites-list-dropmarker');
+      var rect = target.getBoundingClientRect();
+      var markerHeight = 8;
+      if (pos == 'above') {
+        marker.style.top = (rect.top - markerHeight / 2) + 'px';
+      } else {
+        marker.style.top = (rect.bottom - markerHeight / 2) + 'px';
+      }
+      marker.style.width = rect.width + 'px';
+      marker.style.left = rect.left + 'px';
+      marker.style.display = 'block';
+    }
+    function hideDropMarker_() {
+      window.clearTimeout(sortableSiteList.hideDropMarkerTimer_);
+      sortableSiteList.hideDropMarkerTimer_ = window.setTimeout(function() {
+        $('reorder-sites-list-dropmarker').style.display = '';
+      }, 100);
+    }
+    function handleClickSiteList_(e) {
+      if (mostVisitedSiteList.selectionModel.selectedIndexes.length == 0) {
+        return;
+      }
+      var index = mostVisitedSiteList.selectionModel.selectedIndexes[0];
+      var site_info = mostVisitedSiteList.dataModel.item(index);
+      setEditDialogUrlAndTitle(site_info.url, site_info.title);
+      Most_Visited_Sites_dialog.close();
+    }
+
+    function closeEditUrlDialog() {
+      Edit_URL_dialog.close();
+    }
+
+    function closeCustomizeDialog() {
+      if(SB_LAYOUT_BGVIDEO!="") {
+        pvGetID('quickdial_bgimage').value='';
+      }else if(SB_LAYOUT_BGIMAGE!=""){
+        pvGetID('quickdial_bgvideo').value='';
+      }
+      Customize_TabsPage_dialog.close();
+    }
+
+    function saveReorderSites(draggedButtonIndex,dropButtonIndex,dropPosBelow) {
+      doSbCmd("//SaveReorderSites " + draggedButtonIndex + '\t' + dropButtonIndex + '\t' +dropPosBelow);
+    }
+
+    function saveEditQuickDialButton() {
+      var nIndex = Edit_URL_dialog.getData('button_index');
+      if (!isIndexValid(nIndex)) return;
+      var sLink = pvGetID('site_url').value;
+      var sTitle = pvGetID('site_title').value;
+
+      if (sb_gAuto[nIndex] == true) {
+        if (pvGetID('url_or_command_auto').checked) {
+          closeEditUrlDialog();
+          return;
+        }
+      } else if (pvGetID('url_or_command_auto').checked == false) {
+        if (sLink == sb_gLinks[nIndex] && sTitle == sb_gTitles[nIndex]) {
+          closeEditUrlDialog();
+          return;
+        }
+        if (sLink == "") {
+          alert("lz(Please specify a valid URL!)");
+          return;
+        }
+      }
+
+      if (pvGetID('url_or_command_auto').checked) {
+        sLink = '#';
+        sTitle = '';
+        sb_gAuto[nIndex] = true;
+      } else {
+        sb_gAuto[nIndex] = false;
+        showRefreshButton(nIndex);
+      }
+      pvSetupIndex(nIndex,sLink,sTitle);
+
+      sLink = escape(sLink);
+      sTitle = escape(sTitle);
+      doSbCmd("//saveEditQuickDialButton " + nIndex + '\t' + sLink + '\t' + sTitle);
+      closeEditUrlDialog();
+    }
+
+    function saveCustomizeSettings() {
+      var row = pvGetID('quickdial_rows').value;
+      var col = pvGetID('quickdial_columns').value;
+      var bgcolor = pvGetID('quickdial_bgcolor').value;
+      var bgimage = pvGetID('quickdial_bgimage').value;
+      var bgrepeat = pvGetID('quickdial_bgrepeat').checked?'1':'0';
+      var bgvideo = pvGetID('quickdial_bgvideo').value;
+      var bgmute = pvGetID('quickdial_bgmute').checked?'1':'0';
+      var show_weather = pvGetID('quickdial_weather').checked?'1':'0';
+      var video_source_file = pvGetID('quickdial_video_source_file').value;//The file will be copy to newtab/background
+      var image_source_file = pvGetID('quickdial_image_source_file').value;//The image file will be copy to newtab/background
+      var bgtype = 0;
+      if (pvGetID('quickdial_use_theme_bg').checked) {
+        bgtype = 0;
+      } else if (pvGetID('quickdial_use_bgcolor').checked) {
+        bgtype = 1;
+        if (bgcolor=='') {
+          bgcolor='ffffff';
+        }
+      } else if (pvGetID('quickdial_use_bgvideo').checked) {
+        bgtype = 3;
+        setQuickDialBgVideo('');//stop for overwrite it
+        if (bgvideo != '') {
+          bgvideo=bgvideo.replace(/\\/g,'/');
+        }
+      } else if (pvGetID('quickdial_use_bgimage').checked) {
+        bgtype = 2;
+      }
+
+      var error_info = "lz(Please enter an integer between %1 and %2!)";
+      if (!(row > 0 && row <= 10)) {
+        alert(error_info.replace("%1","1").replace("%2","10"));
+        return "";
+      }
+      if (!(col > 1 && col <= 10)) {
+        alert(error_info.replace("%1","2").replace("%2","10"));
+        return "";
+      }
+      row = row.replace(' ','');
+      col = col.replace(' ','');
+
+      if (bgcolor=='') {
+        bgcolor=SB_LAYOUT_BGCOLOR;
+      }
+      doSbCmd('//CustomizeQuickDialPage ' + row + '\t' + col + '\t' + bgcolor + '\t' + bgimage + '\t' + bgrepeat + '\t' + image_source_file + '\t' + bgvideo + '\t' + video_source_file + '\t' + bgtype + '\t' + bgmute + '\t' + show_weather);
+    }
+
+    function setCustomizeBgColorField(sColor) {
+      pvGetID('quickdial_bgcolor').value = "#" + sColor;
+      pvGetID('quickdial_bgimage').value = '';
+      pvGetID('quickdial_bgvideo').value = '';
+    }
+
+    function setCustomizeBgImageField(sImage,image_src) {
+      pvGetID('quickdial_bgimage').value = sImage;
+      pvGetID('quickdial_image_source_file').value = image_src;
+      pvGetID('quickdial_bgcolor').value = '';
+      pvGetID('quickdial_bgvideo').value = '';
+    }
+    function setCustomizeBgVideoField(sVideo,video_src) {
+      pvGetID('quickdial_bgimage').value = '';
+      pvGetID('quickdial_video_source_file').value = video_src;
+      pvGetID('quickdial_bgcolor').value = '';
+      pvGetID('quickdial_bgvideo').value = sVideo;
+    }
+
+    function setEditDialogUrlAndTitle(sUrl,sTitle){
+      pvGetID('site_url').value = sUrl;
+      pvGetID('site_title').value = sTitle;
+      pvGetID('url_or_command_manual').checked = true;
+    }
+    function showWeatherBox(is_show) {
+      pvGetID('sb_weather').style.visibility=is_show?'visible':'hidden';
+      pvGetID('weather_temp').style.visibility=is_show?'visible':'hidden';
+    }
+    function showWeatherInfo() {
+      setWeatherInfo(SB_WEATHER_TEMPERATURE,SB_WEATHER_CENTIGRADE,SB_WEATHER_TIP,1,1);
+      showWeatherBox(sb_gWeatherBoxHidden==0);
+    }
+    function setWeatherInfo(weather_temp,is_centigrade,weather_tooltip,include_weather_icon,include_weather_tooltip) {
+      if (include_weather_icon==1) {
+        pvGetID('sb_weather_icon').style.backgroundImage='url(weather/weather_icon.png?r=' + Math.round(Math.random()*100000) + ')';
+      }
+      if (include_weather_tooltip!=1) {
+        return;
+      }
+      if (weather_temp==-1000) {
+        pvGetID('weather_temp').style.visibility='hidden';
+        SB_WEATHER_TIP='';
+        return;
+      }
+      pvGetID('weather_temp').style.visibility='visible';
+      pvGetID('weather_temp').innerText=weather_temp + (is_centigrade==1?'℃':'℉');
+
+      SB_WEATHER_TEMPERATURE=weather_temp;
+      SB_WEATHER_CENTIGRADE=is_centigrade;
+      SB_WEATHER_TIP=weather_tooltip;
+      SB_SHOW_WEATHER='1';
+      showWeatherBox(sb_gWeatherBoxHidden==0);
+    }
+
+		function showSelectBgVideoDialog() {
+      pvGetID('quickdial_use_bgvideo').checked = true;
+      doSbCmd('//ShowSelectBgVideoDialog');
+    }
+
+    function showSelectBgImageDialog() {
+      pvGetID('quickdial_use_bgimage').checked = true;
+      doSbCmd('//ShowSelectBgImageDialog');
+    }
+
+    function showSelectBgColorDialog() {
+      pvGetID('color_chooser').click();
+    }
+
+    function showReorderSitesDialog() {
+      if (sortableSiteList.dataModel == undefined) {
+        var site_info_list = [];
+        var pos_most_visited_site = 0;
+        for (var i = SB_BUTTON_START; i < SB_BUTTON_COUNT; i++) {
+          var site_url = '';
+          var site_title = '';
+          var site_icon = undefined;
+          if (sb_gAuto[i]) {
+            if (pos_most_visited_site < most_visited_sites_data_.length) {
+              pos_most_visited_site++;
+              site_url = "";
+              site_title = "lz(Automatic)";
+            }
+          } else {
+            site_url = sb_gLinks[i];
+            site_title =sb_gTitles[i];
+            site_icon = sb_gIcons[i];
+          }
+          var site_info = {
+            'url': site_url,
+            'title': site_title,
+            'icon': site_icon,
+            'button_name': 'button_' + i
+          };
+          site_info_list.push(site_info);
+        }
+        sortableSiteList.dataModel = new cr.ui.ArrayDataModel(site_info_list);
+      }
+      Reorder_Sites_dialog.open();
+    }
+
+    function setQuickDialButtonToMostVisitedSite(nIndex) {
+        var sLink, sTitle, sImage, sIcon;
+        if (!isIndexValid(nIndex)) return;
+        if (most_visited_sites_ == undefined || most_visited_sites_.length == 0) {
+          deleteQuickDialButton(nIndex);
+          return;
+        }
+        var site_info = most_visited_sites_.shift();
+        sLink = site_info.url;;
+        sTitle = site_info.title;
+        sImage = "chrome://thumb/" + sLink;
+        sIcon = "chrome://favicon/size/16@1x/" + sLink;
+        pvSetupIndex(nIndex, sLink, sTitle, sImage, sIcon);
+    }
+
+    function sjcmd(s) {
+      var sUrl;
+      if (s != "") {
+        var sCmd = String(s);
+        if (sCmd.substr(0,2) == '//') {
+          sCmd = sCmd.substr(2);
+          var sArg = '';
+          var q=sCmd.indexOf(' ');
+          if (q != -1) {
+            sArg=sCmd.slice(q+1);
+            if (sArg.indexOf('\t')!=-1) { //args split with '\t'
+              sArg=sArg.split('\t');
+            } else if (sArg.indexOf(' ')!=-1) {//args split with ' '
+              sArg=sArg.split(' ');
+            } else { //only one arg
+              sArg=s.split(' ');
+              sArg=sArg.slice(1);
+            }
+            sCmd=sCmd.slice(0,q);
+          }
+          if (sCmd == 'editQuickDialButton') {
+            var edit_button_Index = sArg[0];
+            if (!isIndexValid(edit_button_Index)) return;
+
+            Edit_URL_dialog.setData('button_index', edit_button_Index);
+            var edit_button_url = sb_gLinks[edit_button_Index];
+            var command_type_radio = pvGetID('url_or_command_radio');
+            if (sb_gAuto[edit_button_Index] == true) {
+              pvGetID('url_or_command_auto').checked = true;
+              if (sb_gTitles[edit_button_Index] == '') {
+                edit_button_url = '';
+              }
+            } else {
+              if (edit_button_url.indexOf("javascript:void(sjcmd('//editQuickDialButton%20") == 0) {
+                edit_button_url = '';
+              }
+              pvGetID('url_or_command_manual').checked = true;
+            }
+            pvGetID('site_url').value = edit_button_url;
+            pvGetID('site_title').value = sb_gTitles[edit_button_Index];
+
+            Edit_URL_dialog.open();
+            return;
+          } else if (sCmd == 'refreshQuickDialButton') {
+            sUrl = sb_gLinks[sArg[0]];
+            if (sUrl.indexOf('javascript:void(sjcmd(') == 0) {
+             return;
+            }
+            sArg.push(sUrl);
+            sArg.push(sb_gTitles[sArg[0]]);
+            setQuickDialButtonWaiting(sArg[0]);
+            setTimeout("refreshQuickDialButtonImagesTimeout('" + sArg[0] + "')",31000);
+          } else if (sCmd == 'newTabPageSearch') {
+            sArg[0] = unescape(sArg.join(' '));//search term
+            sArg.push(sb_gEngineName);
+          } else if (sCmd == 'saveEditQuickDialButton') {
+            sArg[1] = unescape(sArg[1]);//title
+            sArg[2] = unescape(sArg[2]);//url
+            setQuickDialButtonWaiting(sArg[0]);
+            setTimeout("refreshQuickDialButtonImagesTimeout('" + sArg[0] + "')",31000);
+          } else if (sCmd == 'showFrequentlySitesDialog') {
+            Most_Visited_Sites_dialog.open();
+            return;
+          } else if (sCmd == 'CustomizeQuickDialPage') {
+            sArg[2] = unescape(sArg[2]);//bgcolor
+            sArg[5] = unescape(sArg[5]);//image_source_file name
+            sArg[7] = unescape(sArg[7]);//video_source_file name
+          } else if (sCmd == 'deleteQuickDialButton') {
+            if (sb_gAuto[sArg[0]]) {
+              sUrl = sb_gLinks[sArg[0]];
+              chrome.send('blacklistURLFromMostVisited', [sUrl]);
+            }
+          }
+
+
+          if (sArg.length == 0) {
+            chrome.send(sCmd);
+          } else {
+            chrome.send(sCmd,sArg);
+          }
+        }
+      }
+    }
+    function lz(s){
+      return s;
+    }
+    function getButtonCount() {
+      return SB_LAYOUT_ROW * SB_LAYOUT_COL;
+    }
+
+    function deleteQuickDialButton(nIndex) {
+        var sLink, sTitle, sImage, sIcon;
+        if (!isIndexValid(nIndex)) return;
+        sLink = pvGetSbCommand("//editQuickDialButton " + nIndex);
+        sTitle = "";
+        sImage = "images/0_snap.jpg";
+        sIcon = "images/0_icon.png";
+        pvSetupIndex(nIndex, sLink, sTitle, sImage, sIcon);
+    }
+    function setQuickDialButton(nIndex, szLink, szTitle) {
+        var sLink, sTitle, sImage, sIcon;
+        if (!isIndexValid(nIndex)) return;
+        if(szLink=="") {
+        	deleteQuickDialButton(nIndex);
+        	return;
+        }
+        sLink = szLink;
+        sTitle = szTitle;
+        sImage = undefined;
+        sIcon = undefined;
+        pvSetupIndex(nIndex, sLink, sTitle, sImage, sIcon);
+        refreshQuickDialButtonImages(nIndex);
+    }
+    function refreshQuickDialButtonIconOnly(nIndex) {
+        var sLink, sTitle, sImage, sIcon;
+        if (!isIndexValid(nIndex)) return;
+        sLink = undefined;
+        sTitle = undefined;
+        sImage = undefined;
+        sIcon = "";
+        pvSetupIndex(nIndex, sLink, sTitle, sImage, sIcon);
+        sIcon = "sites/" + nIndex + "_icon.png" + '?r='+Math.random();
+        pvSetupIndex(nIndex, sLink, sTitle, sImage, sIcon);
+    }
+    function refreshQuickDialButtonImagesTimeout(nIndex) {
+      if (!isIndexValid(nIndex)) return;
+      if (pvGetID("sb_DialID_" + nIndex + "_img").src != "images/spacer.gif") return;
+      refreshQuickDialButtonImages(nIndex);
+    }
+    function refreshQuickDialButtonImages(nIndex) {
+        var sLink, sTitle, sImage, sIcon;
+        if (!isIndexValid(nIndex)) return;
+        pvClearDialButtonWaiting(nIndex);
+        sLink = undefined;
+        sTitle = undefined;
+        sImage = "";
+        sIcon = "";
+        pvSetupIndex(nIndex, sLink, sTitle, sImage, sIcon);
+        sImage = "sites/" + nIndex + "_snap.jpg"  + '?r='+Math.random();
+        sIcon = "sites/" + nIndex + "_icon.png" + '?r='+Math.random();
+        pvSetupIndex(nIndex, sLink, sTitle, sImage, sIcon);
+    }
+    function setQuickDialButtonWaiting(nIndex) {
+        var sImage, sIcon;
+        sImage = "images/loading.gif";
+        sIcon = "images/0_icon.png";
+        pvSetQuickDialButtonCenterImage(nIndex, sImage, sIcon);
+    }
+    function pvClearDialButtonWaiting(nIndex) {
+        pvSetQuickDialButtonCenterImage(nIndex, "images/spacer.gif", "images/0_icon.png");
+    }
+    function pvSetQuickDialButtonCenterImage(nIndex,sImage,sIcon) {
+        if (!isIndexValid(nIndex)) return;
+        var sID = "sb_DialID_" + nIndex + "_";
+
+        sb_gImages[nIndex] = sImage;
+        oID = pvGetID(sID + "bgimg");
+        if (oID != null) {
+            oID.style.backgroundImage = "url('" + sImage + "')";
+        }
+        oID = pvGetID(sID + "img");
+        if (oID != null) {
+            oID.src = "images/spacer.gif";
+        }
+        sb_gIcons[nIndex] = sIcon;
+        oID = pvGetID(sID + "ico");
+        if (oID != null) {
+            oID.src = sIcon;
+            oID.width = 16;
+            oID.height = 16;
+        }
+    }
+    function setSearchEngine(sName, sIconPath) {
+        pvSetupEngine(sName,sIconPath)
+        sb_gEngineName = sName;
+        sb_gEngineIcon = sIconPath;
+    }
+    function pvSetButtonTitle(nIndex, sTitle) {
+      pvSetupIndex(nIndex,undefined,sTitle);
+    }
+    function pvSetupIndex(nIndex, sLink, sTitle, sImage, sIcon) {
+        if (!isIndexValid(nIndex)) return;
+
+        var sID = "sb_DialID_" + nIndex + "_";
+        var oID;
+        try {
+            if (sLink != undefined) {
+                sb_gLinks[nIndex] = sLink;
+            }
+            if (sTitle != undefined) {
+                sb_gTitles[nIndex] = sTitle;
+                oID = pvGetID(sID + "title");
+                if(oID!=null){
+                	if(g_sb_button_width>0){
+	                	oID.innerText = sTitle;
+	                	var nWidthMax=g_sb_button_width - 16*2 - 30 - 16;
+	                	if(oID.offsetWidth> nWidthMax){
+	                		var n = 1;
+	                		oID.innerText = "";
+	                		while(oID.offsetWidth < (nWidthMax) && n < sTitle.length){
+	                			oID.innerText = sTitle.substr(0,n) + "...";
+	                			n++;
+	                		}
+	                	}
+	                }
+                }
+            }
+            if (sImage != undefined) {
+                sb_gImages[nIndex] = sImage;
+                oID = pvGetID(sID + "img");
+                if (oID != null) {
+                	oID.src=sImage;
+                	oID.width = g_sb_button_width;
+                	oID.height = g_sb_button_height;
+                }
+            }
+            if (sIcon != undefined) {
+                sb_gIcons[nIndex] = sIcon;
+                oID = pvGetID(sID + "ico");
+                if (oID != null) {
+                	oID.src = sIcon;
+                	oID.width = 16;
+                	oID.height = 16;
+                }
+            }
+        } catch (e) {}
+    }
+    function pvSetupEngine(sName, sIcon) {
+        try{
+            var oName = pvGetID("sb_engineName");
+            if (oName != null) {
+                oName.innerText = sName;
+            }
+            oName = pvGetID("sb_searchBox");
+            if (oName != null) {
+                oName.placeholder = sName;
+            }
+            var oIcon = pvGetID("sb_engineIcon");
+            if (oIcon != null) {
+                oIcon.src = sIcon;
+                oIcon.width = 16;
+                oIcon.height = 16;
+            }
+        }catch(e){}
+    }
+    function pvOpenNewTab(nIndex) {
+        if (!isIndexValid(nIndex)) return;
+        var sHref = new String(sb_gLinks[nIndex]);
+        open(sHref);
+    }
+
+    function isIndexValid(nIndex) {
+        if (nIndex >= SB_BUTTON_START && nIndex <= SB_BUTTON_COUNT) {
+            return true;
+        }
+        return false;
+    }
+    function pvGetID(sID) {
+        return document.getElementById(sID);
+    }
+    function pvGetItemTpl() {
+    	var tpl=pvGetID("sb_dial_tpl");
+    	if(tpl == null ){
+    		alert("Template error");
+    		return "";
+    	}
+    	return tpl.innerHTML;
+    }
+    function doSearch() {
+		    sb_gSearch = true;//sbt
+        var oSearchBox = document.sb_searchform.sb_searchTerms;
+        var sSearch = escape(oSearchBox.value);
+        if (sSearch != "") {
+            location = pvGetSbCommand("//newTabPageSearch " + sSearch);
+        }
+    }
+    function doPopupEnginesList() {
+        var oIcon = pvGetID("sb_engineIcon");
+        var xPos=0;
+        var yPos = 0;
+        try {
+            if (oIcon != null) {
+                xPos = oIcon.offsetLeft;
+                yPos = oIcon.offsetTop + oIcon.offsetHeight + 2;
+            }
+        } catch (e) {
+            xPos = 0;
+            yPos = 0;
+        }
+        location = pvGetSbCommand("//changeNewTabPageSearchEngine " + xPos + "\t" + yPos);
+    }
+    function pvGetSbCommand(sCMD){
+    	if(sCMD != ""){
+        return "javascript:void(" + SB_CMD + SB_CMD_START +  escape(sCMD) + SB_CMD_END + ");";
+    	}
+    	return "";
+    }
+    function doSbCmd(sCMD){
+    	location = pvGetSbCommand(sCMD);
+    }
+    function pvInitQuickDialButtons() {
+      if (most_visited_sites_ == undefined) {
+        return;
+      }
+      g_bInitButtons = true;
+      g_nLayoutWidth = 0;
+      g_nLayoutHeight = 0;
+
+		showQuickDialLayout(false);
+        for (var i = SB_BUTTON_START; i <= SB_BUTTON_COUNT; i++) {
+            if (sb_gLinks[i] == '#') {
+                sb_gAuto[i] = true;
+                setQuickDialButtonToMostVisitedSite(i);
+                hideRefreshButton(i);
+            } else if (sb_gLinks[i] == undefined) {
+                deleteQuickDialButton(i);
+            } else {
+                if (sb_gImages[i] == undefined) {
+                    setQuickDialButton(i, sb_gLinks[i], sb_gTitles[i]);
+                    if (sb_gLinks[i].indexOf('opengroup ')==0) {
+                      hideRefreshButton(i);
+                    }
+                } else {
+                    pvSetupIndex(i, sb_gLinks[i], sb_gTitles[i], sb_gImages[i], sb_gIcons[i]);
+                }
+            }
+        }
+        most_visited_sites_.length = 0;
+        if(sb_gEngineName != '' ){
+            pvSetupEngine(sb_gEngineName, sb_gEngineIcon);
+        } else {
+          doSbCmd("//initSearchBar");
+        }
+
+            if(SB_SHOW_WEATHER=='1') {
+              doSbCmd('//UpdateWeather');
+            }
+    }
+    function createTableLayout(nRow, nCol) {
+        var sItem = pvGetItemTpl();
+        if (sItem == "") {
+            return "";
+        }
+        var sLayout = new Array();
+        if (!(SB_LAYOUT_ROW > 0 && SB_LAYOUT_ROW <= 10)) {
+            alert("Layout Row Out of Range (1-10) =" + SB_LAYOUT_ROW);
+            return "";
+        }
+        if (!(SB_LAYOUT_COL > 1 && SB_LAYOUT_COL <= 10)) {
+            alert("Layout Col Out of Range (2-10) =" + SB_LAYOUT_COL);
+            return "";
+        }
+
+        var sTip2 = "lz(Refresh)";
+        var sTip3 = "lz(Edit)";
+        var sTip4 = "lz(Clear)";
+        sLayout.push('<table width="1000" border="0" id="tablebuttons" cellpadding="0" cellspacing="0">');
+        for (var i = 1; i <= SB_LAYOUT_ROW; i++) {
+            sLayout.push("<tr id='row" + i + "' valign='middle'>");
+            for (var j = 1; j <= SB_LAYOUT_COL; j++) {
+                var sDial = sItem;
+                sDial = sDial.replace(/\{SB_ITEM\}/g, ((i - 1) * SB_LAYOUT_COL + j));
+
+                sDial = sDial.replace(/\{SB_TOOLTIP2\}/g, sTip2);
+                sDial = sDial.replace(/\{SB_TOOLTIP3\}/g, sTip3);
+                sDial = sDial.replace(/\{SB_TOOLTIP4\}/g, sTip4);
+				        sLayout.push("<td id='sb_DialID_" + ((i - 1) * SB_LAYOUT_COL + j) + "_block'>");
+                sLayout.push(sDial);
+                sLayout.push("</td>");
+            }
+            sLayout.push("</tr>");
+        }
+        sLayout.push("</table>");
+        return sLayout.join("");
+    }
+
+    function showQuickDialLayout(bShow){
+      if (sb_gLayoutShowed == bShow) {
+        return;
+      }
+
+      if (!g_bInitButtons) {
+        return;
+      }
+
+    	var quick_dial=pvGetID("sb_quick_dial");
+  		if(quick_dial == null){
+  			alert("Template error");
+  			return;
+  		}
+  		var oSearchBar=pvGetID("sb_search_bar");
+  		if(oSearchBar==null){
+  			alert("Search bar error");
+  			return;
+  		}
+  		var oCustomBox=pvGetID("sb_custom_box");
+  		if(oCustomBox==null){
+  			alert("Custom box error");
+  			return;
+  		}
+  		if(bShow==true){
+  			oSearchBar.style.visibility='visible';
+  			oCustomBox.style.visibility='visible';
+        quick_dial.style.visibility='visible';
+        if(SB_SHOW_WEATHER=='1') {
+          if(sb_gWeatherBoxHidden==0) {
+            showWeatherBox(bShow);
+          }
+        }
+  		}else{
+  			quick_dial.style.visibility='hidden';
+  			oSearchBar.style.visibility='hidden';
+  			oCustomBox.style.visibility='hidden';
+        showWeatherBox(bShow);
+  		}
+      sb_gLayoutShowed = bShow;
+    }
+
+    function pvResizeLayout(){
+      var nWidth=window.innerWidth;
+      var nHeight=window.innerHeight;
+
+    	if((nWidth==g_nLayoutWidth)&&(nHeight==g_nLayoutHeight)){
+    		return;
+    	}
+
+    	g_nLayoutWidth=nWidth;
+    	g_nLayoutHeight=nHeight;
+
+    	showQuickDialLayout(false);
+
+    	var nCellWidth=Math.round((nWidth-2*nSideSpacing)/SB_LAYOUT_COL);
+		//We should also estimate the cell width from window height;
+		var nEstCellHeight=(nHeight-nVerticalSpace)/SB_LAYOUT_ROW;
+		var nEstCellWidth=Math.round((nEstCellHeight-(nTopMargin+nBottomMargin+nButtonSpacing))/2*3)+2*nSideMargin+nButtonSpacing;
+
+        //We should take the smaller of the two estimated width.
+		if (nCellWidth>nEstCellWidth) nCellWidth=nEstCellWidth;
+
+		//apply max and min cell width limit here.
+		if (nCellWidth>nMaxCellWidth) nCellWidth=nMaxCellWidth;
+		if (nCellWidth<nMinCellWidth) nCellWidth=nMinCellWidth;
+
+    	var nCellHeight=Math.round((nCellWidth-2*nSideMargin-nButtonSpacing)*2/3)+nTopMargin+nBottomMargin+nButtonSpacing;
+    	var nWidthBtn=nCellWidth-nButtonSpacing;
+    	var nHeightBtn=nCellHeight-nButtonSpacing;
+        var nHeightImg=nCellHeight-nButtonSpacing-nTopMargin-nBottomMargin;
+        var nWidthImg=nCellWidth-nButtonSpacing-2*nSideMargin;
+        g_sb_button_width=nWidthBtn;
+		g_sb_button_height=nHeightBtn;
+
+		var oTable=pvGetID("sb_newtab_content");
+		if(oTable!=null){
+			oTable.style.width=nCellWidth * SB_LAYOUT_COL + "px";//nWidth + "px";
+		}
+
+		var width=nWidth;
+		var table=pvGetID("tablebuttons");
+		if(table!=null){
+			table.width=nCellWidth * SB_LAYOUT_COL + "px";
+		}
+		for (var k=1; k<=SB_LAYOUT_ROW; k++)
+		{
+			var row=pvGetID("row"+k);
+			if(row!=null){
+				row.style.height=nCellHeight+nRowSpacing+"px";
+			}
+		}
+
+		for (var i = 1; i <= SB_LAYOUT_ROW; i++) {
+			for (var j = 1; j <= SB_LAYOUT_COL; j++) {
+				var nIndex = ((i - 1) * SB_LAYOUT_COL + j);
+        var oItemBlock = pvGetID('sb_DialID_' + nIndex + '_block');
+				var sItemID = 'sb_DialID_' + nIndex + '_btn';
+		        var oItem = pvGetID(sItemID);
+		        if(oItem!=null){
+		            oItem.style.width=nWidthBtn + "px";
+		            oItem.style.height=nHeightBtn + "px";
+								oItem.style.left=(nButtonSpacing/2)+"px";
+		        }
+		        var sTitle=getButtonTitle(nIndex);
+                var oTitle = pvGetID('sb_DialID_' + nIndex + '_' + 'title');
+                if(oTitle!=null){
+                	oTitle.innerText = sTitle;
+                	var nWidthMax=g_sb_button_width - 16*2 - 30 - 16;
+                	if(oTitle.offsetWidth> nWidthMax){
+                		var n = 1;
+                		oTitle.innerText = "";
+                		while(oTitle.offsetWidth < (nWidthMax) && n < sTitle.length){
+                			oTitle.innerText = sTitle.substr(0,n) + "...";
+                			n++;
+                		}
+                	}
+                }
+	            var oImgBg=pvGetID('sb_DialID_' + nIndex + '_bgimg');
+	            if(oImgBg!=null){
+	            	oImgBg.style.width=nWidthImg + "px";
+	            	oImgBg.style.height=nHeightImg + "px";
+	            }
+	            var oImgItem=pvGetID('sb_DialID_' + nIndex + '_img');
+	            if(oImgItem!=null){
+	            	oImgItem.style.width=nWidthImg + "px";
+	            	oImgItem.style.height=nHeightImg + "px";
+	            }
+
+			}
+		}
+
+		var oSearchBar=pvGetID("sb_search_bar");
+		if(oSearchBar!=null){
+			var nWidthSearchBar=nWidth/4;
+			nWidthSearchBar=nWidthSearchBar<400?400:nWidthSearchBar;
+			oSearchBar.style.width=nWidthSearchBar + "px";
+			var oSearchBox=pvGetID("sb_searchBox");
+			if(oSearchBox!=null){
+				oSearchBox.style.width=(nWidthSearchBar - 78 - 21)+"px"; //21px is voice-button
+        if (navigator.userAgent.indexOf('Macintosh')!=-1) {
+          oSearchBox.style.width=(nWidthSearchBar - 78 - 21 - 1)+"px";//fix mac searchbar layout
+        }
+
+        $("sb_custom_box").style.right = g_nLayoutWidth<740? g_nLayoutWidth - 740 + 40 + "px": "40px";
+
+        if(g_nLayoutWidth<740) {
+          sb_gWeatherBoxHidden=1;
+        } else {
+          sb_gWeatherBoxHidden=0;
+        }
+			}
+
+		}
+		showQuickDialLayout(true);
+    }
+
+    function setQuickDialLayout(nRow,nCol){
+	    showQuickDialLayout(false);
+
+		SB_LAYOUT_ROW = nRow;
+		SB_LAYOUT_COL = nCol;
+
+		SB_BUTTON_COUNT = SB_LAYOUT_ROW * SB_LAYOUT_COL + SB_BUTTON_START;
+		sb_gLinks.length = SB_BUTTON_COUNT;
+        sb_gTitles.length = SB_BUTTON_COUNT;
+        sb_gImages.length = SB_BUTTON_COUNT;
+        sb_gIcons.length = SB_BUTTON_COUNT;
+
+		var quick_dial=pvGetID("sb_quick_dial");
+		if(quick_dial == null){
+			alert("Template error");
+			return;
+		}
+		var oSearchBar=pvGetID("sb_search_bar");
+		if(oSearchBar==null){
+			alert("Search bar error");
+			return;
+		}
+
+		var htmlLayout=createTableLayout(nRow,nCol);
+		quick_dial.innerHTML=htmlLayout;
+
+	}
+
+	function getButtonTitle(nIndex){
+		var sTitle=sb_gTitles[nIndex];
+		return sTitle;
+	}
+	function getButtonUrl(nIndex){
+    if (!isIndexValid(nIndex)) return;
+		var sUrl=sb_gLinks[nIndex];
+		if (sb_gLinks[nIndex].substr(0,9)=="openform " || sb_gLinks[nIndex].substr(0,10)=="opengroup ") sUrl=SB_CMD+"://"+sUrl;
+		return sUrl;
+	}
+  function pvOnButtonsOver() {
+    if (SB_LAYOUT_BGTYPE==1) {
+      return;
+    }
+    if (SB_BUTTON_OUT_OPACITY==1) {
+      changeButtonOpacity(OPACITY_VALUE);
+      return;
+    }
+    changeButtonOpacity(OPACITY_VALUE);
+  }
+  function pvOnButtonsOut() {
+    if (SB_LAYOUT_BGTYPE==1) {
+      return;
+    }
+    if (SB_BUTTON_OUT_OPACITY==1) {
+      changeButtonOpacity(OPACITY_VALUE);
+      return;
+    }
+    changeButtonOpacity(OPACITY_BACKGROUND_VALUE);
+  }
+    function pvToolButtonImage(oObj,sImage) {
+        try {
+            oObj.src = "images/" + sImage + ".png";
+        } catch (e) { }
+    }
+
+    function setQuickDialBgColor(sColor) {
+    	document.body.style.backgroundImage='';
+    	document.body.style.backgroundColor=sColor;
+      changeButtonOpacity(OPACITY_VALUE);
+    }
+
+    function setQuickDialBgImage(sImage) {
+      if (SB_BUTTON_OUT_OPACITY==1) {
+        changeButtonOpacity(OPACITY_VALUE);
+        return;
+      }
+    	document.body.style.backgroundColor='transparent';
+			document.body.style.backgroundAttachment="fixed";
+      if(sImage.indexOf('chrome://theme/')==0) {
+				$('themecss').href = 'chrome://theme/css/new_tab_theme.css?' + Date.now();
+      }else{
+		    document.body.style.backgroundImage="url('background/"+sImage+"')";
+				document.body.style.backgroundPosition="center center";
+	      document.body.style.backgroundRepeat=SB_BACKGROUND_REPEAT=='1'?'repeat':'no-repeat';
+				document.body.style.backgroundSize=SB_BACKGROUND_REPEAT=='1'?'auto':'cover';
+      }
+    }
+    function setQuickDialBgVideo(sVideo) {
+  		if (SB_BUTTON_OUT_OPACITY==1) {
+        changeButtonOpacity(OPACITY_VALUE);
+        return;
+      }
+	    $('sb_bg_video_src').src=sVideo==''?'':('file:///' + unescape(sVideo));
+      var bg_video=$('sb_bg_video');
+      bg_video.oncontextmenu= function() {return false;};
+      bg_video.muted=SB_BACKGROUND_MUTE=='1'?true:false;
+      bg_video.load();
+    }
+
+    function onActiveTab(is_active) {
+
+      if (is_active) {
+        if (SB_SHOW_WEATHER=='1') {
+          showWeatherInfo();
+        }
+      }
+
+      toggleQuickDialBgVideo(is_active);
+    }
+
+    function toggleQuickDialBgVideo(active_tab) {
+      if(SB_LAYOUT_BGTYPE!=3) {
+        return;
+      }
+      var bg_video=$('sb_bg_video');
+      if(active_tab=='1') {
+        bg_video.play();
+      } else {
+        bg_video.pause();
+      }
+    }
+
+    function changeButtonOpacity(opacity_value)
+    {
+      var siteButtons = document.getElementsByTagName("div");
+      var i = 0;
+      while(i < siteButtons.length) {
+        if(siteButtons[i].className == "sb-block") {
+            siteButtons[i].style.opacity=opacity_value;
+        }
+        i++;
+      }
+    }
+
+    function openCustomizDialog() {
+      pvGetID('quickdial_rows').value = SB_LAYOUT_ROW;
+      pvGetID('quickdial_columns').value = SB_LAYOUT_COL;
+      pvGetID('quickdial_bgcolor').value = SB_LAYOUT_BGCOLOR;
+      pvGetID('quickdial_bgvideo').value = SB_LAYOUT_BGVIDEO;
+      pvGetID('quickdial_bgimage').value = SB_LAYOUT_BGIMAGE;
+      pvGetID('quickdial_bgrepeat').checked = SB_BACKGROUND_REPEAT=='1'?true:false;
+      pvGetID('quickdial_bgmute').checked = SB_BACKGROUND_MUTE=='1'?true:false;
+      pvGetID('color_chooser').value = '#' + (SB_LAYOUT_BGCOLOR==''?'FFFFFF':SB_LAYOUT_BGCOLOR);
+      pvGetID('quickdial_weather').checked = SB_SHOW_WEATHER=='1'?true:false;
+      if (SB_LAYOUT_BGTYPE==0) {
+        pvGetID('quickdial_use_theme_bg').checked=true;
+      } else if (SB_LAYOUT_BGTYPE==1) {
+        pvGetID('quickdial_use_bgcolor').checked=true;
+      } else if (SB_LAYOUT_BGTYPE==2) {
+        pvGetID('quickdial_use_bgimage').checked=true;
+      } else if (SB_LAYOUT_BGTYPE==3) {
+        pvGetID('quickdial_use_bgvideo').checked=true;
+      }
+
+      Customize_TabsPage_dialog.open();
+    }
+    function init(){
+      chrome.send('getMostVisited');
+	    setQuickDialLayout(SB_LAYOUT_ROW,SB_LAYOUT_COL);
+      initSpeechRecognition();
+
+      if(SB_WEATHER_ICON_RELOAD==1) {
+        setTimeout('showWeatherInfo()',200);
+      }
+    }
+    function isDialogOpen(dlg) {
+      return dlg.container.style.display == "block";
+    }
+    function openOnlineVideoLibrary() {
+      open(SB_ONLINE_VIDEO_LIBRARY_URL);
+    }
+
+    function onWeatherInfoMouseEvent(obj,is_over) {
+      if (is_over) {
+        if (typeof SB_WEATHER_TIP=='undefined') {
+          obj.title='';
+        }else{
+          obj.title=SB_WEATHER_TIP;
+        }
+      }
+      pvGetID('sb_weather_more').style.visibility=is_over?'visible':'hidden';
+    }
+    function showWeatherDialog() {
+      location='sjcmd://show_weather_dialog';
+    }
+    function getAbsoluteLeft(oNode)
+    {
+      if (oNode.getBoundingClientRect) return Math.round(oNode.getBoundingClientRect().left)+document.documentElement.scrollLeft;
+      if (oNode.nodeName=="#text") return getTextNodePosition(oNode).left;
+      if (oNode.offsetParent) return oNode.offsetLeft+getAbsoluteLeft(oNode.offsetParent);
+      return oNode.offsetLeft;
+    }
+
+    function getAbsoluteTop(oNode)
+    {
+      if (oNode.getBoundingClientRect) return Math.round(oNode.getBoundingClientRect().top)+document.documentElement.scrollTop;
+      if (oNode.nodeName=="#text") return getTextNodePosition(oNode).top;
+      if (oNode.offsetParent) return oNode.offsetTop+getAbsoluteTop(oNode.offsetParent);
+      return oNode.offsetTop;
+    }
+    function showWeatherMenu() {
+      var oIcon = pvGetID("sb_weather_more");
+      var xPos=0;
+      var yPos = 0;
+      try {
+          if (oIcon != null) {
+              xPos = getAbsoluteLeft(oIcon) + oIcon.offsetWidth + 2;
+              yPos = getAbsoluteTop(oIcon) + oIcon.offsetHeight + 2;
+          }
+      } catch (e) {
+          xPos = 0;
+          yPos = 0;
+      }
+      location = pvGetSbCommand("//showWeatherDropMenu " + xPos + "\t" + yPos);
+    }
+    document.onkeydown = function(e){
+        if(!e) e = window.event;
+        if((e.keyCode || e.which) == 13){
+            if(isDialogOpen(Edit_URL_dialog)) {
+              saveEditQuickDialButton();
+            } else if(isDialogOpen(Customize_TabsPage_dialog)) {
+              saveCustomizeSettings();
+            }
+        }
+    }
+
+  //Search by voice
+    var finalTranscript = '';
+    var recognizing = false;
+    function initSpeechRecognition() {
+      // check that your browser supports the API
+      if (!('webkitSpeechRecognition' in window)) {
+        alert("Sorry, your Browser does not support the Speech API");
+      } else {
+        $('sb_voice_button').src='images/input_speech.png';
+        // Create the recognition object and define the event handlers
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;//true;         // keep processing input until stopped
+        recognition.interimResults = true;     // show interim results
+        recognition.lang = SB_SPEECH_RECOGNITION_LANG;           // specify the language
+        recognition.onstart = function() {
+          recognizing = true;
+          $('speech_recognition_message').innerText = "lz(Speak now)";
+          Speech_Recognition_dialog.open();
+        };
+
+        recognition.onerror = function(event) {
+          $('speech_recognition_message').innerText = "lz(There was a recognition error...)";
+          $('sb_voice_button').src='images/input_speech.png';
+          recognizing = false;
+          recognition.abort();
+        };
+
+        recognition.onend = function() {
+          $('sb_voice_button').src='images/input_speech.png';
+          recognizing = false;
+          $('speech_recognition_message').innerText = '';
+          Speech_Recognition_dialog.close();
+        };
+
+        recognition.onsoundstart = function() {
+          $('speech_recognition_message').innerText = "lz(Listening...)";
+          $('sb_mic_on').style.display='none';
+          $('sb_mic_recording').style.display='';
+        };
+
+        recognition.onsoundend = function() {
+          $('sb_mic_recording').style.display='none';
+          $('sb_mic_on').style.display='';
+        };
+
+        recognition.onresult = function(event) {
+          var interimTranscript = '';
+          // Assemble the transcript from the array of results
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+              finalTranscript += event.results[i][0].transcript;
+            } else {
+              interimTranscript += event.results[i][0].transcript;
+            }
+          }
+
+          // update the page
+          if(finalTranscript.length > 0) {
+            recognition.stop();
+            recognizing = false;
+            Speech_Recognition_dialog.close();
+            $('sb_voice_button').src='images/input_speech.png';
+            $('sb_searchBox').value = finalTranscript;
+            doSearch();
+          } else {
+            $('sb_searchBox').value = interimTranscript;
+          }
+        };
+
+        $("sb_voice_button").onclick = function(e) {
+            recognition.abort();
+            if (recognizing) {
+              recognizing = false;
+              $('sb_voice_button').src='images/input_speech.png';
+            } else {
+              finalTranscript = '';
+              // Request access to the User's microphone and Start recognizing voice input
+              recognition.start();
+              $('sb_voice_button').src='images/input_speech_recording.png';
+            }
+        };
+      }
+    };
+</script>
+</head>
+
+<body onload="init()" onresize="pvResizeLayout()" style="margin:0px;">
+<video autoplay loop id="sb_bg_video"><source id="sb_bg_video_src" src=""></video>
+
+<div id="sb_newtab_content">
+
+<!-- weather -->
+<div id="sb_weather" style="position: fixed; top: 5px;right: 12px;width:52px;height:68px;visibility:hidden;cursor:pointer;" onmouseover="onWeatherInfoMouseEvent(this,true);" onmouseout="onWeatherInfoMouseEvent(this,false);">
+  <div id="sb_weather_icon" style="background-position:center;background-repeat: no-repeat; background-size: 48px 48px; width:58px;height:48px;" onclick="showWeatherDialog();"></div>
+  <div id="weather_temp" style="font-size: 14px;width: 58px;text-align: center; font-weight:600; font-family:Tahoma, Arial, Helvetica, Sans-Serif; color:#333333; background:rgba(255,255,255,0.5);border-radius: 4px 4px 4px 4px; " onclick="showWeatherDialog();"></div>
+  <div id="sb_weather_more" title="lz(More options)" style="visibility:hidden; position: fixed; top: 55px;right: 5px;"><img src="images/more.gif" style="border:none;" onclick="showWeatherMenu();" /></div>
+</div>
+
+	<div id="sb_custom_box" style="visibility:hidden">
+    <span class="sb_smallbutton_css">
+    <a id="sb_store_link" href="https://chrome.google.com/webstore"><img id="sb_store_box_img" src="images/webstore.png" title="lz(Web store)" style="border:0px;width:34px;height:34px;" alt="lz(Web store)" /></a>
+    </span>
+		<span class="sb_smallbutton_css">
+		<a id="sb_custom_link" href="javascript:openCustomizDialog();"><img id="sb_custom_box_img" src="images/customize.gif" title="lz(Customize)" style="border:0px;width:34px;height:34px;" alt="lz(Customize)" /></a>
+		</span>
+		<span class="sb_smallbutton_css">
+		<a href="http://www.slimjet.com/mlredir.php?file=community.php"><img id="sb_custom_box_img" src="images/community.png" title="lz(Online community)" style="border:0px" alt="lz(Online community)" /></a>
+		</span>
+	</div>
+	<div id="sb_search_box" class="sb-align-center" style="visibility:hidden">
+		<div>
+		<form method="get" name="sb_searchform" action="#" onsubmit="return false">
+			<a name="button"></a>
+			<div class="sb_search_css" id="sb_search_bar">
+			<img id="searchbox_left" width="7px" src="images/searchbox_left.gif" style="border:none; vertical-align: middle;float:left;" alt="" /><img src="images/google.ico" onerror="this.src='images/search.png'" width="16px" height="16px" style="border:none;cursor:pointer; vertical-align: middle;margin:-5px 0px 0px 0px" alt="" id="sb_engineIcon" onclick="doPopupEnginesList()"/><img src="images/more.gif" alt="" style="border:none;cursor:pointer; vertical-align: middle;margin:-5px 0px 0px 0px" onclick="doPopupEnginesList()" /><span id="sb_engineName" style="display:none">Google</span><input type="text" value="" name="sb_searchTerms" style="color:#000000; vertical-align:middle; height: 26px;margin:-3px 1px 1px 1px; border-bottom-style: none; border-top-style: none; border-top-width: 0px; border-bottom-width: 0px; border-left-color: #C0C0C0; border-left-style: solid; border-left-width: 1px; border-right-color: #C0C0C0; border-right-style: solid; border-right-width: 1px; font-size: 14px; font-family: 'Courier New', Courier, monospace; font-style: normal;" id="sb_searchBox" onkeydown="if (event.keyCode==13) doSearch();" /><img id="sb_voice_button" src="images/input_speech.png" style="border:none; vertical-align: middle;margin:-5px 0px 0px 6px;cursor:pointer;display:inline;width:16px;height:16px;" alt="lz(Search by voice)" title="lz(Search by voice)" /><img src="images/search.gif" style="border:none; vertical-align: middle;margin:-5px 0px 0px 6px;cursor:pointer" alt="lz(Search)" onclick="doSearch()" title="lz(Search)" /><img id="searchbox_right" width="8px" src="images/searchbox_right.gif" style="border:none; vertical-align: middle;dislpay:inline;" alt="" />
+			</div>
+		</form>
+		</div>
+	</div>
+
+	<div id="sb_dial_tpl">
+		<div class="sb-block" id="sb_DialID_{SB_ITEM}_btn">
+		<div class="sb-block-tl" id="sb_DialID_{SB_ITEM}_tl">
+		</div>
+		<div class="sb-block-tr" id="sb_DialID_{SB_ITEM}_tr">
+		</div>
+		<div class="sb-block-bl" id="sb_DialID_{SB_ITEM}_bl">
+		</div>
+		<div class="sb-block-br" id="sb_DialID_{SB_ITEM}_br">
+		</div>
+		<div class="sb-block-tc" id="sb_DialID_{SB_ITEM}_tc">
+		</div>
+		<div class="sb-block-bc" id="sb_DialID_{SB_ITEM}_bc">
+		</div>
+		<div class="sb-block-cl" id="sb_DialID_{SB_ITEM}_cl">
+		</div>
+		<div class="sb-block-cr" id="sb_DialID_{SB_ITEM}_cr">
+		</div>
+		<div class="sb-block-cc" id="sb_DialID_{SB_ITEM}_cc">
+		</div>
+		<div class="sb-block-body">
+			<div class="sb-blockcontent">
+				<div class="sb-blockcontent-body" onmouseover="pvShowToolButtons('{SB_ITEM}','1')" onmouseout="pvShowToolButtons('{SB_ITEM}','0')">
+					<span class="sb-float-right" id="sb_top_toolbar_{SB_ITEM}" style="visibility: hidden;"><a class="sb-toollink" title="{SB_TOOLTIP4}" href="#" onclick="doSbCmd('//deleteQuickDialButton {SB_ITEM}')"><img class="sb-toolicon" alt="{SB_TOOLTIP4}" src="images/remove_def.png" onmouseover="pvToolButtonImage(this,'remove');" onmouseout="pvToolButtonImage(this,'remove_def');" /></a></span><span style="vertical-align:top"><img alt="" src="" id="sb_DialID_{SB_ITEM}_ico" onerror="this.src='images/0_icon.png'" /></span>&nbsp;<span id="sb_DialID_{SB_ITEM}_title" style="white-space:nowrap;text-align:center;vertical-align:top;" onmouseover="this.title=getButtonTitle('{SB_ITEM}')">&nbsp;</span>
+					<div class="sb-snapshot" id="sb_DialID_{SB_ITEM}_bgimg" style="width:1px;height:1px;"><a href="#" title="title" onmouseover="this.href=getButtonUrl('{SB_ITEM}');this.title=getButtonTitle('{SB_ITEM}');"><img id="sb_DialID_{SB_ITEM}_img" style="width:1px;height:1px;margin:0 auto; BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; BORDER-TOP: medium none; BORDER-RIGHT: medium none;" alt="" src="" onerror="this.src='images/0_snap.jpg'" /></a></div>
+					<div style="margin: 7px auto; visibility: hidden;"  id="sb_bottom_toolbar_{SB_ITEM}"><span class="sb-float-right"></span><a class="sb-toollink" title="{SB_TOOLTIP3}" href="#" onclick="doSbCmd('//editQuickDialButton {SB_ITEM}')"><img class="sb-toolicon" alt="{SB_TOOLTIP3}" src="images/settings_def.png" onmouseover="pvToolButtonImage(this,'settings');" onmouseout="pvToolButtonImage(this,'settings_def');" /></a> <a id="sb_refresh_button_{SB_ITEM}" class="sb-toollink" title="{SB_TOOLTIP2}" href="#" onclick="doSbCmd('//refreshQuickDialButton {SB_ITEM}')"><img class="sb-toolicon" alt="{SB_TOOLTIP2}" src="images/reload_def.png" onmouseover="pvToolButtonImage(this,'reload');" onmouseout="pvToolButtonImage(this,'reload_def');" /></a>
+                    </div>
+                    <div class="cleared">
+					</div>
+				</div>
+			</div>
+			<div class="cleared">
+			</div>
+		</div>
+		</div>
+	</div>
+
+	<div id="sb_quick_dial"  onmouseover="pvOnButtonsOver()" onmouseout="pvOnButtonsOut()">
+	</div>
+
+  <div id="sb_edit_url_dialog" style="display: none;" title="lz(Edit URL)">
+    <table cellpadding="0" cellspacing="0" style="width: 500px">
+      <tr>
+        <td colspan="5"><label>
+          <input type="radio" checked="checked" name="url_or_command_radio" id="url_or_command_auto" value="0">Automatically use a frequently used site</label><input type="button" name="use_auto_site_on_all_button" value="Use on all buttons" onclick="closeEditUrlDialog();doSbCmd('//SetAllButtonToFrequentlySites');"></td>
+      </tr>
+      <tr>
+        <td colspan="5"><label>
+          <input type="radio" name="url_or_command_radio" id="url_or_command_manual" value="1">Use fixed URL or command</label></td>
+      </tr>
+      <tr>
+        <td colspan="5"><input type="text" style="width: 360px" id="site_url" onchange="pvGetID('site_title').value = '';">
+          <button name="pick_frequently_site_button" style="width: 24px; height: 24px; padding: 0px;" title="lz(Pick a frequently used site...)" onclick="doSbCmd('//showFrequentlySitesDialog');"><img src="images/favor_site.png" style="width: 16px; height: 16px;"></button>
+          <button name="choose_bookmark_folder_button" style="width: 24px; height: 24px; padding: 0px;" title="lz(Open all bookmarks in folder...)" onclick="doSbCmd('//ShowChooseBookmarksDialog');"><img src="images/open_group.png" style="width: 16px; height: 16px;"></button>
+          <button name="select_saved_form_button" style="width: 24px; height: 24px; padding: 0px;" title="lz(Open saved form...)" onclick="doSbCmd('//ShowSelectFormDialog');"><img src="images/saved_form.png" style="width: 16px; height: 16px;"></button></td>
+      </tr>
+      <tr>
+        <td colspan="5">Title (Leave blank to use default title):</td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <input type="text" style="width: 490px" id="site_title"></td>
+      </tr>
+	  <tr>
+        <td colspan="5">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td style="width: 112px">&nbsp;</td>
+        <td><input type="button" value="OK" onclick="saveEditQuickDialButton();"></td>
+        <td><input type="button" value="Cancel" onclick="closeEditUrlDialog();"></td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="sb_customize_tabspage_dialog" style="display: none;" title="lz(Customize Tabs Page)">
+    <table style="width: 480px; height: 210px;" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+          <table style="width: 100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="width: 160px">Number of rows:</td>
+              <td><input type="text" id="quickdial_rows" value="4" />&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="width: 160px">Number of columns:</td>
+              <td><input type="text" id="quickdial_columns" value="4" /></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table style="width: 100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="vertical-align:middle;" colspan="2"><label><input type="radio" checked="checked" name="quickdial_background_type" id="quickdial_use_theme_bg" value="0">Use theme background</label></td>
+            </tr>
+            <tr style="height:5px;"><td></td></tr>
+            <tr>
+              <td style="vertical-align:middle;" colspan="2"><label><input type="radio" name="quickdial_background_type" id="quickdial_use_bgcolor" value="1">Background color</label></td>
+            </tr>
+            <tr>
+              <td style="width: 20px">&nbsp;</td>
+              <td><input type="color" id="color_chooser" onchange="$('quickdial_bgcolor').value=String(this.value).substr(1);" onclick="$('quickdial_use_bgcolor').checked=true;"><input type="text" id="quickdial_bgcolor" value="FFFFFF" style="display:none;"><input type="button" name="select_bgcolor" value="Select color..." onclick="showSelectBgColorDialog()"></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr style="height:5px;"><td></td></tr>
+      <tr>
+        <td>
+          <table style="width: 100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td  colspan="2"><label><input type="radio" name="quickdial_background_type" id="quickdial_use_bgimage" value="2">Background image</label>&nbsp;<input type="button" name="select_bgimage" value="..." onclick="showSelectBgImageDialog()"></td>
+              <td><input type="hidden" id="quickdial_bgimage" style="width: 400px" ></td>
+            <tr>
+              <td style="width: 20px">&nbsp;</td>
+              <td><label><input type="checkbox" id="quickdial_bgrepeat" value="1">Tile background image</label></td>
+            </tr>
+            <tr style="height:5px;"><td></td></tr>
+            <tr>
+              <td  colspan="2"><label><input type="radio" name="quickdial_background_type" id="quickdial_use_bgvideo" value="3">Background video</label>&nbsp;<input type="button" name="select_bgvideo" value="..." onclick="showSelectBgVideoDialog()"> <a href='javascript:void(openOnlineVideoLibrary());'>Online video library</a></td>
+            </tr>
+            <tr>
+              <td style="width: 20px">&nbsp;</td>
+              <td><label><input type="checkbox" id="quickdial_bgmute" value="1">Mute sound</label></td>
+            <!-- </tr> -->
+            <!-- <tr> -->
+              <td style="width: 20px">&nbsp;</td>
+              <td><input type="hidden" id="quickdial_bgvideo" style="width: 400px" ></td>
+            </tr>
+            <tr>
+              <td colspan="2"><label><input type="checkbox" id="quickdial_weather" value="0">Show weather info</label></td>
+            </tr>
+            <tr style="height:10px;"><td></td></tr>
+            <tr>
+              <td style="width: 20px">&nbsp;</td>
+              <td><input type="button" name="reorder_sites" value="Reorder sites on tabs page..." onclick="showReorderSitesDialog();"></td>
+            </tr>
+          </table>
+          <input type="hidden" id="quickdial_video_source_file" />
+          <input type="hidden" id="quickdial_image_source_file" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table cellpadding="0" cellspacing="0" style="width: 100%">
+			  <tr>
+				<td colspan="5">&nbsp;</td>
+			  </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td style="width: 112px">&nbsp;</td>
+              <td><input type="button" value="OK" onclick="saveCustomizeSettings();"></td>
+              <td><input type="button" value="Cancel" onclick="closeCustomizeDialog();"></td>
+              <td>&nbsp;</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div id="sb_reorder_sites_dialog" style="display: none;" title="lz(Reorder Sites on Tabs Page)">
+  <list style="width: 400px; height: 200px;" id="quick-dial-sites-list"></list>
+  <div id="reorder-sites-list-dropmarker"></div>
+  </div>
+
+  <div id="sb_most_visited_sites_dialog" style="display: none;" title="lz(Pick a frequently used site)">
+  <list style="width: 400px; height: 250px;" id="most-visited-sites-list"></list>
+  </div>
+
+  <div id="sb_speech_recognition_dialog" style="display:none;" title="lz(Search by voice)">
+  <div id="speech_recognition_message">&nbsp;</div>
+  <div id="sb_mic_recording" style="display:none;"><img src="images/mic_recording.png" /></div>
+  <div id="sb_mic_on"><img src="images/mic_on.png" /></div>
+  </div>
+
+
+</div>
+<script type="text/javascript">
+  Edit_URL_dialog = new OverlayJS({
+    selector: "sb_edit_url_dialog",
+    modal: true,
+    width: 500,
+    height: 200,
+    buttons: {
+    }
+  });
+  Customize_TabsPage_dialog = new OverlayJS({
+    selector: "sb_customize_tabspage_dialog",
+    modal: true,
+    width: 480,
+    height: 340,
+    buttons: {
+    }
+  });
+  Reorder_Sites_dialog = new OverlayJS({
+    selector: "sb_reorder_sites_dialog",
+    modal: true,
+    width: 480,
+    height: 280,
+    buttons: {
+    }
+  });
+  Most_Visited_Sites_dialog = new OverlayJS({
+    selector: "sb_most_visited_sites_dialog",
+    modal: true,
+    width: 480,
+    height: 250,
+    buttons: {
+    }
+  });
+  Speech_Recognition_dialog = new OverlayJS({
+    selector: "sb_speech_recognition_dialog",
+    modal: true,
+    width: 250,
+    height: 180,
+    header: false,
+    buttons: {
+    }
+  });
+
+  pvGetID('sb_edit_url_dialog').innerHTML = '';
+  pvGetID('sb_customize_tabspage_dialog').innerHTML = '';
+  pvGetID('sb_reorder_sites_dialog').innerHTML = '';
+  pvGetID('sb_most_visited_sites_dialog').innerHTML = '';
+  pvGetID('sb_speech_recognition_dialog').innerHTML = '';
+</script>
+</body>
+</html>

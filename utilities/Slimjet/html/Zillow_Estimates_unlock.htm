@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Unlock premium feature</title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function onOK() {
+    email = document.getElementById("form_email").value;
+    unlock_code = document.getElementById("form_unlock_code").value;
+    location = "sjcmd://validate_input " + email + ' ' + unlock_code;
+}
+
+function onCancel()
+{
+    document.sjReturnValue = "";
+    window.close();
+}
+</script>
+
+</head>
+<BODY style="font-size:12px; font-family: 'Times New Roman', Times, serif">
+<div style="width:300px">
+    <table style="width:100%" border ="0">
+        <tr>
+            <td style="width:30%">Order Email:</td>
+            <td ><input style="width:96%"  type="text" id="form_email" value="" /></td>
+        </tr>
+        <tr>
+            <td>Unlock code:</td>
+            <td><input style="width:96%"  type="text" id="form_unlock_code" value="" /></td>
+        </tr>
+    </table>  
+    <table style="width:100%" border="0">
+        <tr align="center">
+            <td width="50%"><button type="button" onclick="onOK();" style="min-width:80px">OK</button></td>
+            <td><button type="button" onclick="onCancel();" style="min-width:80px">Cancel</button></td>
+        </tr>
+    </table>
+ </div>
+</BODY>
+</HTML>

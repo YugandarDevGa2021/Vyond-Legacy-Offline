@@ -1,0 +1,12 @@
+http://www.amazon.com,"Shop at Amazon"
+http://www.ebay.com,"ebay - Discount shopping"
+http://www.booking.com?aid=845847,"Book hotels & vacation rentals"
+https://www.goldenfrog.com/vyprvpn/special/referral?offer_id=129&aff_id=2468&file_id=3820,"World's fastest VPN"
+http://tracking.groupon.com/r?tsToken=US_AFF_0_204939_600716_0&url=https%3A%2F%2Fwww.groupon.com%2F%3Fz%3Dskip%26utm_medium%3Dafl%26utm_source%3DGPN%26utm_campaign%3D204939%26mediaId%3D600716,"Groupon - Deals & Coupons for Restaurants, Fitness, Travel & more"
+http://www.cardbenefit.com/?ref=slimsfch,"Find the best credit cards"
+http://www.yahoo.com,Yahoo!
+http://www.facebook.com/,"Facebook"
+http://www.gmail.com,Gmail
+http://www.youtube.com,"YouTube"
+http://www.netflix.com,Netflix
+http://www.craigslist.org,Craigslist

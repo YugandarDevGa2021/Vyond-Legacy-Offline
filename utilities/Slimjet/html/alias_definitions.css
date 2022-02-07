@@ -1,0 +1,352 @@
+/* Editable List properties */
+list > * {
+  -webkit-box-align: center;
+  -webkit-transition: 150ms background-color;
+  border: none;
+  border-radius: 0;  /* TODO(dbeam): Is this necessary? */
+  box-sizing: border-box;
+  display: -webkit-box;
+  /*height: 32px;*/
+  margin: 0;
+}
+
+list > .spacer {
+  /* The above height rule should not apply to spacers. When redraw is called
+     on the list they will be given an explicit element height but this ensures
+     they have 0 height to begin with. */
+  height: 0;
+}
+
+list:not([disabled]) > :hover {
+  background-color: rgb(228, 236, 247);
+}
+
+/* TODO(stuartmorgan): Once this becomes the list style for other WebUI pages
+ * these rules can be simplified (since they wont need to override other rules).
+ */
+
+list:not([hasElementFocus]) > [selected],
+list:not([hasElementFocus]) > [lead][selected] {
+  background-color: #d0d0d0;
+  background-image: none;
+}
+
+list[hasElementFocus] > [selected],
+list[hasElementFocus] > [lead][selected],
+list:not([hasElementFocus]) > [selected]:hover,
+list:not([hasElementFocus]) > [selected][lead]:hover {
+  background-color: rgb(187, 206, 233);
+  background-image: none;
+}
+
+list[hasElementFocus] > [lead],
+list[hasElementFocus] > [lead][selected] {
+  border-bottom: 1px solid rgb(120, 146, 180);
+  border-top: 1px solid rgb(120, 146, 180);
+}
+
+list[hasElementFocus] > [lead]:nth-child(2),
+list[hasElementFocus] > [lead][selected]:nth-child(2) {
+  border-top: 1px solid transparent;
+}
+
+list[hasElementFocus] > [lead]:nth-last-child(2),
+list[hasElementFocus] > [lead][selected]:nth-last-child(2) {
+  border-bottom: 1px solid transparent;
+}
+
+list[disabled] > [lead][selected],
+list[disabled]:focus > [lead][selected] {
+  border: none;
+}
+
+list[disabled] {
+  opacity: 0.6;
+}
+
+list > .heading {
+  color: #666;
+}
+
+list > .heading:hover {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+list .deletable-item {
+  -webkit-box-align: center;
+}
+
+list .deletable-item > :first-child {
+  -webkit-box-align: center;
+  -webkit-box-flex: 1;
+  -webkit-padding-end: 5px;
+  display: -webkit-box;
+}
+
+list .row-delete-button {
+  -webkit-transition: 150ms opacity;
+  background-color: transparent;
+  /* TODO(stuartmorgan): Replace with real images once they are available. */
+  background-image: -webkit-image-set(
+      url('images/close_2_d100.png') 1x,
+      url('images/close_2_d200.png') 2x);
+  border: none;
+  display: block;
+  height: 16px;
+  opacity: 1;
+  width: 16px;
+}
+
+list > *:not(:hover):not([selected]):not([lead]) .row-delete-button,
+list:not([hasElementFocus]) > *:not(:hover):not([selected]) .row-delete-button,
+list[disabled] .row-delete-button,
+list .row-delete-button[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* HostedApp entries use the disabled closing button to display the App's
+ * favicon, as an indicator that instead of deleting the permission here
+ * the user has to remove the hosted app.*/
+list div[role='listitem'][managedby='HostedApp'] .row-delete-button {
+  opacity: 1;
+}
+
+list .row-delete-button:hover {
+  background-image: -webkit-image-set(
+      url('images/close_2_hover_d100.png')
+          1x,
+      url('images/close_2_hover_d200.png')
+          2x);
+}
+
+list .row-delete-button:active {
+  background-image: -webkit-image-set(
+      url('images/close_2_pressed_d100.png')
+          1x,
+      url('images/close_2_pressed_d200.png')
+          2x);
+}
+
+list .static-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+list[type='text'][inlineeditable] input {
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+}
+
+list > :not([editing]) [displaymode='edit'] {
+  display: none;
+}
+
+list > [editing] [displaymode='static'] {
+  display: none;
+}
+
+list > [editing] input:invalid {
+  /* TODO(stuartmorgan): Replace with validity badge */
+  background-color: pink;
+}
+
+.list-inline-button {
+  -webkit-appearance: none;
+  -webkit-transition: opacity 150ms;
+  background: rgb(138, 170, 237);
+  border: none;
+  border-radius: 2px;
+  color: white;
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+.list-inline-button:hover {
+  opacity: 1;
+}
+/* Kent@FlashPeak alias definitions css */
+
+.inputbox {
+  min-width: 180px;
+}
+.inputbutton {
+  min-width: 80px;
+  margin: 0px;
+}
+.listheader {
+  cursor: pointer;
+}
+.listheader:hover {
+  color: rgb(138, 170, 237);
+}
+.labeltext {
+  display:inline-block;
+  min-width: 120px;
+}
+
+.alias-img {
+  height: 14px;
+  padding: 0px;
+  vertical-align: middle;
+  width: 14px;
+}
+
+.alias-name {
+  padding: 0px;
+  display: inline-block;
+  width: 120px;
+  min-width: 120px;
+  vertical-align: middle;
+}
+
+.url-path {
+  padding-left: 12px;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.row-delete-button {
+  display: none;
+}
+.deletable-item {
+  -webkit-user-select: none;
+  cursor: default;
+  margin: 0px;
+  white-space: nowrap;
+  max-width: 560px;
+  overflow: hidden;
+}
+#alias-list-container {
+  border: 1px solid #ccc;
+  margin: 0px;
+  /*height: 330px;*/
+  /*width: 300px;*/
+  overflow:auto;
+}
+
+#alias-frame {
+  margin: 0px;
+  max-height: 330px;
+  max-width: 570px;
+  overflow:auto;
+}
+#alias-definitions-header {
+  padding: 5px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+#alias-column {
+  display: inline-block;
+  min-width: 140px;
+  border-right: 1px solid #ccc;
+}
+#alias-url-command {
+  display: inline-block;
+  min-width: 410px;
+}
+.alias-definitions {
+  display: -webkit-box;
+  margin: 10px 0;
+}
+
+.alias-definitions-lower-left button,
+.alias-definitions-list button {
+  min-width: 70px;
+}
+
+.alias-definitions h3 {
+  -webkit-margin-start: 12px;
+  font-size: 100%;
+  font-weight: bold;
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+
+.alias-definitions-contents > span:not(.input-method-label) {
+  display: inline-block;
+  margin: 1px;
+  padding: 0.42em 10px;
+}
+
+.alias-definitions-header,
+.alias-definitions-footer {
+  line-height: 1.2em;
+  margin: 10px 0;
+}
+
+#alias-definitions-list {
+  height: 330px;
+  max-height: 330px;
+  padding: 0px;
+  text-align: left;
+  vertical-align: top;
+}
+
+#alias-definitions-list {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  width: 300px;
+}
+
+#alias-definitions-list {
+  -webkit-margin-start: -1px;
+  width: 300px;
+}
+
+#alias-definitions-list h3:not(:first-of-type) {
+  margin-top: 24px;
+}
+
+.alias-definitions-notification > div {
+  margin-bottom: 4px;
+}
+
+#alias-definitions-input-method-list button {
+  -webkit-margin-start: 20px;
+  display: block;
+  margin-bottom: 0.65em;
+  margin-top: 0.65em;
+}
+
+#alias-definitions-list {
+  -webkit-box-flex: 1;
+  outline: none;
+  padding: 0;
+  width: 100%;
+}
+
+#alias-definitions-list .alias-name {
+  -webkit-box-flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#alias-definitions-list li {
+  -webkit-padding-start: 2px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  list-style-type:none;
+}
+
+#alias-definitions-list-dropmarker {
+  background-clip: padding-box;
+  background-color: hsl(214, 91%, 65%);
+  border: 3px solid hsl(214, 91%, 65%);
+  border-bottom-color: transparent;
+  border-radius: 0;
+  border-top-color: transparent;
+  box-sizing: border-box;
+  display: none;
+  height: 8px;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  z-index: 10;
+}
+/* END OF Kent@FlashPeak alias definitions css */
+

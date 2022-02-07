@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Please select your geographic zone</title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function onOK()
+{
+   var zones = document.getElementById("zones_list");
+   document.sjReturnValue = zones.options[zones.options.selectedIndex].value;
+   window.close();
+}
+function onCancel()
+{
+    document.sjReturnValue = "";
+    window.close();
+}
+function setLocations(loctions)
+{
+    var zones = loctions.split(';');
+    var zones_list = document.getElementById("zones_list");
+    for (var i =0; i < zones.length; i++) 
+    {
+        zones_list.options.add(new Option(zones[i]));
+    }
+}
+</SCRIPT>
+</head>
+<BODY style="font-size:13px; font-family:Verdana, Geneva, sans-serif">
+<div style="width:400px">
+  <table width="100%" border="0">
+    <tr align="top">
+      <td colspan="2"><p><label>Multiple geographic zones are found based on your address. Please select the one closest 
+      to your location for weather forecast.</label></p>
+      <select id="zones_list" size="10" style="width:400px"></select>
+      </td>
+    </tr>
+    <tr align="center">
+      <td width="50%"><button type="button" onclick = "onOK();" style="min-width:80px">OK</button></td>
+      <td width="50%"><button type="button" onclick = "onCancel();" style="min-width:80px" >Cancel</button></td>
+    </tr>
+      
+  </table>
+</div>
+</BODY>
+</HTML>

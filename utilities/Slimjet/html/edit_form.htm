@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Edit form</title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="formdata.js"></script>
+<script type="text/javascript">
+
+function onOK()
+{
+  document.sjReturnValue = GetFormData(document.forms[0]);
+  //console.log(document.sjReturnValue);
+  // window.close();
+  location="sjcmd://validate_input "+encodeURI(document.sjReturnValue);
+}
+
+function onCancel()
+{
+  document.sjReturnValue = "";
+  window.close();
+}
+
+function onEdit()
+{
+	document.location.href="sjcmd://edit_form_data";
+}
+
+document.onkeydown = function(e)
+{
+    if((e.keyCode || e.which) == 13){
+        document.getElementById("button_ok").click();
+    }
+}
+</script>
+</head>
+<body style="font-size:13px; font-family:Verdana, Geneva, sans-serif">
+<div style="width:400px">
+<form><table width="100%" border="0">
+  <tr>
+    <td><label>Title:</label></td>
+    <td width="320"><input name="title" value = "" type="text" id = "text_title" style="width:300px;" /></td>
+  </tr>
+  <tr>
+    <td><label>URL:</label></td>
+    <td><input name="url" value = "" type="text" id = "text_url" style="width:300px;"/></td>
+  </tr>
+</table>
+		<p><label>Auto-fill delay(seconds):</label>
+      <input name="delay" value = "" type="text" id = "text_delay" style="width:50px;" />
+    </p>
+ 		<p>
+    <label>
+      <input name="nosubmit" type="checkbox" id="checkbox_nosubmit" value = "0" />
+    Do not submit form</label>
+    </p>
+    <p>
+      <label>
+        <input name="encrypt" type="checkbox" id="checkbox_encrypt" value = "0" />
+      Encrypt with master password</label>
+    </p>
+    <p>
+    <label>
+      <input name="hide_passwords" type="checkbox" id="checkbox_hide" value = "0" />
+    Mask password fields</label>
+    </p>
+
+  </form>
+  <table width="100%" border="0">
+    <tr align="center">
+      <td width="50%"><button id="button_edit" onclick = "onEdit();" style="min-width:160px">Form data editor...</button></td>
+      <td width="25%"><button id="button_ok" onclick = "onOK();" style="min-width:80px">OK</button></td>
+      <td width="25%"><button onclick = "onCancel();" style="min-width:80px">Cancel</button></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
