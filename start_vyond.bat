@@ -45,6 +45,8 @@ if not exist utilities ( goto error_location )
 if not exist wrapper ( goto error_location )
 if not exist server ( goto error_location )
 goto noerror_location
+pushd wrapper
+if not exist main.js ( goto restore_main )
 :error_location
 echo Doesn't seem like this script is in a Vyond Legacy Offline folder.
 pause && exit
@@ -52,10 +54,6 @@ pause && exit
 
 :: patch detection
 if exist "patch.jpg" goto patched
-
-:: Main.js file restorer
-pushd wrapper
-if not exist main.js ( goto restore_main )
 
 :: Prevents CTRL+C cancelling (please close with 0) and keeps window open when crashing
 if "%~1" equ "point_insertion" goto point_insertion
