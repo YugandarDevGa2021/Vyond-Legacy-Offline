@@ -1,4 +1,4 @@
-// Core part of Wrapper: Offline
+// Core part of Vyond Legacy Offline
 const RPC = require("discord-rpc");
 require("./server");
 
