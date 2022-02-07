@@ -477,7 +477,7 @@ function playerLoaded() {
 };
 jQuery('#playerdiv').flash({
     id: "Player",
-    swf: "https://localhost:4664/animation/414827163ad4eb60/player.swf",
+    swf: "${params.flashvars.animationPath}player.swf",
     height: 539,
     width: 958,
     bgcolor: "#000000",
