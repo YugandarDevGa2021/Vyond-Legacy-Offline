@@ -45,8 +45,6 @@ if not exist utilities ( goto error_location )
 if not exist wrapper ( goto error_location )
 if not exist server ( goto error_location )
 goto noerror_location
-pushd wrapper
-if not exist main.js ( goto restore_main )
 :error_location
 echo Doesn't seem like this script is in a Vyond Legacy Offline folder.
 pause && exit
@@ -1106,8 +1104,3 @@ echo :: Runs through all of the scripts code, while never launching or installin
 echo set DRYRUN=n>> utilities\config.bat
 echo:>> utilities\config.bat
 goto returnfromconfigcopy
-
-:return_main
-	set MAIN=wrapper\main.js
-	echo require("./server");>> !main!
-goto returnfromenvcopy
