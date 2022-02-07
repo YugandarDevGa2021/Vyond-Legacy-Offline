@@ -1,5 +1,13 @@
 ﻿{
 	"voices": {
+                "kidaroo": {
+			"country": "US",
+			"language": "en",
+			"gender": "M",
+			"source": "vfproxy",
+			"arg": "Kidaroo",
+			"desc": "Kidaroo"
+		},
 		"import": {
 			"country": "",
 			"language": "any",
