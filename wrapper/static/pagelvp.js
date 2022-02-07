@@ -23,15 +23,22 @@ module.exports = function (req, res, url) {
 	var attrs, params, title;
 	switch (url.pathname) {
 	case '/videos/': {
-			title = 'Your Animation - Vyond';
+		let presave = query.movieId && query.movieId.startsWith('m') ? query.movieId :
+				`m-${fUtil[query.noAutosave ? 'getNextFileId' : 'fillNextFileId']('movie-', '.xml')}`;
+		title = 'Your Animation - Vyond';
 		attrs = {
 				data: process.env.SWF_URL + '/player.swf',
 				type: 'application/x-shockwave-flash', width: '100%', height: '100%',
 			};
 			params = {
 				flashvars: {
-                                        'apiserver': '/', 'storePath': process.env.STORE_URL + '/<store>', 'ut': 60,
-					'autostart': 1, 'isWide': 1, 'clientThemePath': process.env.CLIENT_URL + '/<client_theme>',
+                                        'bs': 'adam', 'nextUrl': '/yourvideos', 'movieId': '', 'ut': '60',
+					'isWide': '1', 'presaveId': presave, 'page': '', 
+					'apiserver': '/', 'ctc': 'go', 'tlang': 'en_US',
+					'autostart': '1', 'appCode': 'go', 'isEmbed': '1',
+					'storePath': process.env.STORE_URL + '/<store>', 
+					'clientThemePath': process.env.CLIENT_URL + '/<client_theme>',
+					'animationPath': process.env.SWF_URL + '/',
 				},
 
 				allowScriptAccess: 'always',
