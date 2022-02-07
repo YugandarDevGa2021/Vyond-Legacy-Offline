@@ -1,9 +1,0 @@
-{
-  "manifest_version": 2,
-  "name": "ChromeRecovery",
-  "version": "101.3.36.121",
-  "imageName": "image.squash",
-  "squash": true,
-  "fsType": "squashfs",
-  "isRemovable": false
-}

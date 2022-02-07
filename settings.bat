@@ -2,6 +2,7 @@ title Vyond Legacy Offline Settings Script
 :: Interactive config.bat changer
 :: Author: Fanimation36#1811
 :: License: MIT
+set borwsertype=Chromium
 
 :: DON'T EDIT THIS FILE! If you need a text version of the settings like it used to be, edit utilities\config.bat. This file is now just an interface for changing that file.
 
@@ -67,7 +68,7 @@ if !VERBOSEWRAPPER!==y (
 )
 :: Browser options
 if !INCLUDEDCHROMIUM!==y (
-	echo ^(2^) Browser set to[92m included Chromium [0m
+	echo ^(2^) Browser set to[92m included !browsertype! [0m
 	if !APPCHROMIUM!==y (
 		echo     ^(3^) Headless mode is[92m ON [0m
 	) else ( 
@@ -115,24 +116,10 @@ if exist "wrapper\main-norpc.js" (
 ) else ( 
 	echo ^(8^) Discord rich prescence is[91m OFF [0m
 )
-:: Cepstral
-if exist "wrapper\tts\info-cepstral.json" (
-	echo ^(9^) Provider for Cepstral/VoiceForge voices is[92m VFProxy [0m
-	if exist "wrapper\tts\load-seamus.js" (
-		echo     ^(10^) VFProxy server is[92m PHP Webserver ^(localhost:8181^) [0m
-	) else (
-		if !CEPSTRAL!==y (
-			echo     ^(10^) VFProxy server is[91m seamus-server.tk [0m
-		)
-	)
-) else (
-	if !CEPSTRAL!==y (
-		echo ^(9^) Provider for Cepstral/VoiceForge voices is[91m Cepstral website [0m
-	)
-)
-:: Character solid archive
-if exist "server\characters\characters.zip" (
-	echo ^(11^) Original LVM Character IDs are[91m OFF [0m
+if exist "utilities\Slimjet" (
+	echo ^(9^) Ungoogled Chromium browser use is[92m ON [0m
+) else ( 
+	echo ^(9^) Ungoogled Chromium browser use is[91m OFF [0m
 )
 :: Dev options
 :: These are really specific options that no casual user would ever really need
@@ -280,46 +267,12 @@ if "!choice!"=="?8" (
         echo when you're using it on Discord.
 	goto reaskoptionscreen
 )
-:: Cepstral
-if "!choice!"=="9" goto cepstralchange
+
+if "!choice!"=="9" goto browserChange
 if "!choice!"=="?9" (
-	echo By default, Vyond Legacy Offline uses the included VFProxy
-	echo for the VoiceForge voices, as VoiceForge was turned
-	echo into a mobile app, causing the original API to be
-	echo deleted. Someone managed to hack the APK and find the
-	echo link, but it outputs in WAV only, so we made a PHP
-	echo wrapper for it ^(VFProxy^) which is intended to bypass
-	echo ratelimits and automatically convert it to MP3 using LAME.
-	echo:
-	echo However, some people seem to be having issues with getting
-	echo it working without any problem.
-	echo:
-	echo Toggling this setting will make it so Wrapper: Offline no
-	echo longer launches VFProxy and instead gets the Cepstral voices
-	echo from the actual Cepstral website's demo.
+	echo When first getting Vyond Legacy Offline, Chromium will be used by default.
+	echo if you don't have admin rights on your computer, you can turn this off and that will fix the problem for you.
 	goto reaskoptionscreen
-)
-if "!choice!"=="10" goto vfproxyserverchange
-if "!choice!"=="?10" (
-	echo This setting runs the localhost version of xomdjl_'s VFProxy.
-	echo This makes it easier to use without having to use an external server.
-	echo:
-	echo However, some people seem to be having problems with this.
-	echo:
-	echo Toggling this setting will allow you to use either the localhost VFProxy
-	echo or the seamus-server.tk host of VFProxy.
-	goto reaskoptionscreen
-)
-:: Character solid archive
-if exist "server\characters\characters.zip" (
-	if "!choice!"=="11" goto extractchars
-	if "!choice!"=="?11" (
-		echo When first getting Vyond Legacy Offline, all non-stock characters are put into a single zip file.
-		echo This is because if they're all separate, extracting takes forever and is incredibly annoying.
-		echo If you wish to import characters made on the LVM when it was still up and hosted by Vyond,
-		echo you can extract them here. They will still be compressed, just in separate files to be usable.
-		goto reaskoptionscreen
-	)
 )
 :: Dev options
 if /i "!choice!"=="masterkey" (
@@ -646,6 +599,20 @@ if exist "server\characters\characters.zip" (
 )
 goto optionscreen
 
+:browserChange
+echo Toggling setting...
+pushd utilities
+if exist "Slimjet" (
+	:: disable
+	ren ungoogled-chromium Chromium
+	ren Slimjet ungoogled-chromium
+) else ( 
+	:: enable
+	ren ungoogled-chromium Slimjet
+	ren Chromium ungoogled-chromium
+)
+popd
+goto optionscreen
 :end
 endlocal
 if "%SUBSCRIPT%"=="" (

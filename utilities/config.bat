@@ -8,10 +8,10 @@ if "%SUBSCRIPT%"=="" ( pushd "C:\Users\JFC5125\Documents\GitHub\Vyond-Legacy-Off
 endlocal
 
 :: Shows exactly Offline is doing, and never clears the screen. Useful for development and troubleshooting. Default: n
-set VERBOSEWRAPPER=n
+set VERBOSEWRAPPER=y
 
 :: Won't check for dependencies (flash, node, etc) and goes straight to launching. Useful for speedy launching post-install. Default: n
-set SKIPCHECKDEPENDS=n
+set SKIPCHECKDEPENDS=y
 
 :: Won't install dependencies, regardless of check results. Overridden by SKIPCHECKDEPENDS. Mostly useless, why did I add this again? Default: n
 set SKIPDEPENDINSTALL=n
@@ -22,12 +22,6 @@ set INCLUDEDCHROMIUM=y
 :: Opens INCLUDEDCHROMIUM in headless mode. Looks pretty nice. Overrides CUSTOMBROWSER and BROWSER_TYPE. Default: y
 set APPCHROMIUM=y
 
-:: Opens Offline in an included copy of Slimjet. Allows continued use of Flash as modern browsers disable it. Default: n
-set INCLUDEDSLIMJET=n
-
-:: Opens INCLUDEDSLIMJET in headless mode. Looks pretty nice. Overrides CUSTOMBROWSER and BROWSER_TYPE. Default: n
-set APPSLIMJET=n
-
 :: Opens Offline in a browser of the user's choice. Needs to be a path to a browser executable in quotes. Default: n
 set CUSTOMBROWSER=n
 
@@ -36,3 +30,7 @@ set BROWSER_TYPE=chrome
 
 :: Runs through all of the scripts code, while never launching or installing anything. Useful for development. Default: n
 set DRYRUN=n
+set CEPSTRAL=n
+set CEPSTRAL=y
+set CEPSTRAL=n
+
