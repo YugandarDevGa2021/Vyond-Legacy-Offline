@@ -1,0 +1,111 @@
+var _____WB$wombat$assign$function_____ = function(name) {return (self._wb_wombat && self._wb_wombat.local_init && self._wb_wombat.local_init(name)) || self[name]; };
+if (!self.__WB_pmw) { self.__WB_pmw = function(obj) { this.__WB_source = obj; return this; } }
+{
+  let window = _____WB$wombat$assign$function_____("window");
+  let self = _____WB$wombat$assign$function_____("self");
+  let document = _____WB$wombat$assign$function_____("document");
+  let location = _____WB$wombat$assign$function_____("location");
+  let top = _____WB$wombat$assign$function_____("top");
+  let parent = _____WB$wombat$assign$function_____("parent");
+  let frames = _____WB$wombat$assign$function_____("frames");
+  let opener = _____WB$wombat$assign$function_____("opener");
+
+(function(window, undefined) {
+  var ANALYTICS_SERVER_BASE_URL = '//web.archive.org/web/20180226035122/https://web-analytics.engagio.com/';
+  var Loader, loader;
+
+  if (!window.EI) {
+    window.EI = {};
+  }
+
+  if (!Loader) {
+    Loader = function() {
+      this.counter = 0;
+      this.urls = [];
+      this.callbacks = [];
+
+      this.registerScript = function(url) {
+        this.counter += 1;
+        this.urls.push(url);
+      };
+
+      this.registerCallback = function(callback) {
+        this.callbacks.push(callback);
+      };
+
+      this._scriptLoaded = function() {
+        var i;
+        this.counter -= 1;
+        if (this.counter === 0 && this.callbacks.length) {
+          for (i = 0; i < this.callbacks.length; i += 1) {
+            this.callbacks[i].call();
+          }
+        }
+      };
+
+      this._loadScript = function(url) {
+        var head, script, obj;
+        obj = this;
+        head = document.getElementsByTagName('head')[0];
+        script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = url;
+
+        // then bind the event to the callback function
+        // there are several events for cross browser compatibility
+        if (script.addEventListener) {
+          script.addEventListener("load", function() {
+            obj._scriptLoaded.apply(obj);
+          }, false);
+        } else if (script.readyState) {
+          script.onreadystatechange = function() {
+            if (this.readyState == 'loaded' || this.readyState == 'complete') {
+              obj._scriptLoaded.apply(obj);
+            }
+          };
+        }
+
+        // fire the loading
+        head.appendChild(script);
+      };
+
+      this.go = function() {
+        var i;
+        for (i = 0; i < this.urls.length; i += 1) {
+          this._loadScript(this.urls[i]);
+        }
+      };
+    };
+  }
+  function main_load() {
+      EI.main.init(ANALYTICS_SERVER_BASE_URL);
+  }
+  pre_loader = new Loader();
+  pre_loader.registerScript(ANALYTICS_SERVER_BASE_URL + 'js/ei_track_all_packed.js');
+  pre_loader.registerCallback(main_load);
+  pre_loader.go();
+}(window));
+
+
+}
+/*
+     FILE ARCHIVED ON 03:51:22 Feb 26, 2018 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 18:05:50 Oct 21, 2021.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  cdx.remote: 0.236
+  LoadShardBlock: 442.369 (3)
+  PetaboxLoader3.resolve: 170.572
+  captures_list: 810.796
+  exclusion.robots.policy: 0.194
+  esindex: 0.016
+  CDXLines.iter: 68.564 (3)
+  exclusion.robots: 0.212
+  load_resource: 317.467
+  PetaboxLoader3.datanode: 408.119 (4)
+*/
