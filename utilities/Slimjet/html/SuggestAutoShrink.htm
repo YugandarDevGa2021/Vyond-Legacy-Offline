@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Automatic photo shrinking</title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<SCRIPT>
+
+function SetErrorInfo(message)
+{
+	document.getElementById("label_info").innerText = message;
+}
+
+function onOK()
+{
+	var resolution = document.getElementById("resolution").value;
+	if(isNaN(resolution) == true )
+	{	
+		SetErrorInfo("The pixels must be digital.");
+		return;
+	}else if(resolution.indexOf(".") > -1 )
+	{
+		SetErrorInfo("The pixels must be integer.");
+		return;
+	}else if( parseInt(resolution) < 1 )
+	{
+		SetErrorInfo("The pixels must be greater then 1K");
+		return;
+	}else if( parseInt(resolution) > 4096 )
+	{
+		SetErrorInfo("The pixels must be less then 4096K");
+		return;
+	}else
+	{
+		document.sjReturnValue = document.getElementById("resolution").value+","+document.getElementById("UseTopLevelDomain").checked;
+		window.close();
+	}
+}
+
+function onCancel()
+{
+    document.sjReturnValue = "";
+    window.close();
+}
+</SCRIPT>
+</head>
+<BODY style="font-size:14px; font-family: 'Times New Roman', Times, serif">
+<div style="width:420px">
+  <p> Would you like to apply automatic photo shrinking on this domain so that you can upload photos faster? </p>
+  <p>Domain:
+    <input value = "" type="text" id = "domain" style="width:300px;" readonly="readonly" />
+  </p>
+  <p>
+    <input type="checkbox" id="UseTopLevelDomain" value = "0" />
+    <label id="topLevelDomainLabel" for="UseTopLevelDomain">Use top level domain name *.com</label>
+  </p>
+  <p>Maximum pixels:
+    <input type="text" id="resolution" style="width:40px;" />
+(K) <label id="label_info" style="color:Crimson"></label></p>
+  <p>Recommended value: 1024 K pixels which results in about 100 KB file size in JPEG format. </p>
+  
+  <table width="100%" border="0">
+    <tr align="center">
+      <td width="50%"><button type="button" onclick = "onOK();" style="min-width:80px">OK</button></td>
+      <td><button type="button" onclick = "onCancel();" style="min-width:80px" >Cancel</button></td>
+    </tr>
+  </table>
+  
+</div>
+</BODY>
+</HTML>

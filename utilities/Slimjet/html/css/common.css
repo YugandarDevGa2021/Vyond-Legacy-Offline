@@ -1,0 +1,44 @@
+BODY
+{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+}
+
+label
+{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+}
+
+
+SELECT
+{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+}
+
+input
+{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+}
+
+button
+{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	white-space: nowrap;
+	height: 23px;
+}
+
+pre
+{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+}
+
+div
+{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+}

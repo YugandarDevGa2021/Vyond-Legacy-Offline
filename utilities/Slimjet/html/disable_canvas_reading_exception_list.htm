@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Domain whitelist</title>
+<style type="text/css">
+@import url(alias_definitions.css);
+</style>
+<style type="text/css">
+.alias-img {
+  display: none;
+  height: 14px;
+  padding: 0px;
+  vertical-align: middle;
+  width: 14px;
+}
+.alias-name {
+  padding: 0px;
+  display: none;
+  width: 140px;
+  min-width: 140px;
+  vertical-align: middle;
+}
+
+.url-path {
+  padding-left: 0px;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+#alias-definitions-list {
+  width: 400px;
+}
+
+#alias-domain-command {
+  width: 380px;
+}
+</style>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="formdata.js"></script>
+<script src="js/cr.js" type="text/javascript"></script>
+<script src="js/cr/event_target.js" type="text/javascript"></script>
+<script src="js/cr/ui.js" type="text/javascript"></script>
+<script src="js/cr/ui/array_data_model.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_selection_model.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_selection_controller.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_single_selection_model.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_item.js" type="text/javascript"></script>
+<script src="js/cr/ui/list.js" type="text/javascript"></script>
+<script src="js/cr/ui/focus_manager.js" type="text/javascript"></script>
+<script src="js/util.js" type="text/javascript"></script>
+<script src="deletable_item_list.js" type="text/javascript"></script>
+<script src="alias_definitions.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+var exceptionsList;
+
+function onRemove()
+{
+  var selected_items = exceptionsList.selectionModel.selectedIndexes;
+  for ( var i=selected_items.length-1; i>=0; i--) {
+    var index = selected_items[i];
+    exceptionsList.dataModel.splice(index,1);
+  }
+	document.getElementById("host-name").value = "";
+}
+
+function isExisted()
+{
+  var selected_items = exceptionsList.selectionModel.selectedIndexes;
+  for ( var i=selected_items.length-1; i>=0; i--) {
+    var index = selected_items[i];
+    exceptionsList.dataModel.splice(index,1);
+  }
+	document.getElementById("host-name").value = "";
+}
+
+function onAdd()
+{
+	var new_domain = document.getElementById("host-name").value;
+	new_domain = new_domain.toLowerCase().trim();
+	if (new_domain.indexOf(".")!=-1)
+	{
+		var links = GetExceptionsList();
+		if (links == "")
+			links = new_domain;
+		else if ((","+links+",").indexOf(","+new_domain+",") != -1)
+		{
+			alert(document.getElementById("urlExisted").innerText);
+			return;
+		}
+		else
+			links +="," + new_domain;
+		SetExceptionsList(links);
+		document.getElementById("host-name").value = "";
+	}
+	else
+		alert(document.getElementById("invalidDomainName").innerText);
+}
+
+function onChange()
+{
+  if (exceptionsList.selectionModel.selectedIndexes.length== 0) {
+     alert(document.getElementById("needSelectAItem").innerText);
+     return;
+  }
+	var index=exceptionsList.selectionModel.selectedIndexes[0];
+	
+	var new_domain = document.getElementById("host-name").value;
+	new_domain = new_domain.toLowerCase().trim();
+	if (new_domain.indexOf(".")==-1)
+	{
+		alert(document.getElementById("invalidDomainName").innerText);
+		return;
+	}
+	
+  var old_domain=exceptionsList.dataModel.item(index).displayUrl;
+	if (old_domain==new_domain) return;
+	
+	if ((","+GetExceptionsList()+",").indexOf(","+new_domain+",")!=-1)
+	{
+		alert(document.getElementById("urlExisted").innerText);
+		return;
+	}
+	
+	var alias_info = {
+    'displayUrl': new_domain
+  };
+  exceptionsList.dataModel.splice(index,1,alias_info);
+	document.getElementById("host-name").value = "";
+}
+function onDone()
+{
+	var ret = GetExceptionsList();
+	if (ret == "")
+		ret="empty";
+  document.sjReturnValue = ret;
+  window.close();
+}
+
+
+function handleClickAliasList(e) {
+  if (exceptionsList.selectionModel.selectedIndexes.length == 0) {
+    return;
+  }
+  var index = exceptionsList.selectionModel.selectedIndexes[0];
+  var alias_info = exceptionsList.dataModel.item(index);
+	document.getElementById("host-name").value = alias_info.displayUrl;
+}
+
+function SetExceptionsList(links)
+{
+  if (unescape(links) == "") return;
+  var url_list=unescape(links).split(",");
+	var alias_infos = '';
+
+	var i = 0;
+  var alias_info_list = [];
+
+	for (var i = 0; i < url_list.length; i++) {
+		var alias_info = {
+			'displayUrl': url_list[i]
+		};
+		alias_info_list.push(alias_info);
+	}
+	delete exceptionsList.dataModel;
+  exceptionsList.autoExpands = true;
+  exceptionsList.dataModel = new cr.ui.ArrayDataModel(alias_info_list);
+  exceptionsList.dataModel.createSortStatus('displayUrl','asc');
+}
+
+function GetExceptionsList()
+{
+  var links = "";
+	if (exceptionsList.dataModel)
+	{
+		for (var i=0; i< exceptionsList.dataModel.length; i++)
+			links += exceptionsList.dataModel.item(i).displayUrl + ",";
+		links = links.substring(0,links.length -1);
+	}
+  return links;
+}
+
+function Init(links)
+{
+	exceptionsList = $('alias-definitions-list');
+  options.AliasDefinitionList.decorate(exceptionsList);
+	SetExceptionsList(links);
+	$('alias-definitions-list').addEventListener('click', handleClickAliasList);
+}
+
+document.onkeydown = function(e){
+    if(!e) e = window.event;
+    if((e.keyCode || e.which) == 13){
+        document.getElementById("button_close").click();
+    }
+}
+
+</SCRIPT>
+</head>
+<BODY style="font-size:13px; font-family:Verdana, Geneva, sans-serif">
+
+<div style="width:400px">
+<form>
+ <div id="slimjet_alias_definitions_dialog" style="width:400px;">
+  <table style="width: 100%; border: 0px;">
+  <tr align="center">
+    <td><div id="alias-list-container">
+      <div id="alias-definitions-header">
+        <div id="alias-domain-command">Domain</div>
+      </div>
+      <div id="alias-frame">
+      <list id="alias-definitions-list" role="list" tabindex="0" aria-activedescendant has-element-focus="hasElementFocus">
+      </list>
+      </div>
+    </div></td>
+  </tr>
+  </table>
+</div>
+<table width="400">     
+    <tr>
+    <td width=1 style="white-space: nowrap">New domain:</td><td><input name="alias" value = "" type="text" id = "host-name" style="width:100%" /></td>
+    </tr>
+</table>
+ 
+  <table width="400">
+    <tr align="center">
+      <td width="25%"><button onclick = "onAdd();" style="min-width:90px" type="button">Add</button></td>
+      <td width="25%"><button onclick = "onRemove();" style="min-width:90px" type="button">Remove</button></td>
+      <td width="25%"><button onclick = "onChange();" style="min-width:90px" type="button">Change</button></td>
+      <td width="25%"><button id="button_close" onclick = "onDone();" style="min-width:90px" type="button">Done</button></td>
+    </tr>
+  </table>
+  </form>
+	<span style="display:none" id="invalidDomainName">Please specify a valid domain name</span>
+  <span style="display:none" id="needSelectAItem">Please select an item!</span>
+  <span style="display:none" id="urlExisted">Duplicate item!</span>
+  </div>
+
+</BODY>
+</HTML>

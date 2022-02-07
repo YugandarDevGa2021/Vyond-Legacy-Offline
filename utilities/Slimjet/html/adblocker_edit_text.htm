@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="formdata.js"></script>
+<script type="text/javascript">
+function onOK()
+{
+    document.sjReturnValue = document.getElementById('user_rules_text').value;
+    if(document.sjReturnValue=="") {
+      document.sjReturnValue="\n";
+    }
+    window.close();
+}
+
+function onCancel()
+{
+    document.sjReturnValue = "";
+    window.close();
+}
+
+function initDialog(user_rules)
+{
+  if(user_rules=="\n") {
+    user_rules="";
+  }
+  document.getElementById('user_rules_text').value=user_rules;
+}
+</SCRIPT>
+</head>
+<BODY style="font-size:13px; font-family:Verdana, Geneva, sans-serif">
+<div style="width:620px">
+  <div style="margin: 5px;">
+   <textarea id="user_rules_text" style="width:600px;height:500px;"></textarea>
+  </div>
+  <table width="100%" border="0">
+    <tr align="center">
+      <td width="50%"><button type="button" onclick = "onOK();" style="min-width:80px">OK</button></td>
+      <td><button type="button" onclick = "onCancel();" style="min-width:80px" >Cancel</button></td>
+    </tr>
+  </table>
+</div>
+</BODY>
+</HTML>

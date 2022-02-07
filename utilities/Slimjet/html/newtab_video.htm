@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Background video</title>
+<script type="text/javascript">
+function onCancel()
+{
+  document.sjReturnValue = "";
+  window.close();
+}
+function onOK()
+{
+  document.sjReturnValue = "ok";
+  window.close();
+}
+</script>
+</head>
+
+<body>
+<div style="width:450px">
+<p>Would you like to show stunning scenic background videos like the one below on the New Tab page?</p>
+<div align="center">
+<video controls="" name="media" width="400" height="280">
+<source src="http://www.slimjetbrowser.com/videos/sample%20new%20tab%20video.webm" type="video/webm"></source>
+</video>
+</div>
+<table width="100%" border="0">
+  <tbody>
+    <tr align="center">
+      <td><input type="button" value="Let me pick" style="min-width:120px" onclick="onOK()"></td>
+      <td><input type="button" value="No, thanks" style="min-width:120px" onclick="onCancel()"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<HTML i18n-values="dir:textdirection;" id="uber" class dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+ <!-- <link rel="stylesheet" href="css/chrome_shared.css" type="text/css" /> -->
+<style type="text/css">
+@import url(alias_definitions.css);
+</style>
+<style type="text/css">
+.alias-img {
+  display: none;
+  height: 14px;
+  padding: 0px;
+  vertical-align: middle;
+  width: 14px;
+}
+.alias-name {
+  padding: 2px;
+  display: inline-block;
+  width: 540px;
+  min-width: 540px;
+  vertical-align: middle;
+}
+.url-path {
+  display: none;
+  padding-left: 12px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+#alias-definitions-list {
+  width: 400px;
+}
+#tabunloader_whitelist_dialog {
+	width:420px;
+}
+</style>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script src="js/cr.js" type="text/javascript"></script>
+<script src="js/cr/event_target.js" type="text/javascript"></script>
+<script src="js/cr/ui.js" type="text/javascript"></script>
+<script src="js/cr/ui/array_data_model.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_selection_model.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_selection_controller.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_single_selection_model.js" type="text/javascript"></script>
+<script src="js/cr/ui/list_item.js" type="text/javascript"></script>
+<script src="js/cr/ui/list.js" type="text/javascript"></script>
+<script src="js/cr/ui/focus_manager.js" type="text/javascript"></script>
+<script src="js/util.js" type="text/javascript"></script>
+<script src="deletable_item_list.js" type="text/javascript"></script>
+<script src="alias_definitions.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--//Kent@FlashPeak
+var AliasDefinitionList = options.AliasDefinitionList;
+var aliasDefinitionList;
+var is_dblclick_alias_list;
+var alias_sorted_direction = 'asc';
+var url_sorted_direction = 'desc';
+function getByID(elem_id) {
+  return $(elem_id);
+}
+function getResText(res_id) {
+  var res_elem = getByID(res_id);
+  if (res_elem != undefined) {
+    return res_elem.innerText;
+  }
+}
+function lzAlert(text_res_id) {
+  alert(getResText(text_res_id));
+}
+function lzConfirm(text_res_id) {
+  return confirm(getResText(text_res_id));
+}
+function validateInput() {
+  if ($('alias-text').value == "") {
+//    lzAlert('RES_INVALID_ALIAS');
+    return false;
+  }
+  return true;
+}
+function compareAliasInfo(alias1, alias2) {
+  if (alias1.displayText > alias2.displayText) {
+    return 1;
+  } else if (alias1.displayText == alias2.displayText) {
+    return 0;
+  } else {
+    return -1;
+  }
+}
+function existAlias(alias) {
+  alias = alias.toLowerCase();
+  alias = alias.trim();
+  for (var i=0; i< aliasDefinitionList.dataModel.length; i++) {
+    if ( aliasDefinitionList.dataModel.item(i).displayText == alias) {
+      return i;
+    }
+  }
+  return -1;
+}
+function insertItem(alias) {
+  var i;
+  alias = alias.toLowerCase();
+  alias = alias.trim();
+
+  if (existAlias(alias) != -1) {
+    lzAlert('RES_ITEM_ALREADY_EXISTS');
+    return false;
+  }
+
+  var alias_info = {
+    'displayText': alias,
+  };
+  aliasDefinitionList.dataModel.push(alias_info);
+  aliasDefinitionList.selectionModel.unselectAll();
+  for (i=0; i< aliasDefinitionList.dataModel.length; i++) {
+    if ( aliasDefinitionList.dataModel.item(i).displayText == alias) {
+      aliasDefinitionList.selectionModel.setIndexSelected(i,true);
+      break;
+    }
+  }
+  return true;
+}
+function handleClickAliasList_(e) {
+  is_dblclick_alias_list = false;
+  setTimeout(checkIsDblClickAliasList_, 100);
+  function checkIsDblClickAliasList_() {
+    if (is_dblclick_alias_list) {
+      return;
+    }
+    handleClickAliasList();
+  }
+}
+function handleClickAliasList() {
+  if (aliasDefinitionList.selectionModel.selectedIndexes.length == 0) {
+    return;
+  }
+  var index = aliasDefinitionList.selectionModel.selectedIndexes[0];
+  var alias_info = aliasDefinitionList.dataModel.item(index);
+  $('alias-text').value = alias_info.displayText;
+}
+function clearInput() {
+  $('alias-text').value = "";
+}
+function setAliasItem(index, alias) {
+  var alias_info = {
+    'displayText': alias
+  };
+  aliasDefinitionList.dataModel.splice(index,1,alias_info);
+}
+function handleClose() {
+  close();
+}
+function handleAdd() {
+  if (!validateInput()) return;
+  var alias = $('alias-text').value;
+  if (insertItem(alias)) {
+    clearInput();
+    handleSave();
+  }
+}
+function handleRemove() {
+  var selected_items = aliasDefinitionList.selectionModel.selectedIndexes;
+  for ( var i=selected_items.length-1; i>=0; i--) {
+    var index = selected_items[i];
+    aliasDefinitionList.dataModel.splice(index,1);
+  }
+  clearInput();
+  handleSave();
+}
+function handleChange() {
+  if (aliasDefinitionList.selectionModel.selectedIndexes.length == 0) {
+     lzAlert('RES_PLEASE_SELECT_ITEM');
+     return;
+  }
+  if (!validateInput()) {
+     return;
+  }
+  var alias = $('alias-text').value;
+
+  var index = aliasDefinitionList.selectionModel.selectedIndexes[0];
+  var exist_index = existAlias(alias);
+  if (exist_index != -1 && exist_index != index) {
+    lzAlert('RES_ITEM_ALREADY_EXISTS');
+    return false;
+  }
+
+  alias = alias.toLowerCase();
+  alias = alias.trim();
+
+
+  setAliasItem(index, alias);
+  clearInput();
+  handleSave();
+}
+function handleSave() {
+  var i;
+  var alias = [];
+  for (i = 0; i<aliasDefinitionList.dataModel.length; i++) {
+    var alias_info = aliasDefinitionList.dataModel.item(i);
+    alias.push(alias_info.displayText);
+  }
+  var alias_url_list = escape(alias.join('\n'));
+  location = 'sjcmd://SaveTabUnloaderWhiteDomains(' + alias_url_list + ')';
+}
+
+function handleSelectAliasList() {
+  return false;
+}
+
+function handleSortByAlias() {
+  var sort_direction = alias_sorted_direction == 'desc'?'asc':'desc';
+  aliasDefinitionList.dataModel.sort('displayText',sort_direction);
+  alias_sorted_direction = sort_direction;
+  url_sorted_direction = 'desc';
+}
+
+function initDialog(filters, prompt_info) {
+  $('prompt-info').innerText = unescape(prompt_info);
+  aliasDefinitionList = $('alias-definitions-list');
+  AliasDefinitionList.decorate(aliasDefinitionList);
+
+  var alias_list = [];
+  var url_list = '';
+  filters = unescape(filters);
+  if (filters.indexOf('\t') != -1) {
+    alias_list = filters.split('\t');
+  } else {
+	if (filters!='') {
+		alias_list = [filters];
+	}
+  }
+
+
+  var i = 0;
+  var alias_info_list = [];
+  for (var i = 0; i < alias_list.length; i++) {
+    var alias_info = {
+      'displayText': alias_list[i],
+    };
+    alias_info_list.push(alias_info);
+  }
+
+  delete aliasDefinitionList.dataModel;
+  aliasDefinitionList.autoExpands = true;
+  aliasDefinitionList.dataModel = new cr.ui.ArrayDataModel(alias_info_list);
+  aliasDefinitionList.dataModel.createSortStatus('displayText','asc');
+
+  $('alias-definitions-list').addEventListener('click', handleClickAliasList_);
+  $('add-button').addEventListener('click', handleAdd);
+  $('remove-button').addEventListener('click', handleRemove);
+  $('change-button').addEventListener('click', handleChange);
+  $('close-button').addEventListener('click', handleClose);
+}
+
+document.onkeydown = function(e){
+    if(!e) e = window.event;
+    if((e.keyCode || e.which) == 13){
+        getByID("close-button").click();
+    }
+}
+
+//-->
+</script>
+</head>
+<BODY>
+<div id="tabunloader_whitelist_dialog">
+  <table style="width: 100%; border: 0px;">
+  <tr>
+    <td>
+      <div id="prompt-info" style="text-align: left;"></div>
+    </td>
+  </tr>
+  <tr align="center">
+    <td><div id="alias-list-container">
+      <div id="alias-frame">
+      <list id="alias-definitions-list" role="list" tabindex="0" aria-activedescendant has-element-focus="hasElementFocus">
+      </list>
+      </div>
+    </div></td>
+  </tr>
+  <tr>
+    <td>
+      <table style="width: 100%; border: 0px;">
+        <tbody><tr>
+          <td width="1" style="white-space: nowrap">New domain:</td><td><input id="alias-text" type="text" style="width:100%"></td>
+        </tr>
+        </tbody></table>
+    </td>
+  </tr>
+  <tr align="left">
+    <td>
+      <table style="width: 100%">
+        <tr>
+          <td>
+            <button style="width: 100%" id="add-button" class="inputbutton">Add</button>
+          </td>
+          <td>
+            <button style="width: 100%" id="remove-button" class="inputbutton">Remove</button>
+          </td>
+          <td>
+            <button style="width: 100%" id="change-button" class="inputbutton">Change</button>
+          </td>
+          <td>
+            <button style="width: 100%" id="close-button" class="inputbutton">Done</button>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+  <div id="slimjet_dialog_res" style="display:none">
+    <!--<span id="RES_INVALID_ALIAS">Invalid filter!</span>-->
+    <span id="RES_ITEM_ALREADY_EXISTS">Domain already exists!</span>
+    <span id="RES_PLEASE_SELECT_ITEM">Please select an item!</span>
+  </div>
+</div>
+
+</BODY>
+</HTML>
