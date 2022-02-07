@@ -614,7 +614,7 @@ jQuery('#player-overlay-dismiss').click(function() {
             <div class="settings-row">
                     <div class="row">
                         <div class="col-sm-6">
-                            <img class="portrait portrait-tiny img-circle" src="/pages/img/addprofile.jpg" alt="">
+                            <img class="portrait portrait-tiny img-circle" src="" alt="">
                         </div>
                         <div class="col-sm-6 socials-icons">
                             <ul class="socials-sharing">
