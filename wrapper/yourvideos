@@ -382,7 +382,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li>
                     <li>
                         <a class="hidden-sm hidden-md hidden-lg" href="videomaker.html">Make a Video</a>
-                        <span class="site-nav-btn hidden-xs"><a class="btn btn-orange" href="/pages/html/ga.vyond.com/videomaker.html">Make a Video</a></span>
+                        <span class="site-nav-btn hidden-xs"><a class="btn btn-orange" href="/videomaker">Make a Video</a></span>
                     </li>
 
 <script>
