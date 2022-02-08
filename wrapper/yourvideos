@@ -144,14 +144,6 @@ zE(function() {
 });
 </script>
 
-<script>
-function displayVideos() {
-window.location.reload();
-}
-function hideVideos() {
-document.getElementById('video-system').style.display = "none";
-}
-</script>
 
 <script>(function () { var ruffleRuntimePath = "chrome-extension://hnicgckkbamlonjfbkdilljeegpbjabo/";
 var obfuscatedEventPrefix = "rufEvent90084354324";
@@ -283,7 +275,6 @@ var obfuscatedEventPrefix = "rufEvent90084354324";
     border-radius: 4px;
     text-align: center;
     vertical-align: middle;
-    display: inline-block;
     color: #fff;
     border: none;
     box-shadow: inset 0 -1px 0 rgba(216, 218, 221, 0.0);
@@ -337,7 +328,7 @@ var obfuscatedEventPrefix = "rufEvent90084354324";
 .tp-modal.no-height .tp-close {
     display: none;
 }
-</style><style type="text/css" id="qual_style-lgx"></style><style type="text/css" id="qual_style-lyy"></style><script type="text/javascript" src="https://pi.pardot.com/analytics?ver=3&amp;visitor_id=240326528&amp;visitor_id_sign=febcffa398bd35336af80854d79ed79bc72c193fabdb5c148d2193ea425e5b040361375e79df502d98639211f3b57925be5e2512&amp;pi_opt_in=&amp;campaign_id=3286&amp;account_id=715453&amp;title=Your%20Videos%20on%20Vyond&amp;url=https%3A%2F%2Fga.vyond.com%2Fyourvideos&amp;referrer="></script></head>
+</style><style type="text/css" id="qual_style-lgx"></style><style type="text/css" id="qual_style-lyy"></style><script type="text/javascript" src="https://pi.pardot.com/analytics?ver=3&amp;visitor_id=240326528&amp;visitor_id_sign=febcffa398bd35336af80854d79ed79bc72c193fabdb5c148d2193ea425e5b040361375e79df502d98639211f3b57925be5e2512&amp;pi_opt_in=&amp;campaign_id=3286&amp;account_id=715453&amp;title=Your%20Videos%20on%20Vyond&amp;url=https%3A%2F%2Fga.vyond.com%2Fyourvideos&amp;referrer="></script><script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
 <body class="en_US has-user">
 <script type="text/javascript">
 if (self !== top) {
@@ -366,7 +357,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="list.html" title="Vyond">
+                  <a class="navbar-brand" href="/pages/html/ga.vyond.com/yourvideos.html" title="Vyond">
                       <img alt="Vyond" src="https://d3v4eglovri8yt.cloudfront.net/static/add8e214e09bd155/go/img/vyond/vyond_logo_legacy.png">
                   </a>
             </div>
@@ -384,14 +375,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <a href="https://support.vyond.com" onclick="amplitudeTrackCtaHelp('help_center');" target="_blank">Help Center</a>
         </li>
         <li>
-            <a href="https://product.vyond.com/" onclick="amplitudeTrackCtaHelp('whats_new');" target="_blank">Whatâs New   </a>
+            <a href="https://product.vyond.com/" onclick="amplitudeTrackCtaHelp('whats_new');" target="_blank">What’s New   </a>
         </li>
     </ul>
 </li>
 <li>
                     <li>
-                        <a class="hidden-sm hidden-md hidden-lg" href="videomaker">Make a Video</a>
-                        <span class="site-nav-btn hidden-xs"><a class="btn btn-orange" href="/videomaker">Make a Video</a></span>
+                        <a class="hidden-sm hidden-md hidden-lg" href="videomaker.html">Make a Video</a>
+                        <span class="site-nav-btn hidden-xs"><a class="btn btn-orange" href="/pages/html/ga.vyond.com/videomaker.html">Make a Video</a></span>
                     </li>
 
 <script>
@@ -506,10 +497,10 @@ transition: none !important;
                     Expanded Timeline                </li>
             </ul>
             <div class="vm5-banner__cta">
-                <a class="btn btn-orange btn-lg text-uppercase" href="videos/list.html" target="_blank" onclick="amplitudeTrackEvent(AMPLITUDE_EVENT.VM5_LEGACY_BANNER_CTA, { trigger: 'start_now' })">
+                <a class="btn btn-orange btn-lg text-uppercase" href="https://product.vyond.com/" target="_blank" onclick="amplitudeTrackEvent(AMPLITUDE_EVENT.VM5_LEGACY_BANNER_CTA, { trigger: 'start_now' })">
                     Start Now                </a>
                 <a class="btn btn-default btn-lg text-uppercase" href="https://product.vyond.com/" target="_blank" onclick="amplitudeTrackEvent(AMPLITUDE_EVENT.VM5_LEGACY_BANNER_CTA, { trigger: 'whats_new' })">
-                    Whatâs New                </a>
+                    What’s New                </a>
         </div>
         </div>
     </div>
@@ -531,7 +522,6 @@ transition: none !important;
                         <span class="caret"></span>
                     </span>
                     <span class="title folder-name">Your Videos</span>
-                    (<span class="video-count count-all">0</span>)
                 </div>
 
                 <div id="videos-folders-nav" class="list-group-item sub-folder-list"></div>
@@ -554,9 +544,9 @@ transition: none !important;
 <div class="grid video-listing-grid hide-folders folder-access" id="video-listing-grid">
     <div class="video-list-header">
         <div class="video-status-filter pull-right">
-            Show:            <a class="link-secondary active" onclick="displayVideos()" data-status="">All</a> /
-            <a class="link-secondary" onclick="hideVideos()" data-status="draft">Draft</a> /
-            <a class="link-secondary" onclick="hideVideos()" data-status="published">Private</a>
+            Show:            <a class="link-secondary active" data-status="">All</a> /
+            <a class="link-secondary" data-status="draft">Draft</a> /
+            <a class="link-secondary" data-status="published">Private</a>
         </div>
     </div>
     
@@ -587,7 +577,7 @@ transition: none !important;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">Ã</button>
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 class="modal-title">Your video was autosaved</h3>
             </div>
             <div class="modal-body">
@@ -837,7 +827,7 @@ var json;
 				const tbl = json[c];
 				const date = tbl.date.substr(0, 10) + ' ' + tbl.date.substr(11);
 				tbody.insertAdjacentHTML('beforeend',
-					'<tr id="video-system"><td><img src="/movie_thumbs/' + tbl.id + '.png"></td><td><div>' + tbl.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div><div>' + tbl.durationString + '</div></div></td><td><span>' + date + '</span></td><td><a href="/videos/?movieId=' + tbl.id + '"></a><a href="/movies/' + tbl.id + '.xml" download="' + tbl.title + '"></a></td></tr>');
+					'<tr><td><img src="/movie_thumbs/' + tbl.id + '.png"></td><td><div>' + tbl.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div><div>' + tbl.durationString + '</div></div></td><td><span>' + date + '</span></td><td><a href="/videos/?movieId=' + tbl.id + '"></a><a href="/videomaker/full/?movieId=' + tbl.id + '"></a><a href="/movies/' + tbl.id + '.xml" download="' + tbl.title + '"></a></td></tr>');
 			}
 		}
 
@@ -846,10 +836,6 @@ var json;
 			if (listReq.readyState != 4) return;
 			json = JSON.parse(listReq.responseText);
 			loadRows();
-		}
-
-		function popup(id) {
-			window.open('/videos/?movieId=' + id, 'MsgWindow', 'width=1280,height=723,left=' + (screen.width / 2 - 640) + ',top=' + (screen.height / 2 - 360));
 		}
 </script>
 <style>
@@ -878,7 +864,7 @@ var json;
 		header>:nth-child(1) {
 			align-content: center;
 			background-color: #1e1e1e;
-			display: inline-block;
+			display: auto;
 			padding-bottom: 13px;
 			text-align: center;
 			color: #fff;
@@ -1087,7 +1073,7 @@ var json;
 			display: inline-block;
 			text-align: center;
 			font-size: 12px;
-			width: 8.5px;
+			width: auto;
 		}
 
 		tr>:nth-child(4) {
@@ -1099,7 +1085,7 @@ var json;
 		}
 
 		tr>:nth-child(4)>a {
-			display: inline-block;
+			display: auto;
 			text-decoration: none;
 			padding-right: 10px;
 			color: #474747;
@@ -1114,6 +1100,10 @@ var json;
 		}
 
 		tr>:nth-child(4)>:nth-child(2)::before {
+			content: '\E235';
+		}
+
+		tr>:nth-child(4)>:nth-child(3)::before {
 			content: '\E182';
 		}
 
@@ -1184,7 +1174,7 @@ _kiq.push(['identify', "antoinejes10000@outlook.com"]);
     <div class="modal-dialog">
     <div class="modal-content">
     <div class="modal-header has-back">
-        <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
+        <button class="close" type="button" data-dismiss="modal" aria-hidden="true">�</button>
         <button class="modal-back" title="Back" data-dismiss="modal" aria-hidden="true">&lt;</button>
         <h3 class="modal-title">Video formats comparison</h3>
     </div>
@@ -1279,7 +1269,7 @@ var folderCounts = 0;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">�</button>
                 <h3 class="modal-title">Subscribe to unlock more features</h3>
             </div>
 
@@ -1315,7 +1305,7 @@ var folderCounts = 0;
     <div class="modal-dialog" style="left: auto;margin-right: auto;margin-left: auto;">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">�</span><span class="sr-only">Close</span></button>
                 <h3 class="modal-title">
                     Your free trial has ended!                </h3>
             </div>
@@ -1333,7 +1323,7 @@ var folderCounts = 0;
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">�</span></button>
                 <h3 class="modal-title">Before You Head To Vyond Studio</h3>
             </div>
             <div class="modal-body">
@@ -1356,7 +1346,7 @@ var folderCounts = 0;
 
 <footer class="site-footer">
     <div class="container">
-        Vyondâ¢ is a trademark of GoAnimate. Inc. Â©2019 GoAnimate. Inc. <a href="https://www.vyond.com/terms">Terms of Service</a> | <a href="https://www.vyond.com/privacy">Privacy Policy</a> | <a href="https://www.vyond.com/cookies">Cookies Policy</a>
+        Vyond™ is a trademark of GoAnimate. Inc. ©2019 GoAnimate. Inc. <a href="https://www.vyond.com/terms">Terms of Service</a> | <a href="https://www.vyond.com/privacy">Privacy Policy</a> | <a href="https://www.vyond.com/cookies">Cookies Policy</a>
     </div>
 
 </footer>
@@ -1513,4 +1503,4 @@ src: url(data:application/x-font-woff;charset=utf-8;base64,d09GMk9UVE8AAAaMAAwAA
 #wistia_grid_44_left{height:100%;position:absolute;right:0;top:0;}
 #wistia_grid_44_right_inside{height:100%;right:0;position:absolute;top:0;}
 #wistia_grid_44_right{height:100%;left:0;position:absolute;top:0;}
-#wistia_grid_44_below{position:relative;}</style></div></div></div><button id="wistia-70x3iky0kr-1_popover_popover_close_button" class="wistia_placebo_close_button" alt="Close" role="button" tabindex="-1" aria-label="Close" style="background: transparent; border: none; cursor: pointer; height: 18px; left: -99999px; opacity: 0; position: absolute; top: 0px; width: 21px; z-index: 10002; overflow: hidden; margin: 0px; padding: 0px;"><img alt="Click to close video" style="height: 34px; width: 34px; position: absolute; right: 2px; top: 1px;"></button></div><iframe data-product="web_widget" title="No content" tabindex="-1" aria-hidden="true" src="about:blank" style="width: 0px; height: 0px; border: 0px; position: absolute; top: -9999px;"></iframe><iframe id="qualaroo_dnt_frame" src="//dntcl.qualaroo.com/frame.html" style="width: 1px; height: 1px; display: none; opacity: 0;"></iframe><div><iframe title="Opens a widget where you can find more information" id="launcher" tabindex="-1" style="width: 105px; height: 50px; padding: 0px; margin: 10px 20px; position: fixed; bottom: 30px; overflow: visible; opacity: 0; border: 0px; z-index: 999998; transition-duration: 250ms; transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1); transition-property: opacity, top, bottom; top: -9999px; visibility: hidden;"></iframe><iframe title="Find more information here" id="webWidget" tabindex="-1" style="width: 374px; max-height: calc(100vh - 32px); height: 572px; position: fixed; opacity: 0; border: 0px; transition-duration: 250ms; transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1); transition-property: opacity, top, bottom; top: -9999px; visibility: hidden; z-index: 999999;"></iframe></div></body></html>	
+#wistia_grid_44_below{position:relative;}</style></div></div></div><button id="wistia-70x3iky0kr-1_popover_popover_close_button" class="wistia_placebo_close_button" alt="Close" role="button" tabindex="-1" aria-label="Close" style="background: transparent; border: none; cursor: pointer; height: 18px; left: -99999px; opacity: 0; position: absolute; top: 0px; width: 21px; z-index: 10002; overflow: hidden; margin: 0px; padding: 0px;"><img alt="Click to close video" style="height: 34px; width: 34px; position: absolute; right: 2px; top: 1px;"></button></div><iframe data-product="web_widget" title="No content" tabindex="-1" aria-hidden="true" src="about:blank" style="width: 0px; height: 0px; border: 0px; position: absolute; top: -9999px;"></iframe><iframe id="qualaroo_dnt_frame" src="//dntcl.qualaroo.com/frame.html" style="width: 1px; height: 1px; display: none; opacity: 0;"></iframe><div><iframe title="Opens a widget where you can find more information" id="launcher" tabindex="-1" style="width: 105px; height: 50px; padding: 0px; margin: 10px 20px; position: fixed; bottom: 30px; overflow: visible; opacity: 0; border: 0px; z-index: 999998; transition-duration: 250ms; transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1); transition-property: opacity, top, bottom; top: -9999px; visibility: hidden;"></iframe><iframe title="Find more information here" id="webWidget" tabindex="-1" style="width: 374px; max-height: calc(100vh - 32px); height: 572px; position: fixed; opacity: 0; border: 0px; transition-duration: 250ms; transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1); transition-property: opacity, top, bottom; top: -9999px; visibility: hidden; z-index: 999999;"></iframe></div><script type="text/javascript">(function(){window['__CF$cv$params']={r:'6d9f56d529f85a04',m:'cxucVPg4Ujb6JyoxzFAjfZ_S5F_tCEMTwf4N9fBJ9q8-1644265439-0-AUY6wq+f/zHr1qjzlHxFqeup7Kcx9/lJ3fNR1PxLUQyPleIF9TO5jBJwMQKgfXpQR172u4cj7QDjLdHlRx2qYeCdcTNGG4IiY1Zon+3+OUpYP66Hpt17vC3joiusZrq8FJF0+Jz/7Y0bdy4cgUEAvF4S6+zNxZmVaEWEwzI80b2WITKMrTIG4UV2Iyr1zO9HeDFInn3iunFgxxn0cu/eqEE=',s:[0xb460e70422,0xd24e285c87],}})();</script></body></html>	
